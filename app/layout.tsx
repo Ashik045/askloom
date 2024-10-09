@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <nav>
-          <ul style={{ display: "flex", margin: "0px 10px" }}>
+          <ul style={{ display: "flex", margin: "10px 10px 20px" }}>
             <Link href={"/"}>
               <li style={{ margin: "0px 10px" }}>Home</li>
             </Link>
