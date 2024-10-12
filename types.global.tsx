@@ -9,6 +9,7 @@ export interface QuestionType {
   title: string;
   question: string;
   user: string;
+  userTitle: string;
   tags: string[]; // Array of strings for tags
   reacts: string[]; // Array of strings for reactions
   comments: Comment[]; // Array of Comment objects

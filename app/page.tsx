@@ -9,8 +9,9 @@ export default function Home() {
       _id: 1,
       title: "First Question",
       question:
-        "lorem ipsum dolor sit amet dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dol.",
+        "lorem ipsum dolor sit amet dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dol. lorem ipsum dolor sit amet dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dol. lorem ipsum dolor sit amet dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dol.",
       user: "Devv",
+      userTitle: "Frontend Developer.",
       tags: ["js, ts, css"],
       reacts: ["2423", "2342", "2343", "2344", "2345"],
       comments: [
@@ -32,6 +33,7 @@ export default function Home() {
       question:
         "lorem ipsum dolor sit amet dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dol.",
       user: "Devv",
+      userTitle: "Frontend Developer.",
       tags: ["js, ts, css"],
       reacts: ["2423", "2342", "2343", "2344", "2345"],
       comments: [
@@ -51,8 +53,9 @@ export default function Home() {
       _id: 3,
       title: "Thired Question",
       question:
-        "lorem ipsum dolor sit amet dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dol.",
+        "lorem ipsum dolor sit amet dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dol.  lorem ipsum dolor sit amet dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dol. lorem ipsum dolor sit amet dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dol.",
       user: "Devv",
+      userTitle: "Frontend Developer.",
       tags: ["js, ts, css"],
       reacts: ["2423", "2342", "2343", "2344", "2345"],
       comments: [
@@ -74,6 +77,7 @@ export default function Home() {
       question:
         "lorem ipsum dolor sit amet dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dol.",
       user: "Devv",
+      userTitle: "Frontend Developer.",
       tags: ["js, ts, css"],
       reacts: ["2423", "2342", "2343", "2344", "2345"],
       comments: [
@@ -95,6 +99,7 @@ export default function Home() {
       question:
         "lorem ipsum dolor sit amet dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dol.",
       user: "Devv",
+      userTitle: "Frontend Developer.",
       tags: ["js, ts, css"],
       reacts: ["2423", "2342", "2343", "2344", "2345"],
       comments: [
