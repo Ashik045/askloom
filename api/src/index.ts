@@ -1,6 +1,7 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
+import mongoose from "mongoose";
 
 import questionRoute from "../routes/question";
 // Initialize Express app
@@ -11,6 +12,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// server connect to database
+mongoose
+  .connect(`${process.env.MONGODB_CONNECTION_STRING}`)
+  .then(() => {
+    console.log("MongoDB connection successful");
+  })
+  .catch((err: object) => {
+    console.log(err);
+  });
 
 // Application route
 app.get("/", (req: Request, res: Response) => {
@@ -30,7 +41,7 @@ app.use((err: Error, req: Request, res: Response, next: Function) => {
 });
 
 // Start the server
-const port = process.env.PORT || 3000;
+const port = process.env.APPLICATION_PORT || 4000;
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
