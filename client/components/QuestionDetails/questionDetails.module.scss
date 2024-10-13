@@ -1,0 +1,98 @@
+.questiondetails_component {
+  margin-top: 10px;
+  color: rgb(92, 92, 92);
+  h2 {
+    font-size: 23px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.796) !important;
+  }
+
+  .questiondetails_user_time {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin: 3px 0px 15px;
+    color: rgb(92, 92, 92);
+
+    p {
+      margin-right: 10px;
+
+      .user_name {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    .q_cmnt {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .post_like_line {
+    width: 99%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.205);
+    margin-bottom: 0px;
+  }
+
+  .q_question {
+    margin: 15px 0px;
+    color: rgb(49, 49, 49);
+  }
+
+  .question_tags {
+    span {
+      padding: 3px 7px;
+      margin-right: 5px;
+      background-color: rgb(219, 217, 217);
+      color: rgba(0, 0, 0, 0.796);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+
+  .add_like_cmnt {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    p {
+      margin: 10px 10px 5px 0px;
+      cursor: pointer;
+      font-size: 19px;
+      display: flex;
+      align-items: center;
+      color: rgba(0, 0, 0, 0.726) !important;
+
+      .likes {
+        margin-left: 5px;
+        padding-top: 2px;
+        font-size: 15px;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .comments {
+        margin-left: 5px;
+        font-size: 15px;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .question_comments {
+    margin-top: 20px;
+    .q_cmnt {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

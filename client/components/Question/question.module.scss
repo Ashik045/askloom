@@ -37,10 +37,15 @@
 
   .question_body {
     margin-top: 3px;
-    h2 {
+    .question_title {
       font-size: 17px;
       font-weight: 500;
       color: rgba(0, 0, 0, 0.796) !important;
+      verflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
 
     .question_text {
@@ -78,7 +83,7 @@
       align-items: center;
 
       p {
-        margin: 5px 10px 0px;
+        margin: 10px 10px 5px 0px;
         cursor: pointer;
         font-size: 19px;
         display: flex;

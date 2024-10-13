@@ -46,13 +46,16 @@ const Question = ({ question }: QuestionProps) => {
       </div>
 
       <div className={styles.question_body}>
-        <h2>
-          <Link href={question._id.toString()}> {question.title}</Link>
+        <h2 className={styles.question_title}>
+          <Link href={`/questions/${question._id}`}> {question.title}</Link>
         </h2>
 
         <div className={styles.question_text}>
           {question.question}
-          <a href="/full-article-page" className={styles.view_more_btn}>
+          <a
+            href={`/questions/${question._id}`}
+            className={styles.view_more_btn}
+          >
             View More
           </a>
         </div>

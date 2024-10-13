@@ -1,7 +1,7 @@
-import styles from "@/app/components/MainHome/mainhome.module.scss";
 import { QuestionType } from "@/types.global";
 import Question from "../Question/Question";
 import QuestionComponent from "../QuestionComponent/QuestionComponent";
+import styles from "./mainhome.module.scss";
 
 interface QuestionProp {
   questions: QuestionType[];

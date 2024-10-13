@@ -27,6 +27,10 @@ const QuestionSchema = new mongoose.Schema<QuestionType>(
     userTitle: {
       type: "string",
     },
+    tags: {
+      type: [String],
+      default: [],
+    },
     reacts: {
       type: [String],
       default: [],
