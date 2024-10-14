@@ -1,0 +1,96 @@
+.login_page {
+  .login_page_component {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+    padding: 20px;
+    margin-top: 100px;
+    border-radius: 5px;
+
+    .social_login {
+      display: grid;
+      justify-content: center;
+
+      .google_login {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 7px 20px;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background-color: #ccc;
+        }
+      }
+
+      .facebook_login {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 7px 20px;
+        background-color: rgb(38, 57, 233);
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 18px;
+        color: white;
+        margin: 10px 0px;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background-color: #ccc;
+          color: black;
+        }
+      }
+    }
+
+    .s_or_e {
+      text-align: center;
+      font-size: 20px;
+      margin: 5px 0px;
+    }
+
+    .login_form {
+      display: grid;
+      justify-content: center;
+
+      label {
+        color: rgba(0, 0, 0, 0.796);
+        font-weight: 600;
+        margin-top: 10px;
+      }
+
+      input {
+        border: none;
+        outline: none;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 2px 7px;
+        width: 100%;
+      }
+
+      button {
+        padding: 6px 12px;
+        background-color: #888888;
+        cursor: pointer;
+        border-radius: 4px;
+        color: white;
+        margin-top: 20px;
+        transition: all 0.1s ease-in-out;
+
+        &:hover {
+          background-color: #0c0c0c;
+        }
+      }
+    }
+  }
+}

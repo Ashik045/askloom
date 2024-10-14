@@ -15,3 +15,14 @@ export interface QuestionType {
   comments: Comment[]; // Array of Comment objects
   createdAt: Date; // Date
 }
+
+export interface UserType {
+  _id: number;
+  name: string;
+  email: string;
+  about: string;
+  password: string;
+  profilePicture?: string;
+  activities: string[];
+  questions: string[];
+}

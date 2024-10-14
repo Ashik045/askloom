@@ -1,8 +1,10 @@
+import cookieSession from "cookie-session";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 
+import passport from "passport";
 import questionRoute from "../routes/question";
 // Initialize Express app
 dotenv.config();
@@ -12,6 +14,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  cookieSession({ name: "session", keys: ["dev"], maxAge: 24 * 60 * 60 * 100 })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // server connect to database
 mongoose
