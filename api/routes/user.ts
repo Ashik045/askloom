@@ -22,7 +22,14 @@ router.get("/login/failed", (req, res) => {
 });
 
 // create a User
-router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+router.get(
+  "/google",
+  (req, res, next) => {
+    console.log("Google login initiated"); // Log request
+    next();
+  },
+  passport.authenticate("google", { scope: ["profile"] })
+);
 
 router.get(
   "/google/callback",

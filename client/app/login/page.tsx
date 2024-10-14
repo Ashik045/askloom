@@ -26,11 +26,16 @@ export default function Login() {
       // Handle error
     }
   };
+
+  const googleLogin = () => {
+    window.open("http://localhost:4000/api/auth/google", "_self");
+  };
+
   return (
     <div className={styles.login_page}>
       <div className={styles.login_page_component}>
         <div className={styles.social_login}>
-          <div className={styles.google_login}>
+          <div className={styles.google_login} onClick={googleLogin}>
             <FaGoogle style={{ marginRight: "8px" }} />
             Log In With Google
           </div>
