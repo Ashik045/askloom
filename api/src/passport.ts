@@ -8,8 +8,9 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 passport.use(
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientID:
+        "1077098493332-k62gepmg9c4tg8eb53fqi7adhhbk70fh.apps.googleusercontent.com",
+      clientSecret: "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",
       callbackURL: "http://localhost:4000/api/auth/google/callback",
     },
     //   function(accessToken, refreshToken, profile, cb) {

@@ -11,10 +11,38 @@ import styles from "./navbar.module.scss";
 const Navbar = () => {
   const [toggler, setToggler] = useState(false);
   const [inpVal, setInpVal] = useState("");
-  const [user, setUser] = useState<null>(null);
   const [selectVal, setSelectVal] = useState("");
   // const router = useRouter();
   const [isClient, setIsClient] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const getUser = () => {
+      fetch("http://localhost:4000/api/auth/login/success", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "true",
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) return response.json();
+          throw new Error("Authentication failed!");
+        })
+        .then((resObject) => {
+          setUser(resObject);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    getUser();
+  }, []);
+
+  console.log(user);
 
   useEffect(() => {
     setIsClient(true);
@@ -41,6 +69,10 @@ const Navbar = () => {
   //   localStorage.removeItem("jwtToken");
   //   console.log("logged out");
   // };
+
+  const handleLogout = () => {
+    window.open("http://localhost4000/api/auth/logout", "_self");
+  }; // 1:06m
 
   const handleChange = (e: any) => {
     setInpVal(e.target.value);
@@ -106,9 +138,12 @@ const Navbar = () => {
             </Link>
 
             {user ? (
-              <Link href={`/users`} style={{ textDecoration: "none" }}>
-                <p>profile</p>
-              </Link>
+              <p>
+                profile{" "}
+                <span onClick={handleLogout} style={{ cursor: "pointer" }}>
+                  Log out
+                </span>{" "}
+              </p>
             ) : (
               <div className={styles.sign_in}>
                 <Link href="/login" style={{ textDecoration: "none" }}>

@@ -9,9 +9,18 @@ router.get("/login/success", (req, res) => {
       success: true,
       message: "Login successfull!",
       user: req.user,
-      cookies: req.cookies,
+      // cookies: req.cookies,
     });
   }
+});
+
+router.get("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err); // Handle any potential errors
+    }
+  });
+  res.redirect("http://localhost:3000");
 });
 
 router.get("/login/failed", (req, res) => {
@@ -34,7 +43,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: process.env.CLIENT_URL,
+    successRedirect: "http://localhost:3000",
     failureRedirect: "/login/failed",
   })
 );

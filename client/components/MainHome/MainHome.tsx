@@ -1,3 +1,5 @@
+"use client";
+
 import { QuestionType } from "@/types.global";
 import Question from "../Question/Question";
 import QuestionComponent from "../QuestionComponent/QuestionComponent";
