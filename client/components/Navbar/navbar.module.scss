@@ -112,6 +112,25 @@
           font-weight: 500;
           color: #fb2577e0;
         }
+
+        .nav_menu_user {
+          display: flex;
+          align-items: center;
+          .login_user {
+            .profilePic {
+              border-radius: 50%;
+              margin-right: 5px;
+              object-fit: cover;
+            }
+          }
+
+          .username {
+            text-decoration: underline;
+            text-transform: lowercase;
+            padding: 0px;
+            margin-right: 5px;
+          }
+        }
       }
 
       .nav_reg {
@@ -129,41 +148,29 @@
             display: block; /* Display the popup when hovering on the parent */
           }
 
-          .profilePic {
-            border-radius: 50%;
-            margin-right: 5px;
-            object-fit: cover;
-          }
+          // .user_popup {
+          //   display: none; /* Hide the popup by default */
+          //   position: absolute; /* Set position to absolute to position the popup relative to its parent */
+          //   bottom: -60px; /* Position the popup 50px below the parent */
+          //   right: 90; /* Center the popup horizontally */
+          //   background-color: #fff; /* Set the background color */
+          //   padding: 5px; /* Add some padding */
+          //   border-radius: 5px; /* Add some border radius */
+          //   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add some box shadow for a nice effect */
+          //   text-align: left;
+          //   transition: all 0.2s ease;
 
-          .username {
-            text-decoration: underline;
-            text-transform: lowercase;
-            padding: 0px;
-          }
+          //   p {
+          //     display: block;
+          //     margin: 5px 0px;
+          //     color: #333;
+          //     text-decoration: none;
 
-          .user_popup {
-            display: none; /* Hide the popup by default */
-            position: absolute; /* Set position to absolute to position the popup relative to its parent */
-            bottom: -60px; /* Position the popup 50px below the parent */
-            right: 90; /* Center the popup horizontally */
-            background-color: #fff; /* Set the background color */
-            padding: 5px; /* Add some padding */
-            border-radius: 5px; /* Add some border radius */
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add some box shadow for a nice effect */
-            text-align: left;
-            transition: all 0.2s ease;
-
-            p {
-              display: block;
-              margin: 5px 0px;
-              color: #333;
-              text-decoration: none;
-
-              &:hover {
-                text-decoration: underline;
-              }
-            }
-          }
+          //     &:hover {
+          //       text-decoration: underline;
+          //     }
+          //   }
+          // }
         }
 
         button {
@@ -279,20 +286,16 @@
       }
 
       .nav_right {
-        // .search {
-        //   .search_form {
-        //     display: flex;
-        //     justify-content: space-between;
-
-        //     .submit_btn {
-        //       margin-left: auto;
-        //     }
-        //   }
-        // }
         .nav_menu {
           p {
             font-size: 16px;
             padding: 7px 5px;
+          }
+
+          .nav_menu_user {
+            .username {
+              display: none;
+            }
           }
         }
       }

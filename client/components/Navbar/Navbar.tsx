@@ -3,10 +3,39 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import { Context } from "Context/Context";
+import noPhoto from "@/public/images/no-photo.png";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BiMenu, BiX } from "react-icons/bi";
 import styles from "./navbar.module.scss";
+
+interface UserJson {
+  sub: string;
+  name: string;
+  given_name: string;
+  family_name: string;
+  picture: string;
+}
+
+interface User {
+  displayName: string;
+  id: string;
+  name: {
+    familyName: string;
+    givenName: string;
+  };
+  photos: { value: string }[]; // Assuming photos is an array of objects with "value"
+  provider: string;
+  _json: UserJson;
+  _raw: string;
+}
+
+interface LoginResponse {
+  message: string;
+  success: boolean;
+  user: User;
+}
 
 const Navbar = () => {
   const [toggler, setToggler] = useState(false);
@@ -14,7 +43,7 @@ const Navbar = () => {
   const [selectVal, setSelectVal] = useState("");
   // const router = useRouter();
   const [isClient, setIsClient] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const getUser = () => {
@@ -31,8 +60,8 @@ const Navbar = () => {
           if (response.status === 200) return response.json();
           throw new Error("Authentication failed!");
         })
-        .then((resObject) => {
-          setUser(resObject);
+        .then((resObject: LoginResponse) => {
+          setUser(resObject.user); // Use 'user' from the response object
         })
         .catch((err) => {
           console.log(err);
@@ -42,7 +71,8 @@ const Navbar = () => {
     getUser();
   }, []);
 
-  console.log(user);
+  // console.log(user);
+  // console.log(user?.photos[0].value);
 
   useEffect(() => {
     setIsClient(true);
@@ -71,7 +101,7 @@ const Navbar = () => {
   // };
 
   const handleLogout = () => {
-    window.open("http://localhost4000/api/auth/logout", "_self");
+    window.open("http://localhost:4000/api/auth/logout", "_self");
   }; // 1:06m
 
   const handleChange = (e: any) => {
@@ -138,12 +168,21 @@ const Navbar = () => {
             </Link>
 
             {user ? (
-              <p>
-                profile{" "}
+              <div className={styles.nav_menu_user}>
+                <div className={styles.login_user}>
+                  <Image
+                    className={styles.profilePic}
+                    src={user.photos[0].value ? user.photos[0].value : noPhoto}
+                    height={35}
+                    width={35}
+                    alt="user profile"
+                  />
+                </div>
+                <p className={styles.username}>{user.displayName} </p>
                 <span onClick={handleLogout} style={{ cursor: "pointer" }}>
                   Log out
                 </span>{" "}
-              </p>
+              </div>
             ) : (
               <div className={styles.sign_in}>
                 <Link href="/login" style={{ textDecoration: "none" }}>
