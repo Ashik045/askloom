@@ -170,18 +170,29 @@ const Navbar = () => {
             {user ? (
               <div className={styles.nav_menu_user}>
                 <div className={styles.login_user}>
-                  <Image
-                    className={styles.profilePic}
-                    src={user.photos[0].value ? user.photos[0].value : noPhoto}
-                    height={35}
-                    width={35}
-                    alt="user profile"
-                  />
+                  <Link href={`/profile/${user.id}`}>
+                    <Image
+                      className={styles.profilePic}
+                      src={
+                        user.photos[0].value ? user.photos[0].value : noPhoto
+                      }
+                      height={35}
+                      width={35}
+                      alt="user profile"
+                    />
+                  </Link>
                 </div>
-                <p className={styles.username}>{user.displayName} </p>
+                <p className={styles.username}>
+                  <Link
+                    href={`/profile/${user.id}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    {user.displayName}
+                  </Link>
+                </p>
                 <span onClick={handleLogout} style={{ cursor: "pointer" }}>
                   Log out
-                </span>{" "}
+                </span>
               </div>
             ) : (
               <div className={styles.sign_in}>

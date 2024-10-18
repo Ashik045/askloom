@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images:{
-    domains: ['res.cloudinary.com', 'www.pexels.com', "lh3.googleusercontent.com"]
+      remotePatterns: [{
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+      },]
   }
 };
 
