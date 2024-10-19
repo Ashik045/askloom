@@ -4,6 +4,7 @@ import passport, { Profile } from "passport";
 
 // var GoogleStrategy = require("passport-google-oauth20").Strategy;
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import User, { IUser } from "../models/usermodel"; // Import the User model
 
 passport.use(
   new GoogleStrategy(
@@ -27,13 +28,34 @@ passport.use(
 
     // user.save()
 
-    function (
+    async (
       accessToken: string,
       refreshToken: string,
       profile: Profile,
-      done: (error: any, user?: Express.User) => void
-    ) {
-      done(null, profile);
+      done
+    ) => {
+      try {
+        // Check if the user already exists in the database
+        let existingUser = await User.findOne({ googleId: profile.id });
+
+        if (existingUser) {
+          // If the user exists, return the user
+          return done(null, existingUser);
+        }
+
+        // If the user doesn't exist, create a new one
+        const newUser: IUser = new User({
+          googleId: profile.id,
+          displayName:
+            profile.displayName || profile.username || "Unknown User",
+          photoUrl: profile.photos?.[0]?.value || "",
+        });
+
+        await newUser.save(); // Save the user to the database
+        return done(null, newUser);
+      } catch (error) {
+        return done(error, undefined);
+      }
     }
   )
 );

@@ -20,7 +20,9 @@ interface UserJson {
 
 interface User {
   displayName: string;
-  id: string;
+  googleId: string;
+  _id: string;
+  photoUrl: string;
   name: {
     familyName: string;
     givenName: string;
@@ -71,7 +73,7 @@ const Navbar = () => {
     getUser();
   }, []);
 
-  // console.log(user);
+  console.log(user);
   // console.log(user?.photos[0].value);
 
   useEffect(() => {
@@ -170,12 +172,10 @@ const Navbar = () => {
             {user ? (
               <div className={styles.nav_menu_user}>
                 <div className={styles.login_user}>
-                  <Link href={`/profile/${user.id}`}>
+                  <Link href={`/profile/${user._id}`}>
                     <Image
                       className={styles.profilePic}
-                      src={
-                        user.photos[0].value ? user.photos[0].value : noPhoto
-                      }
+                      src={user.photoUrl ? user.photoUrl : noPhoto}
                       height={35}
                       width={35}
                       alt="user profile"
@@ -184,7 +184,7 @@ const Navbar = () => {
                 </div>
                 <p className={styles.username}>
                   <Link
-                    href={`/profile/${user.id}`}
+                    href={`/profile/${user._id}`}
                     style={{ textDecoration: "none" }}
                   >
                     {user.displayName}
