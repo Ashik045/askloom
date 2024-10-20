@@ -25,8 +25,7 @@ export const Context = createContext(INITIAL_STATE);
 export const ContextProvider: React.FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, INITIAL_STATE);
 
-  /* The `useEffect` hook is used to perform side effects in a functional component. In this case, it is
- used to save the `state.user` value to the `localStorage` whenever it changes. */
+  /* The `useEffect` hook is used to perform side effects in a functional component. In this case, it is used to save the `state.user` value to the `localStorage` whenever it changes. */
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(state.user));
   }, [state.user]);
