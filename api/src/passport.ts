@@ -3,6 +3,7 @@ import passport, { Profile } from "passport";
 // import { Strategy as GoogleStrategy } from "passport-google-oauth20"; // Correct import
 
 // var GoogleStrategy = require("passport-google-oauth20").Strategy;
+import jwt, { Secret } from "jsonwebtoken";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import User, { IUser } from "../models/usermodel"; // Import the User model
 
@@ -37,10 +38,18 @@ passport.use(
       try {
         // Check if the user already exists in the database
         let existingUser = await User.findOne({ googleId: profile.id });
+        const jwtSecret: Secret =
+          process.env.JWT_SECRET_KEY || "@zP3m6M8*Wx%2F";
 
         if (existingUser) {
-          // If the user exists, return the user
-          return done(null, existingUser);
+          // Generate JWT token
+          const token = jwt.sign(
+            { id: existingUser._id, googleId: existingUser.googleId },
+            jwtSecret, // Use environment variable for secret
+            { expiresIn: "2d" }
+          );
+
+          return done(null, { user: existingUser, token });
         }
 
         // If the user doesn't exist, create a new one
@@ -52,18 +61,19 @@ passport.use(
         });
 
         await newUser.save(); // Save the user to the database
-        return done(null, newUser);
+        // Generate JWT token
+        const token = jwt.sign(
+          { id: newUser._id, googleId: newUser.googleId },
+          jwtSecret,
+          { expiresIn: "2d" }
+        );
+
+        return done(null, { user: newUser, token });
       } catch (error) {
         return done(error, undefined);
       }
     }
   )
-);
-
-passport.serializeUser(
-  (user: Express.User, done: (error: any, id?: any) => void) => {
-    done(null, user);
-  }
 );
 
 passport.deserializeUser(
@@ -74,3 +84,17 @@ passport.deserializeUser(
     done(null, user);
   }
 );
+
+// Deserialize the user by finding the user by ID in the database
+passport.deserializeUser(async (id: string, done) => {
+  try {
+    const user = await User.findById(id); // Find the user by ID
+    if (user) {
+      done(null, user); // Pass the user to the session
+    } else {
+      done(null, false); // User not found
+    }
+  } catch (error) {
+    done(error, null); // Handle any errors
+  }
+});

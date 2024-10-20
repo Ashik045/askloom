@@ -1,3 +1,4 @@
+import { ContextProvider } from "@/Context/Context";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Navbar from "../components/Navbar/Navbar";
@@ -29,8 +30,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
-        {children}
+        <ContextProvider>
+          <Navbar />
+          {children}
+        </ContextProvider>
       </body>
     </html>
   );

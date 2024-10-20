@@ -73,7 +73,7 @@ const Navbar = () => {
     getUser();
   }, []);
 
-  console.log(user);
+  // console.log(user);
   // console.log(user?.photos[0].value);
 
   useEffect(() => {

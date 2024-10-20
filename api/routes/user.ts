@@ -3,13 +3,42 @@ import passport from "passport";
 
 const router = express.Router();
 
+interface UserWithToken {
+  user: {
+    displayName: string;
+    id: string;
+    name: {
+      familyName: string;
+      givenName: string;
+    };
+    photos: Array<{ value: string }>;
+    provider: string;
+    _json: {
+      sub: string;
+      name: string;
+      given_name: string;
+      family_name: string;
+      picture: string;
+    };
+    _raw: string;
+  };
+  token: string;
+}
+
 router.get("/login/success", (req, res) => {
-  if (req.user) {
+  const user = req.user as UserWithToken | undefined;
+
+  if (user) {
     res.status(200).json({
       success: true,
       message: "Login successfull!",
-      user: req.user,
-      cookies: req.cookies,
+      user: user.user,
+      token: user.token, // Extract token
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "User not authenticated!",
     });
   }
 });

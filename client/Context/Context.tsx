@@ -1,3 +1,5 @@
+"use client";
+
 import { State } from "@/types.global";
 import React, { createContext, useEffect, useReducer } from "react";
 import { Reducer } from "./Reducer";

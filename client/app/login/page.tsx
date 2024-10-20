@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { Context } from "@/Context/Context";
 import styles from "@/styles/loginpage.module.scss";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { dispatch } = useContext(Context);
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
@@ -27,8 +30,48 @@ export default function Login() {
     }
   };
 
-  const googleLogin = () => {
-    window.open("http://localhost:4000/api/auth/google", "_self");
+  const googleLogin = async () => {
+    try {
+      // Dispatch loading state
+      dispatch({ type: "LOGIN_START" });
+
+      // Open Google login and wait for the redirect back to the app
+      window.open("http://localhost:4000/api/auth/google", "_self");
+
+      // Use an API request to check the login success
+      const response = await fetch(
+        "http://localhost:4000/api/auth/login/success",
+        {
+          method: "GET",
+          credentials: "include", // Include cookies for session handling
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const { user, token } = data;
+
+        // Store the JWT token in localStorage
+        localStorage.setItem("jwttoken", token);
+        localStorage.setItem("user", JSON.stringify(user));
+
+        // Dispatch the success action with user data
+        dispatch({ type: "LOGIN_SUCCESS", payload: user });
+      } else {
+        // If login fails, dispatch error
+        dispatch({ type: "LOGIN_FAILURE", payload: "Login failed!" });
+      }
+    } catch (error: unknown) {
+      let errorMessage = "An unknown error occurred.";
+
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      } else if (typeof error === "string") {
+        errorMessage = error;
+      }
+
+      dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });
+    }
   };
 
   return (
