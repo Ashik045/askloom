@@ -22,37 +22,33 @@ passport.use(
       done
     ) => {
       try {
-        // Check if the user already exists in the database
         let existingUser = await User.findOne({ googleId: profile.id });
+
         const jwtSecret: Secret =
-          process.env.JWT_SECRET_KEY || "9&N@@&8a@zP3m6M8*Wx%2F";
+          process.env.JWT_SECRET_KEY || "your_jwt_secret";
 
         if (existingUser) {
-          // Generate JWT token
           const token = jwt.sign(
             { id: existingUser._id, googleId: existingUser.googleId },
-            jwtSecret, // Use environment variable for secret
+            jwtSecret,
             { expiresIn: "2d" }
           );
 
           return done(null, { user: existingUser, token });
         }
 
-        // If the user doesn't exist, create a new one
         const newUser: IUser = new User({
           googleId: profile.id,
-          displayName:
-            profile.displayName || profile.username || "Unknown User",
+          displayName: profile.displayName || "Unknown User",
           photoUrl: profile.photos?.[0]?.value || "",
-          about: "", // Provide default or empty values for other properties
-          password: "", // Optional
+          about: "",
+          password: "",
           questions: [],
           comments: [],
           reacts: [],
         });
 
-        await newUser.save(); // Save the user to the database
-        // Generate JWT token
+        await newUser.save();
         const token = jwt.sign(
           { id: newUser._id, googleId: newUser.googleId },
           jwtSecret,
@@ -68,21 +64,22 @@ passport.use(
 );
 
 // Serialize the user by saving the user ID in the session
+// Use IUser type for serialization
 passport.serializeUser((user: IUser, done) => {
-  done(null, user._id); // Serialize only the user ID
+  done(null, user._id); // Serialize by user ID
 });
 
-// Deserialize the user by finding the user by ID in the database
+// Deserialize user
 passport.deserializeUser(async (id: string, done) => {
   try {
-    const user = await User.findById(id); // Find the user by ID
+    const user = await User.findById(id);
     if (user) {
-      done(null, user); // Pass the user to the session
+      done(null, user);
     } else {
-      done(null, false); // User not found
+      done(null, false);
     }
   } catch (error) {
-    done(error, null); // Handle any errors
+    done(error, null);
   }
 });
 

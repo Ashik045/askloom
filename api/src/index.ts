@@ -27,16 +27,6 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// app.use(
-//   cookieSession({
-//     name: "session",
-//     keys: ["dev"],
-//     maxAge: 24 * 60 * 60 * 1000,
-//     secure: false, // Should be true in production (with HTTPS)
-//     httpOnly: false, // Allow JS to access cookies if needed
-//   })
-// );
-
 app.use(
   session({
     secret: process.env.SECRET_KEY as string, // Replace with a real secret
