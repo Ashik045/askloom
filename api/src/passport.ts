@@ -45,7 +45,7 @@ passport.use(
           googleId: profile.id,
           displayName: profile.displayName || "Unknown User",
           photoUrl: profile.photos?.[0]?.value || "",
-          about: "",
+          about: "New User",
           password: "",
           questions: [],
           comments: [],
@@ -72,7 +72,9 @@ passport.use(
 
 // Serialize the user by saving the user ID in the session
 passport.serializeUser((user, done) => {
-  done(null, (user as IUser)._id); // Explicitly cast user to IUser
+  // Ensure the user is cast correctly to IUser and serialize the _id
+  const userId = (user as IUser)._id;
+  done(null, userId); // Serialize just the user ID
 });
 
 // Deserialize user.
