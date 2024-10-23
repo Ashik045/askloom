@@ -50,7 +50,6 @@ export default function Login() {
       if (response.ok) {
         const data = await response.json();
         const { user, token } = data;
-        console.log(data);
 
         // Store the JWT token in localStorage
         localStorage.setItem("jwttoken", token);

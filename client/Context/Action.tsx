@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { State } from "@/types.global";
 
-export const LoginStart = (loginData: { email: string; password: string }) => ({
+export const LoginStart = () => ({
   type: "LOGIN_START",
 });
 
@@ -10,10 +10,10 @@ export const LoginSuccess = (user: State["user"]) => ({
   payload: user,
 });
 
-export const LoginFailure = () => ({
+export const LoginFailure = (error: string) => ({
   type: "LOGIN_FAILURE",
+  payload: error,
 });
-
 export const Logout = () => ({
   type: "LOGOUT",
 });

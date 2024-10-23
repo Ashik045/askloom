@@ -42,7 +42,6 @@ interface LoginResponse {
 const Navbar = () => {
   const [toggler, setToggler] = useState(false);
   const [inpVal, setInpVal] = useState("");
-  const [selectVal, setSelectVal] = useState("");
   // const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const [user, setUser] = useState<User | null>(null);

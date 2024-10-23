@@ -23,21 +23,21 @@ passport.use(
     ) => {
       try {
         // Check if the user already exists
-        let existingUser = await User.findOne({ googleId: profile.id });
+        let user = await User.findOne({ googleId: profile.id });
 
         const jwtSecret: Secret =
           process.env.JWT_SECRET_KEY || "your_jwt_secret";
 
-        if (existingUser) {
+        if (user) {
           // Generate a JWT token
           const token = jwt.sign(
-            { id: existingUser._id, googleId: existingUser.googleId },
+            { id: user._id, googleId: user.googleId },
             jwtSecret,
             { expiresIn: "2d" }
           );
 
           // Return existing user and token
-          return done(null, { user: existingUser as IUser, token });
+          return done(null, { user, token }); // Return user and token
         }
 
         // If user does not exist, create a new one
@@ -62,7 +62,7 @@ passport.use(
         );
 
         // Return new user and token
-        return done(null, { user: newUser, token });
+        return done(null, { user: newUser, token }); // Return new user and token
       } catch (error) {
         return done(error, undefined); // Handle error
       }
@@ -72,21 +72,23 @@ passport.use(
 
 // Serialize the user by saving the user ID in the session
 passport.serializeUser((user, done) => {
-  // Ensure the user is cast correctly to IUser and serialize the _id
-  const userId = (user as IUser)._id;
-  done(null, userId); // Serialize just the user ID
+  const userObj = user as { user: IUser }; // user contains both user and token
+  done(null, userObj.user._id); // Serialize only the user ID
 });
 
 // Deserialize user.
 passport.deserializeUser(async (id: string, done) => {
   try {
     const user = await User.findById(id);
-    done(null, user as IUser); // Explicitly cast user to IUser
+    if (user) {
+      done(null, user); // Pass the user object to the session
+    } else {
+      done(new Error("User not found"), null); // Handle user not found
+    }
   } catch (error) {
-    done(error, null);
+    done(error, null); // Handle any errors during deserialization
   }
 });
-
 // passport.serializeUser(
 //   (
 //     user: Express.User,

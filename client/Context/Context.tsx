@@ -8,10 +8,10 @@ type Props = {
   children: React.ReactNode;
 };
 
+// Check if we're on the client side
 const isServer = typeof window !== "undefined";
 
-/* The `INITIAL_STATE` constant is defining the initial state of the application. It is an object of
-type `State` which contains the following properties: */
+/* Initial state of the application */
 export const INITIAL_STATE: State = {
   user:
     isServer && localStorage.getItem("user")
@@ -29,7 +29,12 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
 
   /* The `useEffect` hook is used to perform side effects in a functional component. In this case, it is used to save the `state.user` value to the `localStorage` whenever it changes. */
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(state.user));
+    if (state.user) {
+      localStorage.setItem("user", JSON.stringify(state.user));
+      console.log(state.user);
+    } else {
+      localStorage.removeItem("user"); // Clear user from localStorage if null
+    }
   }, [state.user]);
 
   return (
