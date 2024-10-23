@@ -9,6 +9,9 @@ import { FaFacebook, FaGoogle } from "react-icons/fa";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
+
+  console.log(user);
 
   const { dispatch } = useContext(Context);
 
@@ -47,9 +50,11 @@ export default function Login() {
         }
       );
 
-      if (response.ok) {
+      if (response.status === 200) {
         const data = await response.json();
         const { user, token } = data;
+
+        setUser(user);
 
         // Store the JWT token in localStorage
         localStorage.setItem("jwttoken", token);
@@ -73,6 +78,8 @@ export default function Login() {
       dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });
     }
   };
+
+  console.log(user);
 
   return (
     <div className={styles.login_page}>

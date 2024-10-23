@@ -19,16 +19,15 @@ interface UserJson {
 }
 
 interface User {
-  displayName: string;
-  googleId: string;
   _id: string;
+  googleId: string;
+  displayName: string;
   photoUrl: string;
-  name: {
-    familyName: string;
-    givenName: string;
-  };
-  photos: { value: string }[]; // Assuming photos is an array of objects with "value"
-  provider: string;
+  about: string;
+  password: string;
+  questions: string[];
+  comments: string[];
+  reacts: string[];
   _json: UserJson;
   _raw: string;
 }
@@ -37,6 +36,7 @@ interface LoginResponse {
   message: string;
   success: boolean;
   user: User;
+  token: string;
 }
 
 const Navbar = () => {

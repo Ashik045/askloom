@@ -26,7 +26,7 @@ passport.use(
         let user = await User.findOne({ googleId: profile.id });
 
         const jwtSecret: Secret =
-          process.env.JWT_SECRET_KEY || "your_jwt_secret";
+          process.env.JWT_SECRET_KEY || "@@&8a@zP3m6M8*Wx%";
 
         if (user) {
           // Generate a JWT token
@@ -72,7 +72,7 @@ passport.use(
 
 // Serialize the user by saving the user ID in the session
 passport.serializeUser((user, done) => {
-  const userObj = user as { user: IUser }; // user contains both user and token
+  const userObj = user as { user: IUser; token: string }; // user contains both user and token
   done(null, userObj.user._id); // Serialize only the user ID
 });
 

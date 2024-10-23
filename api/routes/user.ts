@@ -1,39 +1,31 @@
 import express from "express";
+import jwt from "jsonwebtoken";
 import passport from "passport";
+import { IUser } from "../models/usermodel";
 
 const router = express.Router();
 
 interface UserWithToken {
-  user: {
-    displayName: string;
-    id: string;
-    name: {
-      familyName: string;
-      givenName: string;
-    };
-    photos: Array<{ value: string }>;
-    provider: string;
-    _json: {
-      sub: string;
-      name: string;
-      given_name: string;
-      family_name: string;
-      picture: string;
-    };
-    _raw: string;
-  };
+  user: IUser;
   token: string;
 }
 
 router.get("/login/success", (req, res) => {
-  const user = req.user as UserWithToken | undefined;
+  const user = req.user as IUser | undefined;
 
   if (user) {
+    // Generate a new token if needed (you may want to store it in the user model)
+    const token = jwt.sign(
+      { id: user._id, googleId: user.googleId },
+      process.env.JWT_SECRET_KEY || "@@&8a@zP3m6M8*Wx%",
+      { expiresIn: "2d" }
+    );
+
     res.status(200).json({
       success: true,
       message: "Login successfull!",
-      user: user.user,
-      token: user.token, // Extract token
+      user,
+      token, // Extract token
     });
   } else {
     res.status(401).json({
@@ -72,7 +64,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "http://localhost:3000",
+    successRedirect: "http://localhost:3000/login",
     failureRedirect: "/login/failed",
   })
 );
