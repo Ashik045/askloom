@@ -9,9 +9,9 @@
     "outDir": "dist",
     "typeRoots": [
       "./node_modules/@types",
-      "./types" // Adjust this path as necessary
+      "src/types" // Adjust this path as necessary
     ]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/types/**/*.d.ts"],
   "exclude": ["node_modules"]
 }

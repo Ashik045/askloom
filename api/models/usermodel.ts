@@ -12,6 +12,7 @@ export interface IUser extends Document {
   comments: string[];
   reacts: string[];
 }
+
 // Create a user schema
 const userSchema: Schema = new Schema(
   {
