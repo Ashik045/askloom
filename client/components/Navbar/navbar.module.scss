@@ -1,7 +1,7 @@
 @mixin menuStyle {
   text-decoration: none;
   text-transform: uppercase;
-  color: black;
+  color: rgba(0, 0, 0, 0.796);
   font-weight: 400;
   font-size: 17px;
   transition: all 0.3s ease;
@@ -60,6 +60,7 @@
         cursor: pointer;
         font-weight: bold;
         font-size: 23px;
+        color: rgba(0, 0, 0, 0.796);
       }
     }
 

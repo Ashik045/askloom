@@ -1,0 +1,42 @@
+$color1: rgb(49, 49, 49);
+$color2: rgb(92, 92, 92);
+.profile_main {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 80% 20%;
+  gap: 15px;
+  justify-content: start;
+
+  .profile_main_user {
+    .profile_main_info {
+      display: grid;
+      grid-template-columns: 17% 70%;
+      gap: 20px;
+      justify-content: start;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .profile_photo {
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .profile_main_in {
+        h1 {
+          font-size: 24px;
+          font-weight: bold;
+          color: rgba(0, 0, 0, 0.796);
+        }
+
+        p {
+          font-size: 17px;
+          color: $color1;
+        }
+
+        .title {
+          margin: 1px 0px;
+        }
+      }
+    }
+  }
+}

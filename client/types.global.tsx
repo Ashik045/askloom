@@ -26,6 +26,7 @@ export interface UserType {
   questions: string[];
   comments: string[];
   reacts: string[];
+  createdAt: Date; // Date
 }
 
 export type State = {
