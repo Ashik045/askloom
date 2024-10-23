@@ -3,77 +3,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import { Context } from "Context/Context";
+import { Context } from "@/Context/Context";
 import noPhoto from "@/public/images/no-photo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BiMenu, BiX } from "react-icons/bi";
 import styles from "./navbar.module.scss";
-
-interface UserJson {
-  sub: string;
-  name: string;
-  given_name: string;
-  family_name: string;
-  picture: string;
-}
-
-interface User {
-  _id: string;
-  googleId: string;
-  displayName: string;
-  photoUrl: string;
-  about: string;
-  password: string;
-  questions: string[];
-  comments: string[];
-  reacts: string[];
-  _json: UserJson;
-  _raw: string;
-}
-
-interface LoginResponse {
-  message: string;
-  success: boolean;
-  user: User;
-  token: string;
-}
 
 const Navbar = () => {
   const [toggler, setToggler] = useState(false);
   const [inpVal, setInpVal] = useState("");
   // const router = useRouter();
   const [isClient, setIsClient] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    const getUser = () => {
-      fetch("http://localhost:4000/api/auth/login/success", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": "true",
-        },
-      })
-        .then((response) => {
-          if (response.status === 200) return response.json();
-          throw new Error("Authentication failed!");
-        })
-        .then((resObject: LoginResponse) => {
-          setUser(resObject.user); // Use 'user' from the response object
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    getUser();
-  }, []);
-
-  // console.log(user);
-  // console.log(user?.photos[0].value);
+  const { user } = useContext(Context);
 
   useEffect(() => {
     setIsClient(true);

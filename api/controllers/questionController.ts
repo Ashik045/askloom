@@ -18,7 +18,7 @@ const createQuestion = async (req: Request, res: Response) => {
   }
 };
 
-// create a new question
+// get a new question
 const getQuestionById = async (req: Request, res: Response) => {
   try {
     const question = await Question.findById(req.params.questionid);

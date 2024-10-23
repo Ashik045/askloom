@@ -17,14 +17,15 @@ export interface QuestionType {
 }
 
 export interface UserType {
-  _id: number;
-  name: string;
-  email: string;
+  _id: string;
+  googleId: string;
+  displayName: string;
+  photoUrl: string;
   about: string;
-  password: string;
-  profilePicture?: string;
-  activities: string[];
+  password?: string;
   questions: string[];
+  comments: string[];
+  reacts: string[];
 }
 
 export type State = {

@@ -1,15 +1,16 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import passport from "passport";
+import { getUserById } from "../controllers/userController";
 import { IUser } from "../models/usermodel";
 
 const router = express.Router();
 
-interface UserWithToken {
-  user: IUser;
-  token: string;
-}
+// get user by userId
+router.get("/user/:userId", getUserById);
 
+// ********************************
+// passportjs google auth routes and controllers
 router.get("/login/success", (req, res) => {
   const user = req.user as IUser | undefined;
 
