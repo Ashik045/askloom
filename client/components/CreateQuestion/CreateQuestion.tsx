@@ -1,7 +1,9 @@
 "use client";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { Context } from "@/Context/Context";
+import axios from "axios";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import ReactQuill from "react-quill"; // Rich text editor
 import "react-quill/dist/quill.snow.css"; // Styles for the editor
@@ -15,10 +17,45 @@ const CreateQuestion = () => {
     formState: { errors },
   } = useForm();
   const [tags, setTags] = useState(["", "", ""]); // State for storing three tags
+  const [loading, setLoading] = useState(false); // State for
 
-  const onSubmit = (data: any) => {
-    data.tags = tags;
-    console.log("Form Data:", data);
+  const { user, dispatch } = useContext(Context);
+
+  const onSubmit = async (data: any) => {
+    setLoading(true);
+    try {
+      const enrichedData = {
+        ...data,
+        tags,
+        _id: user?._id,
+        user: user?.displayName,
+        userTitle: user?.about,
+      };
+
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/api/question/create",
+          enrichedData
+        );
+        setLoading(false);
+
+        if (response.data.message) {
+          console.log(response.data.message);
+
+          // router.push("/");
+        }
+
+        setLoading(false);
+      } catch (error: any) {
+        dispatch({ type: "LOGIN_FAILURE", payload: error.response.data.error });
+      }
+
+      console.log(enrichedData);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setLoading(false);
+    }
   };
 
   // Function to handle changes in tag inputs
@@ -78,13 +115,16 @@ const CreateQuestion = () => {
               value={tag}
               placeholder={`Tag ${index + 1}`}
               onChange={(e) => handleTagChange(index, e)}
+              style={{ textTransform: "lowercase" }}
             />
           ))}
         </div>
         {errors.tags?.message && <p>{String(errors.tags.message)}</p>}
 
         {/* Submit Button */}
-        <button type="submit">Create Question</button>
+        <button type="submit">
+          {loading ? "Loading.." : "Create Question"}{" "}
+        </button>
       </form>
     </div>
   );

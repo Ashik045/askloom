@@ -31,7 +31,6 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     if (state.user) {
       localStorage.setItem("user", JSON.stringify(state.user));
-      console.log(state.user);
     } else {
       localStorage.removeItem("user"); // Clear user from localStorage if null
     }

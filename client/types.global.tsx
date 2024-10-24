@@ -5,7 +5,7 @@ interface Comment {
 }
 
 export interface QuestionType {
-  _id: number;
+  _id: string;
   title: string;
   question: string;
   user: string;

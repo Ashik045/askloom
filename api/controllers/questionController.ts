@@ -4,7 +4,11 @@ import { Question } from "../models/questionmodel";
 // create a new question
 const createQuestion = async (req: Request, res: Response) => {
   try {
-    const newQuestion = await new Question({ ...req.body });
+    const newQuestion = await new Question({
+      ...req.body,
+      reacts: [],
+      comments: [],
+    });
 
     newQuestion.save();
 
