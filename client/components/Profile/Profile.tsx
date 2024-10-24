@@ -1,13 +1,25 @@
-import { UserType } from "@/types.global";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+"use client";
+
+import { QuestionType, UserType } from "@/types.global";
 import Image from "next/image";
+import { useState } from "react";
+import Activity from "../Activity/Activity";
+import Question from "../Question/Question";
 import styles from "./profile.module.scss";
 
 interface UserT {
   user: UserType;
+  questions: QuestionType[];
 }
 
-function Profile({ user }: UserT) {
+function Profile({ user, questions }: UserT) {
   const date = new Date(user.createdAt);
+  const [activity, setActivity] = useState<string>("questions");
+
+  const handlePostOrActivity = (value: string, userId: string) => {
+    setActivity(value);
+  };
 
   return (
     <div className={styles.profile_main}>
@@ -37,14 +49,51 @@ function Profile({ user }: UserT) {
 
         <div className={styles.user_qna}>
           <nav>
-            <p>1 Question</p>
-            <p>2 Comments</p>
-            <p>2 Reacts</p>
+            <p
+              className={
+                activity === "questions"
+                  ? `${styles.active}`
+                  : `${styles.notactive}`
+              }
+              onClick={() => handlePostOrActivity("questions", user._id)}
+            >
+              1 Question
+            </p>
+            <p
+              className={
+                activity === "comments"
+                  ? `${styles.active}`
+                  : `${styles.notactive}`
+              }
+              onClick={() => handlePostOrActivity("comments", user._id)}
+            >
+              2 Comments
+            </p>
+            <p
+              className={
+                activity === "reacts"
+                  ? `${styles.active}`
+                  : `${styles.notactive}`
+              }
+              onClick={() => handlePostOrActivity("reacts", user._id)}
+            >
+              2 Reacts
+            </p>
           </nav>
+
+          {activity === "questions" ? (
+            questions.map((question) => {
+              return <Question key={question._id} question={question} />;
+            })
+          ) : activity === "comments" ? (
+            <Activity />
+          ) : (
+            <p>Reacts</p>
+          )}
         </div>
       </div>
 
-      <div className={styles.profile_main_user}>
+      <div className={styles.trending_questions}>
         <h1>trending questions</h1>
       </div>
     </div>

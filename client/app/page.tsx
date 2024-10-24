@@ -120,10 +120,7 @@ export default async function Home() {
 
   return (
     <div className=" font-[family-name:var(--font-geist-sans)]">
-      <main
-        className={styles.main_home_page}
-        style={{ backgroundColor: "#f6fcfd" }}
-      >
+      <main className={styles.main_home_page}>
         <h1>tags</h1>
         <MainHome questions={questionss} />
         <h1>Trending Questions</h1>
