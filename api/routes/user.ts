@@ -1,10 +1,20 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import passport from "passport";
-import { getUserById } from "../controllers/userController";
+import {
+  getUserById,
+  loginHandler,
+  regHandler,
+} from "../controllers/userController";
 import { IUser } from "../models/usermodel";
 
 const router = express.Router();
+
+// user registration
+router.post("/registration", regHandler);
+
+// manually login
+router.post("/login/manual", loginHandler);
 
 // get user by userId
 router.get("/user/:userId", getUserById);

@@ -1,34 +1,54 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Context } from "@/Context/Context";
 import styles from "@/styles/loginpage.module.scss";
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const { dispatch } = useContext(Context);
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
+    dispatch({ type: "LOGIN_START" });
+
     // Perform client-side validation here
 
-    // Send login request to the server API route
-    const res = await fetch("/api/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: { "Content-Type": "application/json" },
-    });
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/auth/login/manual",
+        { email, password }
+      );
+      setLoading(false);
+      // console.log(response.data.user);
 
-    if (res.ok) {
-      // Handle successful login
-    } else {
-      // Handle error
+      if (response.data.user) {
+        localStorage.setItem("jwttoken", response.data.token);
+
+        // Dispatch the success action with user data
+        dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
+
+        setPassword("");
+        router.push("/");
+      }
+
+      setLoading(false);
+    } catch (error: any) {
+      setLoading(false);
+      dispatch({ type: "LOGIN_FAILURE", payload: error.response.data.error });
+      console.log(error);
+      throw new Error("There was an error logging user!");
     }
   };
 
@@ -124,7 +144,7 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">Login</button>
+          <button type="submit">{loading ? "Loading..." : "Submit"}</button>
         </form>
 
         <p className={styles.reg_p}>

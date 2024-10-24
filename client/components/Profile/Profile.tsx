@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
+import noPhoto from "@/public/images/no-photo.png";
 import { QuestionType, UserType } from "@/types.global";
 import Image from "next/image";
 import { useState } from "react";
@@ -26,7 +27,7 @@ function Profile({ user, questions }: UserT) {
       <div className={styles.profile_main_user}>
         <div className={styles.profile_main_info}>
           <Image
-            src={user.photoUrl}
+            src={user.photoUrl ? user.photoUrl : noPhoto}
             alt="askloom user"
             height={100}
             width={100}

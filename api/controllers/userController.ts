@@ -1,7 +1,104 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
+import jwt, { Secret } from "jsonwebtoken";
 import User from "../models/usermodel";
 
+// create a new user
+const regHandler = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email: email });
+
+    // check if useremail or username is already in use
+    if (!user) {
+      // hashing the password
+      const hashPassword = await bcrypt.hash(password, 10);
+
+      // create a new user object
+      const newUser = await new User({
+        ...req.body,
+        googleId: null, // Explicitly set googleId to null
+        password: hashPassword,
+        questions: [],
+        comments: [],
+        reacts: [],
+      });
+
+      newUser.save();
+
+      // create the jwt token
+      const jwtSecret: Secret = process.env.JWT_SECRET_KEY || "";
+      const payload = {
+        id: newUser._id,
+        email: newUser.email,
+      };
+      const jwtToken = jwt.sign(payload, jwtSecret, { expiresIn: "2d" });
+
+      res.status(200).json({
+        message: "User registration successfull.",
+        user: newUser,
+        token: jwtToken,
+      });
+    } else {
+      res.status(500).json({
+        error: "Email already in use!",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      error: "User registration failed!",
+    });
+  }
+};
+
+// user login
+const loginHandler = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  try {
+    // check if the email matches
+    const user = await User.findOne({ email: email });
+
+    if (user) {
+      // check if the password is correct
+      const isRightPassword = await bcrypt.compare(password, user.password);
+
+      // if the password is correct then login and send the user as a result
+      if (isRightPassword) {
+        const { password: _pw, ...userDetail } = user.toObject();
+
+        // create the jwt token
+        const jwtSecret: Secret = process.env.JWT_SECRET_KEY || "";
+        const payload = {
+          id: user._id,
+          email: user.email,
+        };
+        const jwtToken = jwt.sign(payload, jwtSecret, { expiresIn: "2d" });
+
+        res.status(200).json({
+          message: "Login successfull!",
+          user: userDetail,
+          token: jwtToken,
+        });
+      } else {
+        res.status(401).json({
+          error: "Incorrect email/username or password!",
+        });
+      }
+    } else {
+      res.status(401).json({
+        error: "Incorrect email/username or password!",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      error: "Login failed!",
+    });
+  }
+};
+
+// get user by id
 const getUserById = async (req: Request, res: Response) => {
   try {
     const user = await User.findById(req.params.userId);
@@ -62,4 +159,4 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-export { getUserById, updateUser };
+export { getUserById, loginHandler, regHandler, updateUser };

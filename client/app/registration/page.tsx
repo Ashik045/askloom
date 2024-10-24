@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
+import { Context } from "@/Context/Context";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import noImage from "@/public/images/no-photo.png";
 import styles from "@/styles/registration.module.scss";
@@ -8,7 +9,7 @@ import axios, { AxiosError } from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 
 type Inputs = {
@@ -26,6 +27,8 @@ export default function Regpage() {
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  const { dispatch } = useContext(Context);
 
   const {
     register,
@@ -50,6 +53,8 @@ export default function Regpage() {
   const onSubmit = async (data: Inputs) => {
     setLoading(true);
     const { confirmPassword, email, ...others } = data;
+
+    dispatch({ type: "LOGIN_START" });
 
     try {
       let profilePicture = "";
@@ -78,21 +83,26 @@ export default function Regpage() {
       };
 
       try {
-        // const response = await axios.post(
-        //   "https://sociatek.onrender.com/api/auth/signup",
-        //   newUser
-        // );
-        // setLoading(false);
-        // console.log(response.data.message);
-
-        // if (response.data.message) {
-        //   router.push("/login");
-        //   reset();
-        // }
-
-        console.log(newUser);
+        const response = await axios.post(
+          "http://localhost:4000/api/auth/registration",
+          newUser
+        );
         setLoading(false);
-      } catch (error) {
+
+        if (response.data.user) {
+          console.log(response.data.user);
+          localStorage.setItem("jwttoken", response.data.token);
+
+          // Dispatch the success action with user data
+          dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
+          router.push("/");
+          reset();
+        }
+
+        setLoading(false);
+      } catch (error: any) {
+        dispatch({ type: "LOGIN_FAILURE", payload: error.response.data.error });
+
         if (axios.isAxiosError(error)) {
           const axiosError = error as AxiosError<{ errors?: any }>;
           if (
@@ -108,8 +118,10 @@ export default function Regpage() {
 
         setLoading(false);
       }
-    } catch (error) {
+    } catch (error: any) {
+      dispatch({ type: "LOGIN_FAILURE", payload: error.response.data.error });
       console.log(error);
+      throw new Error("There was an error logging user!");
       setLoading(false);
     }
   };
