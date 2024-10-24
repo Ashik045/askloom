@@ -80,17 +80,17 @@
 
       button {
         padding: 6px 12px;
-        background-color: #888888;
         cursor: pointer;
         border-radius: 4px;
         color: white;
         margin-top: 20px;
+        background-color: #0c0c0c;
         font-weight: bold;
 
         transition: all 0.1s ease-in-out;
 
         &:hover {
-          background-color: #0c0c0c;
+          background-color: #888888;
         }
       }
     }

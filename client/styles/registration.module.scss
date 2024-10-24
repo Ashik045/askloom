@@ -16,6 +16,7 @@
       text-align: center;
       font-weight: bold;
       font-size: 20px;
+      color: rgba(0, 0, 0, 0.796) !important;
     }
 
     .reg_form {
@@ -70,17 +71,17 @@
 
       .submit_btn {
         padding: 6px 12px;
-        background-color: #888888;
         cursor: pointer;
         border-radius: 4px;
         color: white;
         margin-top: 20px;
         margin-bottom: 8px;
         font-weight: bold;
+        background-color: #0c0c0c;
         transition: all 0.1s ease-in-out;
 
         &:hover {
-          background-color: #0c0c0c;
+          background-color: #888888;
         }
       }
 

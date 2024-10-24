@@ -1,0 +1,78 @@
+.create_question {
+  padding: 10px;
+
+  h1 {
+    font-size: 23px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.796);
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  form {
+    width: 100%; // Ensure the form takes full width
+
+    .question_inp {
+      width: 100%; // Ensure the input container takes full width
+      margin-bottom: 15px;
+
+      label {
+        color: rgba(0, 0, 0, 0.796);
+        margin-top: 10px;
+        font-weight: 600;
+        display: block;
+      }
+
+      input {
+        margin-bottom: 3px;
+        padding: 5px 4px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        border: 1px solid #ccc;
+        width: 100%; // Input should take full width
+        box-sizing: border-box; // Include padding and borders in the width
+      }
+    }
+
+    .tag_inputs {
+      label {
+        color: rgba(0, 0, 0, 0.796);
+        margin-top: 10px;
+        font-weight: 600;
+        display: block;
+      }
+
+      input {
+        margin-bottom: 3px;
+        margin-right: 5px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        border: 1px solid #ccc;
+        padding: 2px 7px;
+        width: 25%;
+        box-sizing: border-box;
+      }
+    }
+
+    button {
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+      color: white;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-weight: bold;
+      transition: all 0.1s ease;
+      width: 100%;
+      background-color: #0c0c0c;
+
+      &:hover {
+        background-color: #888888;
+      }
+    }
+  }
+}

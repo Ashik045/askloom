@@ -112,7 +112,7 @@ const Navbar = () => {
             <Link href="/" style={{ textDecoration: "none" }}>
               <p>Questions</p>
             </Link>
-            <Link href="/post" style={{ textDecoration: "none" }}>
+            <Link href="/createquestion" style={{ textDecoration: "none" }}>
               <p>ask question</p>
             </Link>
 
