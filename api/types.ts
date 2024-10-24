@@ -1,5 +1,6 @@
 export interface IUser extends Document {
   googleId: string;
+  email: string;
   displayName: string;
   photoUrl: string;
   about: string;

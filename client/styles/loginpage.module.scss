@@ -85,12 +85,21 @@
         border-radius: 4px;
         color: white;
         margin-top: 20px;
+        font-weight: bold;
+
         transition: all 0.1s ease-in-out;
 
         &:hover {
           background-color: #0c0c0c;
         }
       }
+    }
+
+    .reg_p {
+      text-decoration: underline;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 10px;
     }
   }
 }

@@ -18,6 +18,7 @@ export interface QuestionType {
 
 export interface UserType {
   _id: string;
+  email: string;
   googleId: string;
   displayName: string;
   photoUrl: string;
@@ -44,3 +45,16 @@ export type Action =
   | { type: "USER_UPDATE_START" }
   | { type: "USER_UPDATE_SUCCESS"; payload: State["user"] }
   | { type: "USER_UPDATE_FAILURE"; payload: string };
+
+export type Inputs = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  username: string;
+  fullname: string;
+  about: string;
+  phone: string;
+  location: string;
+  facebook: string;
+  profession: string;
+};

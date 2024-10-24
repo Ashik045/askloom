@@ -3,6 +3,7 @@
 
 import { Context } from "@/Context/Context";
 import styles from "@/styles/loginpage.module.scss";
+import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 
@@ -86,56 +87,6 @@ export default function Login() {
     checkLoginStatus();
   }, []); // Make sure to add dependencies as necessary
 
-  // const googleLogin = async () => {
-  //   try {
-  //     // Dispatch loading state
-  //     dispatch({ type: "LOGIN_START" });
-
-  //     // Open Google login and wait for the redirect back to the app
-  //     window.open("http://localhost:4000/api/auth/google", "_self");
-
-  //     // Use an API request to check the login success
-  //     const response = await fetch(
-  //       "http://localhost:4000/api/auth/login/success",
-  //       {
-  //         method: "GET",
-  //         credentials: "include", // Include cookies for session handling
-  //       }
-  //     );
-
-  //     console.log(await response.json());
-
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       const { user } = data;
-
-  //       setUser(user);
-
-  //       // Store the JWT token in localStorage
-  //       localStorage.setItem("jwttoken", data.token);
-  //       localStorage.setItem("user", JSON.stringify(user));
-
-  //       // Dispatch the success action with user data
-  //       dispatch({ type: "LOGIN_SUCCESS", payload: user });
-  //     } else {
-  //       // If login fails, dispatch error
-  //       dispatch({ type: "LOGIN_FAILURE", payload: "Login failed!" });
-  //     }
-  //   } catch (error: unknown) {
-  //     let errorMessage = "An unknown error occurred.";
-
-  //     if (error instanceof Error) {
-  //       errorMessage = error.message;
-  //     } else if (typeof error === "string") {
-  //       errorMessage = error;
-  //     }
-
-  //     dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });
-  //   }
-  // };
-
-  // console.log(user);
-
   return (
     <div className={styles.login_page}>
       <div className={styles.login_page_component}>
@@ -145,7 +96,10 @@ export default function Login() {
             Log In With Google
           </div>
 
-          <div className={styles.facebook_login}>
+          <div
+            className={styles.facebook_login}
+            style={{ cursor: "not-allowed" }}
+          >
             {" "}
             <FaFacebook style={{ marginRight: "8px" }} />
             Log In With Facebook
@@ -172,6 +126,13 @@ export default function Login() {
           />
           <button type="submit">Login</button>
         </form>
+
+        <p className={styles.reg_p}>
+          <Link href={"/registration"}>
+            {" "}
+            Don&apos;t have an account? Sign Up now.
+          </Link>
+        </p>
       </div>
     </div>
   );

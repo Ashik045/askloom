@@ -3,6 +3,7 @@ import mongoose, { Document, Schema } from "mongoose";
 // Define a User interface
 export interface IUser extends Document {
   googleId: string;
+  email: string;
   displayName: string;
   photoUrl: string;
   about: string;
@@ -17,8 +18,10 @@ const userSchema: Schema = new Schema(
   {
     googleId: {
       type: String,
-      required: true,
       unique: true,
+    },
+    email: {
+      type: String,
     },
     displayName: {
       type: String,

@@ -17,7 +17,7 @@ const Navbar = () => {
   // const router = useRouter();
   const [isClient, setIsClient] = useState(false);
 
-  const { user } = useContext(Context);
+  const { user, dispatch } = useContext(Context);
 
   useEffect(() => {
     setIsClient(true);
@@ -47,7 +47,11 @@ const Navbar = () => {
 
   const handleLogout = () => {
     window.open("http://localhost:4000/api/auth/logout", "_self");
-  }; // 1:06m
+
+    dispatch({ type: "LOGOUT" });
+
+    localStorage.removeItem("jwttoken");
+  };
 
   const handleChange = (e: any) => {
     setInpVal(e.target.value);
