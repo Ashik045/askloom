@@ -42,6 +42,16 @@
   .q_question {
     margin: 15px 0px;
     color: rgb(49, 49, 49);
+
+    ul {
+      padding-left: 30px; // Add space for bullets
+      list-style-type: disc; // Display bullets by default
+
+      li {
+        margin: 3px 0;
+        // line-height: 1.4;
+      }
+    }
   }
 
   .question_tags {

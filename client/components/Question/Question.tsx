@@ -51,7 +51,10 @@ const Question = ({ question }: QuestionProps) => {
         </h2>
 
         <div className={styles.question_text}>
-          {question.question}
+          <div
+            className={styles.question_q}
+            dangerouslySetInnerHTML={{ __html: question.question }}
+          ></div>
           <a
             href={`/questions/${question._id}`}
             className={styles.view_more_btn}

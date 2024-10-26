@@ -26,7 +26,7 @@ const CreateQuestion = () => {
     try {
       const enrichedData = {
         ...data,
-        tags,
+        tags: tags.filter((tag) => tag.trim() !== ""), // Filter out empty tags
         _id: user?._id,
         user: user?.displayName,
         userTitle: user?.about,

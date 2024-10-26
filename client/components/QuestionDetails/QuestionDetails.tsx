@@ -37,7 +37,10 @@ export default function QuestionDetails({ question }: QuestionDetailsProps) {
 
       <div className={styles.post_like_line}></div>
 
-      <p className={styles.q_question}>{question.question}</p>
+      <div
+        className={styles.q_question}
+        dangerouslySetInnerHTML={{ __html: question.question }}
+      ></div>
 
       <div className={styles.question_tags}>
         {question.tags.map((tag) => (
