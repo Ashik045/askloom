@@ -3,7 +3,7 @@ const getAllQuestions = async () => {
   try {
     const result = await fetch(`http://localhost:4000/api/questions/all`, {
       next: {
-        revalidate: 5, // This revalidates the cache every 10 seconds
+        revalidate: 2, // This revalidates the cache every 10 seconds
       },
     });
 

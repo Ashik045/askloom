@@ -60,7 +60,7 @@ const loginHandler = async (req: Request, res: Response) => {
     // check if the email matches
     const user = await User.findOne({ email: email });
 
-    if (user) {
+    if (user && user.password) {
       // check if the password is correct
       const isRightPassword = await bcrypt.compare(password, user.password);
 

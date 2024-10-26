@@ -6,7 +6,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaRegComment, FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import styles from "./question.module.scss";
 
@@ -22,6 +22,16 @@ const Question = ({ question }: QuestionProps) => {
   const { user } = useContext(Context);
   const router = useRouter();
 
+  useEffect(() => {
+    if (question && user?._id) {
+      const isLiked = question.reacts?.includes(user?._id);
+
+      if (isLiked) {
+        setLike(true);
+      }
+    }
+  }, [question, user?._id]);
+
   const handleClick = async (prop: string) => {
     if (likeLoading) {
       return;
@@ -31,7 +41,7 @@ const Question = ({ question }: QuestionProps) => {
     setLikeLoading(true);
 
     // check if user is authenticated
-    const token = localStorage.getItem("jwtToken");
+    const token = localStorage.getItem("jwttoken");
 
     if (!user) {
       router.push("/login");
@@ -49,13 +59,14 @@ const Question = ({ question }: QuestionProps) => {
       try {
         // add a like request
         const response = await axios.post(
-          `https://sociatek.onrender.com/api/post/like/${question._id}`,
+          `http://localhost:4000/api/question/react/${question._id}`,
           {},
           config
         );
 
         setLikeCount(likeCount + 1);
         setLike(!like);
+        console.log("liked");
       } catch (error) {
         console.log(error);
       }
@@ -63,10 +74,11 @@ const Question = ({ question }: QuestionProps) => {
       // add an unlike request
       try {
         const response = await axios.post(
-          `https://sociatek.onrender.com/api/post/unlike/${question._id}`,
+          `http://localhost:4000/api/question/unreact/${question._id}`,
           {},
           config
         );
+        console.log("unliked");
       } catch (error) {
         console.error(error);
       }
@@ -138,8 +150,8 @@ const Question = ({ question }: QuestionProps) => {
               />
             )}
             <span className={styles.likes}>
-              {question.reacts.length}{" "}
-              {question.reacts.length > 1 ? "Likes" : "Like"}
+              {likeCount}
+              {likeCount > 1 ? "Likes" : "Like"}
             </span>
           </p>
           <p>

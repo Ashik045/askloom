@@ -5,6 +5,7 @@ import {
   getAllQuestions,
   getQuestionById,
   reactQuestion,
+  unReactQuestion,
 } from "../controllers/questionController";
 
 import { ReactQuestionMiddleware } from "../middlewares/questionvalidation";
@@ -28,6 +29,12 @@ router.post(
   "/question/react/:questionid",
   ReactQuestionMiddleware,
   reactQuestion
+);
+
+router.post(
+  "/question/unreact/:questionid",
+  ReactQuestionMiddleware,
+  unReactQuestion
 );
 
 export default router;
