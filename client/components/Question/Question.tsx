@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { Context } from "@/Context/Context";
 import nophoto from "@/public/images/no-photo.png";
@@ -10,6 +11,8 @@ import { useContext, useEffect, useState } from "react";
 import { FaRegComment, FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import styles from "./question.module.scss";
 
+import { formatDistanceToNow } from "date-fns";
+
 interface QuestionProps {
   question: QuestionType;
 }
@@ -18,6 +21,7 @@ const Question = ({ question }: QuestionProps) => {
   const [like, setLike] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
   const [likeCount, setLikeCount] = useState(question.reacts?.length);
+  const [timeAgo, setTimeAgo] = useState("");
 
   const { user } = useContext(Context);
   const router = useRouter();
@@ -31,6 +35,34 @@ const Question = ({ question }: QuestionProps) => {
       }
     }
   }, [question, user?._id]);
+
+  const createTime = question.createdAt;
+  // Updating the time every minute
+  useEffect(() => {
+    const calculateTimeAgo = () => {
+      const now = new Date();
+      const createdDate = new Date(createTime); // Convert createdAt to a Date object
+      const distance = formatDistanceToNow(createdDate, {
+        addSuffix: true,
+      });
+
+      setTimeAgo(distance);
+    };
+
+    if (createTime) {
+      calculateTimeAgo(); // Update the time immediately
+
+      // Update the time every minute (you can adjust the interval as needed)
+      const intervalId = setInterval(calculateTimeAgo, 60000);
+
+      // Clear the interval when the component unmounts
+      return () => clearInterval(intervalId);
+    }
+  }, [createTime]);
+
+  if (timeAgo.startsWith("about ")) {
+    setTimeAgo(timeAgo.slice(5));
+  }
 
   const handleClick = async (prop: string) => {
     if (likeLoading) {
@@ -112,7 +144,7 @@ const Question = ({ question }: QuestionProps) => {
           </Link>
 
           <p className={styles.post_date}>
-            {question.userTitle} <i>5min ago</i>
+            {question.userTitle} <i>{timeAgo}</i>
           </p>
         </div>
       </div>
@@ -151,7 +183,7 @@ const Question = ({ question }: QuestionProps) => {
             )}
             <span className={styles.likes}>
               {likeCount}
-              {likeCount > 1 ? "Likes" : "Like"}
+              {likeCount > 1 ? " Likes" : " Like"}
             </span>
           </p>
           <p>

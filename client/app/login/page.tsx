@@ -93,6 +93,8 @@ export default function Login() {
           localStorage.setItem("jwttoken", token);
           localStorage.setItem("user", JSON.stringify(user));
 
+          router.push("/");
+
           // Dispatch the success action with user data
           dispatch({ type: "LOGIN_SUCCESS", payload: user });
         } else {
