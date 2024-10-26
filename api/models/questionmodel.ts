@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 export interface QuestionType {
-  _id: number;
   title: string;
   question: string;
+  userid: string;
   user: string;
   userTitle: string;
   tags: string[]; // Array of strings for tags
@@ -14,18 +14,22 @@ export interface QuestionType {
 const QuestionSchema = new mongoose.Schema<QuestionType>(
   {
     title: {
-      type: "string",
+      type: String,
       required: true,
     },
     question: {
-      type: "string",
+      type: String,
+    },
+    userid: {
+      type: String,
+      required: true,
     },
     user: {
-      type: "string",
+      type: String,
       required: true,
     },
     userTitle: {
-      type: "string",
+      type: String,
     },
     tags: {
       type: [String],

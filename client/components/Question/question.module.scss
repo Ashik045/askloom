@@ -69,6 +69,16 @@
             // line-height: 1.4;
           }
         }
+
+        ol {
+          padding-left: 30px; // Add space for bullets
+          list-style-type: decimal; // Display bullets by default
+
+          li {
+            margin: 3px 0;
+            // line-height: 1.4;
+          }
+        }
       }
     }
 

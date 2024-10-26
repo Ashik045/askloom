@@ -55,6 +55,7 @@ const Question = ({ question }: QuestionProps) => {
             className={styles.question_q}
             dangerouslySetInnerHTML={{ __html: question.question }}
           ></div>
+
           <a
             href={`/questions/${question._id}`}
             className={styles.view_more_btn}
@@ -66,12 +67,12 @@ const Question = ({ question }: QuestionProps) => {
         <div className={styles.add_like_cmnt}>
           <p>
             {like ? (
-              <FaRegThumbsUp
+              <FaThumbsUp
                 className={styles.unlike_icon}
                 onClick={handleClick}
               />
             ) : (
-              <FaThumbsUp
+              <FaRegThumbsUp
                 className={styles.unlike_icon}
                 onClick={handleClick}
               />

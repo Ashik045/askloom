@@ -43,7 +43,7 @@ export default function QuestionDetails({ question }: QuestionDetailsProps) {
       ></div>
 
       <div className={styles.question_tags}>
-        {question.tags.map((tag) => (
+        {question.tags?.map((tag) => (
           <span key={tag} className={styles.question_tag}>
             {tag}
           </span>

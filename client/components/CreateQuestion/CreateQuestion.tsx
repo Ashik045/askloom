@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Context } from "@/Context/Context";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import ReactQuill from "react-quill"; // Rich text editor
@@ -18,6 +19,7 @@ const CreateQuestion = () => {
   } = useForm();
   const [tags, setTags] = useState(["", "", ""]); // State for storing three tags
   const [loading, setLoading] = useState(false); // State for
+  const router = useRouter();
 
   const { user, dispatch } = useContext(Context);
 
@@ -27,7 +29,7 @@ const CreateQuestion = () => {
       const enrichedData = {
         ...data,
         tags: tags.filter((tag) => tag.trim() !== ""), // Filter out empty tags
-        _id: user?._id,
+        userid: user?._id,
         user: user?.displayName,
         userTitle: user?.about,
       };
@@ -42,7 +44,7 @@ const CreateQuestion = () => {
         if (response.data.message) {
           console.log(response.data.message);
 
-          // router.push("/");
+          router.push("/");
         }
 
         setLoading(false);
