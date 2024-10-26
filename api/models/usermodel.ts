@@ -2,12 +2,12 @@ import mongoose, { Document, Schema } from "mongoose";
 
 // Define a User interface
 export interface IUser extends Document {
-  googleId: string;
-  email: string;
+  googleId?: string;
+  email?: string;
   displayName: string;
-  photoUrl: string;
+  photoUrl?: string;
   about: string;
-  password: string;
+  password?: string;
   questions: string[];
   comments: string[];
   reacts: string[];

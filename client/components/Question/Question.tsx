@@ -1,9 +1,12 @@
 "use client";
+import { Context } from "@/Context/Context";
 import nophoto from "@/public/images/no-photo.png";
 import { QuestionType } from "@/types.global";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
 import { FaRegComment, FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import styles from "./question.module.scss";
 
@@ -13,9 +16,66 @@ interface QuestionProps {
 
 const Question = ({ question }: QuestionProps) => {
   const [like, setLike] = useState(false);
+  const [likeLoading, setLikeLoading] = useState(false);
+  const [likeCount, setLikeCount] = useState(question.reacts?.length);
 
-  const handleClick = () => {
-    setLike(!like);
+  const { user } = useContext(Context);
+  const router = useRouter();
+
+  const handleClick = async (prop: string) => {
+    if (likeLoading) {
+      return;
+    }
+
+    // Set likeLoading to true
+    setLikeLoading(true);
+
+    // check if user is authenticated
+    const token = localStorage.getItem("jwtToken");
+
+    if (!user) {
+      router.push("/login");
+      setLikeLoading(false); // Set likeLoading to false to enable handling likes again
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    if (prop === "like" && !like) {
+      try {
+        // add a like request
+        const response = await axios.post(
+          `https://sociatek.onrender.com/api/post/like/${question._id}`,
+          {},
+          config
+        );
+
+        setLikeCount(likeCount + 1);
+        setLike(!like);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      // add an unlike request
+      try {
+        const response = await axios.post(
+          `https://sociatek.onrender.com/api/post/unlike/${question._id}`,
+          {},
+          config
+        );
+      } catch (error) {
+        console.error(error);
+      }
+      setLikeCount(likeCount - 1);
+      setLike(!like);
+    }
+
+    // Set likeLoading to false after the request is completed
+    setLikeLoading(false);
   };
 
   return (
@@ -69,12 +129,12 @@ const Question = ({ question }: QuestionProps) => {
             {like ? (
               <FaThumbsUp
                 className={styles.unlike_icon}
-                onClick={handleClick}
+                onClick={() => handleClick("dislike")}
               />
             ) : (
               <FaRegThumbsUp
                 className={styles.unlike_icon}
-                onClick={handleClick}
+                onClick={() => handleClick("like")}
               />
             )}
             <span className={styles.likes}>
