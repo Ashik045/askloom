@@ -72,7 +72,15 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
         userTitle: user?.about,
       };
 
-      // console.log(enrichedData);
+      const token = localStorage.getItem("jwttoken");
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      console.log(initialData);
 
       try {
         const url = initialData
@@ -80,9 +88,7 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
           : "http://localhost:4000/api/question/create";
 
         const method = initialData ? axios.put : axios.post;
-        const response = await method(url, enrichedData);
-
-        setLoading(false);
+        const response = await method(url, enrichedData, config);
 
         if (response.data.message) {
           console.log(response.data.message);
@@ -96,6 +102,7 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
 
         setLoading(false);
       } catch (error: any) {
+        setLoading(false);
         console.error("Error submitting form:", error);
       }
 

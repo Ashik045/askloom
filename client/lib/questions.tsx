@@ -3,7 +3,7 @@ const getAllQuestions = async () => {
   try {
     const result = await fetch(`http://localhost:4000/api/questions/all`, {
       next: {
-        revalidate: 2, // This revalidates the cache every 10 seconds
+        revalidate: 1, // This revalidates the cache every 10 seconds
       },
     });
 
@@ -26,7 +26,11 @@ const getAllQuestions = async () => {
 const getQuestionById = async (id: string | number) => {
   try {
     // Fix the URL format, remove the colon and directly insert `id`
-    const result = await fetch(`http://localhost:4000/api/question/${id}`);
+    const result = await fetch(`http://localhost:4000/api/question/${id}`, {
+      next: {
+        revalidate: 1, // This revalidates the cache every 10 seconds
+      },
+    });
 
     if (!result.ok) {
       throw new Error("Failed to fetch the requested question");

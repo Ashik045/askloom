@@ -2,6 +2,7 @@ import express from "express";
 
 import {
   createQuestion,
+  DeleteAQuestion,
   editAQuestion,
   getAllQuestions,
   getQuestionById,
@@ -9,12 +10,15 @@ import {
   unReactQuestion,
 } from "../controllers/questionController";
 
-import { ReactQuestionMiddleware } from "../middlewares/questionvalidation";
+import {
+  QuestionValidation,
+  ReactQuestionMiddleware,
+} from "../middlewares/questionvalidation";
 
 const router = express.Router();
 
 // create a question
-router.post("/question/create", createQuestion);
+router.post("/question/create", QuestionValidation, createQuestion);
 
 // get a question by questionId
 router.get("/question/:questionid", getQuestionById);
@@ -25,8 +29,15 @@ router.get("/questions/all", getAllQuestions);
 // get all questions
 router.get("/questions/all", getAllQuestions);
 
-// get all questions
-router.put("/question/edit/:questionid", editAQuestion);
+// edit question
+router.put("/question/edit/:questionid", QuestionValidation, editAQuestion);
+
+// delete question
+router.delete(
+  "/question/delete/:questionid",
+  QuestionValidation,
+  DeleteAQuestion
+);
 
 // react a question
 router.post(

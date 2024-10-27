@@ -8,6 +8,12 @@ interface AuthenticatedRequest extends Request {
 
 // create a new question
 const createQuestion = async (req: Request, res: Response) => {
+  const userId = (req as AuthenticatedRequest).userData?.id;
+
+  if (!userId) {
+    return res.status(401).json({ error: "Unauthorized!" });
+  }
+
   try {
     const newQuestion = await new Question({
       ...req.body,
@@ -57,8 +63,72 @@ const getAllQuestions = async (req: Request, res: Response) => {
   }
 };
 
+// edit question
 const editAQuestion = async (req: Request, res: Response) => {
-  //
+  const userId = (req as AuthenticatedRequest).userData?.id;
+
+  if (!userId) {
+    return res.status(401).json({ error: "Unauthorized!" });
+  }
+
+  try {
+    const question = await Question.findById(req.params.questionid);
+
+    if (question?.userid && userId) {
+      const updatedQuestion = {
+        ...req.body,
+        reacts: [],
+        comments: [],
+      };
+
+      try {
+        const question2 = await Question.findByIdAndUpdate(
+          req.params.questionid,
+          { $set: updatedQuestion },
+          { new: true }
+        );
+
+        res.status(200).json({
+          message: question2,
+        });
+      } catch (error) {
+        res.status(500).json({ error: "Failed to update the question!" });
+      }
+    } else {
+      res.status(500).json({ error: "You can only update your question!" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update the question!" });
+  }
+};
+
+// delete question
+const DeleteAQuestion = async (req: Request, res: Response) => {
+  const userId = (req as AuthenticatedRequest).userData?.id;
+
+  if (!userId) {
+    return res.status(401).json({ error: "Unauthorized!" });
+  }
+
+  try {
+    const question = await Question.findById(req.params.questionid);
+
+    if (question?.userid && userId) {
+      try {
+        await Question.findByIdAndDelete(req.params.questionid);
+
+        res.status(200).json({
+          message: "Question deleted.",
+        });
+      } catch (error) {
+        res.status(500).json({ error: "Failed to delete the question!" });
+      }
+    } else {
+      res.status(500).json({ error: "You can only deleted your question!" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to deleted the question!" });
+  }
 };
 
 // react questions
@@ -141,6 +211,7 @@ const unReactQuestion = async (req: Request, res: Response) => {
 };
 export {
   createQuestion,
+  DeleteAQuestion,
   editAQuestion,
   getAllQuestions,
   getQuestionById,

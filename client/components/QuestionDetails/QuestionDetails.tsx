@@ -18,6 +18,7 @@ interface QuestionDetailsProps {
 export default function QuestionDetails({ question }: QuestionDetailsProps) {
   const [like, setLike] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [likeCount, setLikeCount] = useState(question.reacts?.length);
   const [timeAgo, setTimeAgo] = useState("");
 
@@ -124,7 +125,39 @@ export default function QuestionDetails({ question }: QuestionDetailsProps) {
     router.push(`/questions/${question._id}/edit`);
   };
 
-  const date = new Date(question.createdAt);
+  // delete the question
+  const handleDelete = async () => {
+    if (loading) {
+      return;
+    }
+
+    const token = localStorage.getItem("jwttoken");
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    setLoading(true);
+
+    try {
+      const res = await axios.delete(
+        `http://localhost:4000/api/question/delete/${question._id}`,
+        config
+      );
+
+      if (res.data.message) {
+        router.push("/");
+      } else {
+        console.error("Error deleting question");
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error deleting question!", error);
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={styles.questiondetails_component}>
@@ -150,7 +183,7 @@ export default function QuestionDetails({ question }: QuestionDetailsProps) {
         {question?.userid === user?._id && (
           <div className={styles.question_upd_del}>
             <p onClick={handleEdit}>Edit</p>
-            <p>Delete</p>
+            <p onClick={handleDelete}>Delete</p>
           </div>
         )}
       </div>
