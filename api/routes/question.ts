@@ -2,6 +2,7 @@ import express from "express";
 
 import {
   createQuestion,
+  editAQuestion,
   getAllQuestions,
   getQuestionById,
   reactQuestion,
@@ -23,6 +24,9 @@ router.get("/questions/all", getAllQuestions);
 
 // get all questions
 router.get("/questions/all", getAllQuestions);
+
+// get all questions
+router.put("/question/edit/:questionid", editAQuestion);
 
 // react a question
 router.post(

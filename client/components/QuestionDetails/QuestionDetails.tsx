@@ -60,8 +60,6 @@ export default function QuestionDetails({ question }: QuestionDetailsProps) {
         setLike(true);
       }
     }
-
-    console.log(question);
   }, [question, user?._id]);
 
   const handleClick = async (prop: string) => {
@@ -149,10 +147,12 @@ export default function QuestionDetails({ question }: QuestionDetailsProps) {
           <p className={styles.q_cmnt}> {question.comments.length} comments</p>
         </div>
 
-        <div className={styles.question_upd_del}>
-          <p onClick={handleEdit}>Edit</p>
-          <p>Delete</p>
-        </div>
+        {question?.userid === user?._id && (
+          <div className={styles.question_upd_del}>
+            <p onClick={handleEdit}>Edit</p>
+            <p>Delete</p>
+          </div>
+        )}
       </div>
 
       <div className={styles.post_like_line}></div>

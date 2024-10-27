@@ -57,6 +57,10 @@ const getAllQuestions = async (req: Request, res: Response) => {
   }
 };
 
+const editAQuestion = async (req: Request, res: Response) => {
+  //
+};
+
 // react questions
 const reactQuestion = async (req: Request, res: Response) => {
   const { questionid } = req.params;
@@ -137,6 +141,7 @@ const unReactQuestion = async (req: Request, res: Response) => {
 };
 export {
   createQuestion,
+  editAQuestion,
   getAllQuestions,
   getQuestionById,
   reactQuestion,

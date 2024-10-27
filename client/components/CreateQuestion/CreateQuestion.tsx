@@ -2,6 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Context } from "@/Context/Context";
+import { QuestionType } from "@/types.global";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
@@ -10,49 +11,95 @@ import ReactQuill from "react-quill"; // Rich text editor
 import "react-quill/dist/quill.snow.css"; // Styles for the editor
 import styles from "./createquestion.module.scss";
 
-const CreateQuestion = () => {
+interface OptionalQuestionProp {
+  initialData?: QuestionType;
+}
+
+const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
   const {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
-  } = useForm();
-  const [tags, setTags] = useState(["", "", ""]); // State for storing three tags
+  } = useForm({
+    defaultValues: {
+      title: initialData?.title || "",
+      question: initialData?.question || "",
+    },
+  });
+  const [tags, setTags] = useState(
+    initialData?.tags
+      ? [...initialData.tags, "", "", ""].slice(0, 3)
+      : ["", "", ""]
+  );
   const [loading, setLoading] = useState(false); // State for
+  const [inpChanged, setInpChanged] = useState(false); // State for
   const router = useRouter();
+  const [error, setError] = useState("");
 
-  const { user, dispatch } = useContext(Context);
+  const { user } = useContext(Context);
+  if (!user) {
+    router.push("/login");
+  }
+
+  // Handle changes in title, question, and tags inputs
+  const handleInputChange = () => setInpChanged(true);
 
   const onSubmit = async (data: any) => {
+    if (
+      data.title === initialData?.title &&
+      data.question === initialData?.question &&
+      JSON.stringify(tags) === JSON.stringify(initialData?.tags)
+    ) {
+      console.log("No changes detected, skipping submission.");
+      return;
+    }
+
+    if (!inpChanged) {
+      setError("No changes detected!");
+      return;
+    }
+
+    setError("");
     setLoading(true);
     try {
       const enrichedData = {
         ...data,
-        tags: tags.filter((tag) => tag.trim() !== ""), // Filter out empty tags
+        tags: tags.filter((tag) => tag.trim() !== ""),
         userid: user?._id,
         user: user?.displayName,
         userTitle: user?.about,
       };
 
+      // console.log(enrichedData);
+
       try {
-        const response = await axios.post(
-          "http://localhost:4000/api/question/create",
-          enrichedData
-        );
+        const url = initialData
+          ? `http://localhost:4000/api/question/edit/${initialData._id}`
+          : "http://localhost:4000/api/question/create";
+
+        const method = initialData ? axios.put : axios.post;
+        const response = await method(url, enrichedData);
+
         setLoading(false);
 
         if (response.data.message) {
           console.log(response.data.message);
 
-          router.push("/");
+          if (initialData) {
+            router.push(`/questions/${initialData._id}`);
+          } else {
+            router.push("/");
+          }
         }
 
         setLoading(false);
       } catch (error: any) {
-        dispatch({ type: "LOGIN_FAILURE", payload: error.response.data.error });
+        console.error("Error submitting form:", error);
       }
 
-      console.log(enrichedData);
+      // console.log(enrichedData);
       setLoading(false);
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -61,40 +108,46 @@ const CreateQuestion = () => {
   };
 
   // Function to handle changes in tag inputs
-  const handleTagChange = (index: any, event: any) => {
+  const handleTagChange = (
+    index: number,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const newTags = [...tags];
-    newTags[index] = event.target.value; // Update the specific tag
-    setTags(newTags); // Set the updated tags array
+    newTags[index] = event.target.value;
+    setTags(newTags);
   };
 
   return (
     <div className={styles.create_question}>
-      <h1>Ask a question</h1>
-
+      <h1>{initialData ? "Edit Question" : "Ask a Question"}</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="create-question-form">
-        {/* Title Field */}
         <div className={styles.question_inp}>
           <label htmlFor="title">Title:</label>
           <input
             id="title"
             type="text"
             {...register("title", { required: "Title is required" })}
+            placeholder="Enter your question title"
+            onChange={handleInputChange}
           />
           {errors.title?.message && <p>{String(errors.title.message)}</p>}
         </div>
 
-        {/* Question Field (Custom Styled ReactQuill) */}
         <div className={styles.question_inp}>
           <label htmlFor="question">Question:</label>
           <ReactQuill
             theme="snow"
-            onChange={(content) => setValue("question", content)}
+            onChange={(content) => {
+              setValue("question", content);
+              handleInputChange();
+            }}
             className={styles.custom_editor}
+            value={watch("question")}
             modules={{
               toolbar: [
-                ["bold", "italic"], // Toggle bold/italic text
-                [{ list: "ordered" }, { list: "bullet" }], // Ordered/bullet lists
-                [{ size: [] }], // Font size dropdown
+                ["bold", "italic"],
+                [{ list: "ordered" }, { list: "bullet" }],
+                [{ size: [] }],
               ],
             }}
             style={{
@@ -107,7 +160,6 @@ const CreateQuestion = () => {
           {errors.question?.message && <p>{String(errors.question.message)}</p>}
         </div>
 
-        {/* Tag Fields */}
         <div className={styles.tag_inputs}>
           <label>Tags:</label>
           {tags.map((tag, index) => (
@@ -116,16 +168,23 @@ const CreateQuestion = () => {
               type="text"
               value={tag}
               placeholder={`Tag ${index + 1}`}
-              onChange={(e) => handleTagChange(index, e)}
+              onChange={(e) => {
+                handleTagChange(index, e);
+                handleInputChange();
+              }}
               style={{ textTransform: "lowercase" }}
             />
           ))}
         </div>
         {errors.tags?.message && <p>{String(errors.tags.message)}</p>}
 
-        {/* Submit Button */}
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <button type="submit">
-          {loading ? "Loading.." : "Create Question"}{" "}
+          {loading
+            ? "Loading.."
+            : initialData
+            ? "Update Question"
+            : "Create Question"}
         </button>
       </form>
     </div>
