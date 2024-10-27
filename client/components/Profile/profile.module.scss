@@ -6,15 +6,17 @@ $color2: rgb(92, 92, 92);
   grid-template-columns: 70% 20%;
   gap: 15px;
   justify-content: start;
-  background-color: #f6fcfd;
 
   .profile_main_user {
+    background-color: #f6fcfd;
+    padding: 8px;
+
     .profile_main_info {
       display: grid;
-      grid-template-columns: 17% 70%;
+      grid-template-columns: 15% 60% 18%;
       gap: 20px;
       justify-content: start;
-      align-items: center;
+      // align-items: center;
       margin-bottom: 20px;
 
       .profile_photo {
@@ -36,6 +38,22 @@ $color2: rgb(92, 92, 92);
 
         .title {
           margin: 1px 0px;
+        }
+      }
+
+      .edit_profile {
+        margin-left: auto;
+        cursor: pointer;
+        p {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-left: 3px;
+          background-color: rgb(240, 239, 239);
+          padding: 3px 7px 0px;
+          color: rgba(0, 0, 0, 0.796);
+          margin-right: 5px;
+          border-radius: 4px;
         }
       }
     }
@@ -69,5 +87,9 @@ $color2: rgb(92, 92, 92);
         }
       }
     }
+  }
+
+  .trending_questions {
+    background-color: #f6fcfd;
   }
 }

@@ -125,7 +125,7 @@ const Question = ({ question }: QuestionProps) => {
   return (
     <div className={styles.single_question}>
       <div className={styles.question_user}>
-        <Link href={`/user/${question.user}}`}>
+        <Link href={`/profile/${question.userid}`}>
           <Image
             src={nophoto}
             height={37}
@@ -137,7 +137,7 @@ const Question = ({ question }: QuestionProps) => {
 
         <div className={styles.post_user_nameandtime}>
           <Link
-            href={`/user/${question.user}`}
+            href={`/profile/${question.userid}`}
             style={{ textDecoration: "none" }}
           >
             <p className={styles.username}>{question.user}</p>

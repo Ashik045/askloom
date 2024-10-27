@@ -5,7 +5,9 @@ import noPhoto from "@/public/images/no-photo.png";
 import { QuestionType, UserType } from "@/types.global";
 import Image from "next/image";
 import { useState } from "react";
+import { MdCreate } from "react-icons/md";
 import Activity from "../Activity/Activity";
+import EditPopup from "../EditPopup/EditPopup";
 import Question from "../Question/Question";
 import styles from "./profile.module.scss";
 
@@ -17,9 +19,14 @@ interface UserT {
 function Profile({ user, questions }: UserT) {
   const date = new Date(user.createdAt);
   const [activity, setActivity] = useState<string>("questions");
+  const [editPopUp, setEditPopUp] = useState(false);
 
   const handlePostOrActivity = (value: string, userId: string) => {
     setActivity(value);
+  };
+
+  const handleEditProfile = () => {
+    setEditPopUp(true);
   };
 
   return (
@@ -38,6 +45,15 @@ function Profile({ user, questions }: UserT) {
             <h1>{user.displayName}</h1>
             <p className={styles.title}>{user.about}</p>
             <p>Member since {date.toLocaleDateString()}</p>
+          </div>
+
+          <div className={styles.edit_profile}>
+            <p onClick={handleEditProfile}>
+              <MdCreate style={{ marginRight: "3px" }} />
+              Edit profile
+            </p>
+
+            {editPopUp && <EditPopup user={user} setEditPopUp={setEditPopUp} />}
           </div>
         </div>
 

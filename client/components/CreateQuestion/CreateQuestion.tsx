@@ -183,7 +183,7 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
             />
           ))}
         </div>
-        {errors.tags?.message && <p>{String(errors.tags.message)}</p>}
+        {/* {errors.tag?.message && <p>{String(errors.tags.message)}</p>} */}
 
         {error && <p style={{ color: "red" }}>{error}</p>}
         <button type="submit">
