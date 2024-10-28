@@ -17,6 +17,7 @@ type Inputs = {
   password: string;
   confirmPassword: string;
   displayName: string;
+  title: string;
   about: string;
   photoUrl: string;
 };
@@ -170,6 +171,27 @@ export default function Regpage() {
           <span className={styles.form_err}>
             {formErrors?.displayName?.message}
           </span>
+
+          <label>Title*</label>
+          <input
+            {...register("title", {
+              required: "Title should be 3-40 characters!",
+              minLength: {
+                value: 3,
+                message: "Minimum length is 3 characters!",
+              },
+              maxLength: {
+                value: 40,
+                message: "Maximum length is 40 characters!",
+              },
+            })}
+            placeholder="Title"
+            onBlur={() => {
+              trigger("title");
+            }}
+            className={styles.exact_form_inp}
+          />
+          <span className={styles.form_err}>{formErrors?.title?.message}</span>
 
           <label>About*</label>
           <textarea

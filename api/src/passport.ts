@@ -22,6 +22,11 @@ passport.use(
       done
     ) => {
       try {
+        // Extract email from Google profile
+        const email = profile.emails && profile.emails[0]?.value;
+
+        console.log(profile);
+
         // Check if the user already exists
         let user = await User.findOne({ googleId: profile.id });
 
@@ -43,8 +48,11 @@ passport.use(
         // If user does not exist, create a new one
         const newUser: IUser = new User({
           googleId: profile.id,
+          email: email || "", // Save email if available
           displayName: profile.displayName || "Unknown User",
           photoUrl: profile.photos?.[0]?.value || "",
+          title:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla nam eligendi quia repellendus, eum amet harum? Sequi, fugit sed reiciendis, ex nesciunt excepturi reprehenderit eum, porro corporis cumque accusamus in!",
           about: "New User",
           password: "",
           questions: [],

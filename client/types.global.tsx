@@ -23,6 +23,7 @@ export interface UserType {
   googleId: string;
   displayName: string;
   photoUrl: string;
+  title: string;
   about: string;
   password?: string;
   questions: string[];
@@ -54,6 +55,7 @@ export type Inputs = {
   username: string;
   fullname: string;
   about: string;
+  title: string;
   phone: string;
   location: string;
   facebook: string;

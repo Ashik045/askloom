@@ -14,11 +14,11 @@ export default async function page({ params }: Params) {
   const user = await getUserByuserId(userid);
   const questionss = await getAllQuestions();
 
-  // create a suspense boundary
+  // create a suspense boundary for user data and questions
 
   return (
     <div className={styles.profile_page}>
-      <Profile user={user} questions={questionss} />
+      <Profile userr={user} questions={questionss} />
     </div>
   );
 }

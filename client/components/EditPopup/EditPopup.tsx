@@ -2,10 +2,10 @@
 import { Context } from "@/Context/Context";
 import noImage from "@/public/images/no-photo.png";
 import { UserType } from "@/types.global";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaTimes } from "react-icons/fa";
 import styles from "./editpopup.module.scss";
@@ -26,6 +26,8 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
   const [profilePic, setProfilePic] = useState<File | null>(null);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
+
   const router = useRouter();
 
   const { dispatch } = useContext(Context);
@@ -33,103 +35,96 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
   const {
     register,
     handleSubmit,
-    formState: { errors: formErrors, touchedFields, isValid },
+    formState: { errors },
     watch,
     reset,
     trigger,
-    clearErrors,
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    defaultValues: {
+      email: user.email || "",
+      displayName: user.displayName || "",
+      about: user.about || "",
+    },
+  });
+
+  // Watch form fields to detect changes
+  const watchedFields = watch();
+
+  // UseEffect to detect if any field has changed
+  useEffect(() => {
+    if (
+      watchedFields.email !== user.email ||
+      watchedFields.displayName !== user.displayName ||
+      watchedFields.about !== user.about ||
+      profilePic
+    ) {
+      setHasChanges(true);
+    } else {
+      setHasChanges(false);
+    }
+  }, [watchedFields, profilePic, user]);
 
   const handleProfilePictureChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (e.target.files && e.target.files.length > 0) {
       setProfilePic(e.target.files[0]);
+      setHasChanges(true);
     }
   };
 
   const onSubmit = async (data: Inputs) => {
-    setLoading(true);
-    const { email, ...others } = data;
+    if (!hasChanges) {
+      setErrorMessages(["No changes detected."]);
+      return;
+    }
 
+    setLoading(true);
     dispatch({ type: "USER_UPDATE_START" });
 
     try {
-      let profilePicture = "";
-      let newUser = {};
+      let profilePictureUrl = user.photoUrl;
 
-      // Upload profile picture and cover photo code...
       if (profilePic) {
         const formData = new FormData();
         formData.append("file", profilePic);
         formData.append("upload_preset", "uploads");
 
-        const {
-          data: { url },
-        } = await axios.post(
+        const { data: uploadData } = await axios.post(
           "https://api.cloudinary.com/v1_1/dqctmbhde/image/upload",
           formData
         );
-
-        profilePicture = url;
+        profilePictureUrl = uploadData.url;
       }
 
-      newUser = {
-        ...others,
-        email: email.toLocaleLowerCase(),
-        photoUrl: profilePicture,
+      const updatedUser = {
+        ...data,
+        email: data.email.toLowerCase(),
+        photoUrl: profilePictureUrl,
       };
 
-      try {
-        const response = await axios.put(
-          `http://localhost:4000/api/auth/user/update${user._id}`,
-          newUser
-        );
-        setLoading(false);
+      const response = await axios.put(
+        `http://localhost:4000/api/auth/user/update${user._id}`,
+        updatedUser
+      );
 
-        if (response.data.user) {
-          // Dispatch the success action with user data
-          dispatch({
-            type: "USER_UPDATE_SUCCESS",
-            payload: response.data.user,
-          });
-          router.push(`/profle/${user._id}`);
-          reset();
-        }
+      setLoading(false);
 
-        setLoading(false);
-      } catch (error: any) {
-        dispatch({
-          type: "USER_UPDATE_FAILURE",
-          payload: error.response.data.error,
-        });
-
-        if (axios.isAxiosError(error)) {
-          const axiosError = error as AxiosError<{ errors?: any }>;
-          if (
-            axiosError.response &&
-            axiosError.response.data &&
-            axiosError.response.data.errors
-          ) {
-            const { errors } = axiosError.response.data;
-            // console.log(errors);
-            setErrorMessages(errors);
-          }
-        }
-
-        setLoading(false);
+      if (response.data.user) {
+        dispatch({ type: "USER_UPDATE_SUCCESS", payload: response.data.user });
+        router.push(`/profile/${user._id}`);
+        reset();
+        setEditPopUp(false);
       }
     } catch (error: any) {
       dispatch({
         type: "USER_UPDATE_FAILURE",
         payload: error.response.data.error,
       });
-      console.log(error);
+      setErrorMessages(["There was an error updating the user."]);
       setLoading(false);
-      throw new Error("There was an error logging user!");
     }
   };
-
   const handleClose = () => {
     setEditPopUp(false);
   };
@@ -154,14 +149,10 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
               },
             })}
             placeholder="Email"
-            onBlur={() => {
-              trigger("email");
-            }}
             className={styles.exact_form_inp}
             style={{ textTransform: "lowercase" }}
           />
-          {/* error message */}
-          <span className={styles.form_err}>{formErrors?.email?.message}</span>
+          <span className={styles.form_err}>{errors.email?.message}</span>
 
           <label>Full Name*</label>
           <input
@@ -177,19 +168,14 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
               },
             })}
             placeholder="Full Name"
-            onBlur={() => {
-              trigger("displayName");
-            }}
             className={styles.exact_form_inp}
           />
-          <span className={styles.form_err}>
-            {formErrors?.displayName?.message}
-          </span>
+          <span className={styles.form_err}>{errors.displayName?.message}</span>
 
           <label>About*</label>
           <textarea
             {...register("about", {
-              required: "About field is required!!",
+              required: "About field is required!",
               minLength: {
                 value: 10,
                 message: "Minimum length is 10 characters!",
@@ -200,33 +186,31 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
               },
             })}
             placeholder="About yourself"
-            onBlur={() => {
-              trigger("about");
-            }}
             className={styles.textarea}
             rows={3}
             cols={70}
             required
           />
-          {/* error message */}
-          <span className={styles.form_err}>{formErrors?.about?.message}</span>
+          <span className={styles.form_err}>{errors.about?.message}</span>
 
           <div className={styles.form_inp_profile_pic}>
             <Image
-              src={profilePic ? URL.createObjectURL(profilePic) : noImage}
+              src={
+                profilePic
+                  ? URL.createObjectURL(profilePic)
+                  : user.photoUrl || noImage
+              }
               alt="upload image"
               width={70}
               height={70}
               className={styles.img}
             />
             <label htmlFor="file">Profile Image: </label>
-
             <input
               type="file"
               name="file"
               id="file"
               onChange={handleProfilePictureChange}
-              // onChange={(e) => setProfilePicture(e.target.files?.[0])}
             />
           </div>
 
@@ -240,9 +224,7 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
             type="submit"
             value={loading ? "Loading.." : "Update"}
             className={styles.submit_btn}
-            style={{
-              cursor: loading ? "not-allowed" : "pointer",
-            }}
+            style={{ cursor: loading ? "not-allowed" : "pointer" }}
           />
         </form>
       </div>

@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
+import { Context } from "@/Context/Context";
 import noPhoto from "@/public/images/no-photo.png";
 import { QuestionType, UserType } from "@/types.global";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { MdCreate } from "react-icons/md";
 import Activity from "../Activity/Activity";
 import EditPopup from "../EditPopup/EditPopup";
@@ -12,14 +13,16 @@ import Question from "../Question/Question";
 import styles from "./profile.module.scss";
 
 interface UserT {
-  user: UserType;
+  userr: UserType;
   questions: QuestionType[];
 }
 
-function Profile({ user, questions }: UserT) {
-  const date = new Date(user.createdAt);
+function Profile({ userr, questions }: UserT) {
+  const date = new Date(userr.createdAt);
   const [activity, setActivity] = useState<string>("questions");
   const [editPopUp, setEditPopUp] = useState(false);
+
+  const { user } = useContext(Context);
 
   const handlePostOrActivity = (value: string, userId: string) => {
     setActivity(value);
@@ -34,7 +37,7 @@ function Profile({ user, questions }: UserT) {
       <div className={styles.profile_main_user}>
         <div className={styles.profile_main_info}>
           <Image
-            src={user.photoUrl ? user.photoUrl : noPhoto}
+            src={userr.photoUrl ? userr.photoUrl : noPhoto}
             alt="askloom user"
             height={100}
             width={100}
@@ -43,16 +46,20 @@ function Profile({ user, questions }: UserT) {
 
           <div className={styles.profile_main_in}>
             <div className={styles.profile_name_or_edit}>
-              <h1>{user.displayName}</h1>
+              <h1>{userr.displayName}</h1>
 
-              <div className={styles.edit_profile}>
-                <p onClick={handleEditProfile}>
-                  <MdCreate style={{ marginRight: "3px", fontSize: "18px" }} />
-                  Edit profile
-                </p>
-              </div>
+              {userr._id === user?._id && (
+                <div className={styles.edit_profile}>
+                  <p onClick={handleEditProfile}>
+                    <MdCreate
+                      style={{ marginRight: "3px", fontSize: "18px" }}
+                    />
+                    Edit profile
+                  </p>
+                </div>
+              )}
             </div>
-            <p className={styles.title}>{user.about}</p>
+            <p className={styles.title}>{userr.about}</p>
             <p>Member since {date.toLocaleDateString()}</p>
           </div>
 
@@ -61,7 +68,7 @@ function Profile({ user, questions }: UserT) {
               Edit profile
             </p> */}
 
-          {editPopUp && <EditPopup user={user} setEditPopUp={setEditPopUp} />}
+          {editPopUp && <EditPopup user={userr} setEditPopUp={setEditPopUp} />}
         </div>
 
         <p style={{ color: "rgb(92, 92, 92)" }}>
@@ -79,7 +86,7 @@ function Profile({ user, questions }: UserT) {
                   ? `${styles.active}`
                   : `${styles.notactive}`
               }
-              onClick={() => handlePostOrActivity("questions", user._id)}
+              onClick={() => handlePostOrActivity("questions", userr._id)}
             >
               1 Question
             </p>
@@ -89,7 +96,7 @@ function Profile({ user, questions }: UserT) {
                   ? `${styles.active}`
                   : `${styles.notactive}`
               }
-              onClick={() => handlePostOrActivity("comments", user._id)}
+              onClick={() => handlePostOrActivity("comments", userr._id)}
             >
               2 Comments
             </p>
@@ -99,7 +106,7 @@ function Profile({ user, questions }: UserT) {
                   ? `${styles.active}`
                   : `${styles.notactive}`
               }
-              onClick={() => handlePostOrActivity("reacts", user._id)}
+              onClick={() => handlePostOrActivity("reacts", userr._id)}
             >
               2 Reacts
             </p>

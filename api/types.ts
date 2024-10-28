@@ -3,6 +3,7 @@ export interface IUser extends Document {
   email: string;
   displayName: string;
   photoUrl: string;
+  title: string;
   about: string;
   password: string;
   questions: string[];

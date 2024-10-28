@@ -6,6 +6,7 @@ export interface IUser extends Document {
   email?: string;
   displayName: string;
   photoUrl?: string;
+  title: string;
   about: string;
   password?: string;
   questions: string[];
@@ -22,10 +23,17 @@ const userSchema: Schema = new Schema(
     },
     email: {
       type: String,
+      // required: true,
     },
     displayName: {
       type: String,
       required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+      default:
+        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla nam eligendi quia repellendus, eum amet harum? Sequi, fugit sed reiciendis, ex nesciunt excepturi reprehenderit eum, porro corporis cumque accusamus in!",
     },
     about: {
       type: String,
