@@ -13,10 +13,10 @@ $color2: rgb(92, 92, 92);
 
     .profile_main_info {
       display: grid;
-      grid-template-columns: 15% 60% 18%;
+      grid-template-columns: 15% 80%;
       gap: 20px;
       justify-content: start;
-      // align-items: center;
+      align-items: center;
       margin-bottom: 20px;
 
       .profile_photo {
@@ -25,10 +25,33 @@ $color2: rgb(92, 92, 92);
       }
 
       .profile_main_in {
-        h1 {
-          font-size: 24px;
-          font-weight: bold;
-          color: rgba(0, 0, 0, 0.796);
+        .profile_name_or_edit {
+          display: grid;
+          grid-template-columns: 60% 30%;
+          justify-content: space-between;
+          align-items: center;
+
+          h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: rgba(0, 0, 0, 0.796);
+          }
+
+          .edit_profile {
+            margin-left: auto;
+            cursor: pointer;
+            p {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin-left: 3px;
+              background-color: rgb(240, 239, 239);
+              padding: 3px 7px 0px;
+              color: rgba(0, 0, 0, 0.796);
+              margin-right: 5px;
+              border-radius: 4px;
+            }
+          }
         }
 
         p {
@@ -41,21 +64,21 @@ $color2: rgb(92, 92, 92);
         }
       }
 
-      .edit_profile {
-        margin-left: auto;
-        cursor: pointer;
-        p {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-left: 3px;
-          background-color: rgb(240, 239, 239);
-          padding: 3px 7px 0px;
-          color: rgba(0, 0, 0, 0.796);
-          margin-right: 5px;
-          border-radius: 4px;
-        }
-      }
+      // .edit_profile {
+      //   margin-left: auto;
+      //   cursor: pointer;
+      //   p {
+      //     display: flex;
+      //     justify-content: center;
+      //     align-items: center;
+      //     margin-left: 3px;
+      //     background-color: rgb(240, 239, 239);
+      //     padding: 3px 7px 0px;
+      //     color: rgba(0, 0, 0, 0.796);
+      //     margin-right: 5px;
+      //     border-radius: 4px;
+      //   }
+      // }
     }
 
     .user_qna {

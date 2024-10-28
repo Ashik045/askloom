@@ -42,19 +42,26 @@ function Profile({ user, questions }: UserT) {
           />
 
           <div className={styles.profile_main_in}>
-            <h1>{user.displayName}</h1>
+            <div className={styles.profile_name_or_edit}>
+              <h1>{user.displayName}</h1>
+
+              <div className={styles.edit_profile}>
+                <p onClick={handleEditProfile}>
+                  <MdCreate style={{ marginRight: "3px", fontSize: "18px" }} />
+                  Edit profile
+                </p>
+              </div>
+            </div>
             <p className={styles.title}>{user.about}</p>
             <p>Member since {date.toLocaleDateString()}</p>
           </div>
 
-          <div className={styles.edit_profile}>
-            <p onClick={handleEditProfile}>
-              <MdCreate style={{ marginRight: "3px" }} />
+          {/* <p onClick={handleEditProfile}>
+              <MdCreate style={{ marginRight: "3px", fontSize: "18px" }} />
               Edit profile
-            </p>
+            </p> */}
 
-            {editPopUp && <EditPopup user={user} setEditPopUp={setEditPopUp} />}
-          </div>
+          {editPopUp && <EditPopup user={user} setEditPopUp={setEditPopUp} />}
         </div>
 
         <p style={{ color: "rgb(92, 92, 92)" }}>

@@ -23,7 +23,6 @@ type Inputs = {
 
 export default function Regpage() {
   const [profilePic, setProfilePic] = useState<File | null>(null);
-  const [coverImg, setCoverImg] = useState<File | null>(null);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -90,7 +89,6 @@ export default function Regpage() {
         setLoading(false);
 
         if (response.data.user) {
-          console.log(response.data.user);
           localStorage.setItem("jwttoken", response.data.token);
 
           // Dispatch the success action with user data
