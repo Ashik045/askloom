@@ -121,15 +121,16 @@ const updateUser = async (req: Request, res: Response) => {
   // const username = req.body.username;
   // const isUser = await User.findOne({ username: username });
   const userid = await req.params.userId;
-  const existingUser = await User.findOne({ userid });
+  const existingUser = await User.findById(userid);
 
   try {
     // Check if the user exists
     if (!existingUser) {
-      return res.status(404).json({ error: "User not found!" });
+      return res.status(404).json({ error: "User not found!!" });
     }
 
-    if (existingUser?._id !== userid) {
+    const newUserId = (existingUser?._id || "")?.toString();
+    if (newUserId !== userid) {
       return res
         .status(403)
         .json({ error: "You can only update your own account!" });
@@ -140,17 +141,24 @@ const updateUser = async (req: Request, res: Response) => {
       req.body.password = await bcrypt.hash(req.body.password, 10);
     }
 
+    const userToSave = {
+      ...req.body,
+      questions: [],
+      comments: [],
+      reacts: [],
+    };
+
     // Update the user
-    const updatedUser = await User.findOneAndUpdate(
-      { userid },
+    const updatedUser = await User.findByIdAndUpdate(
+      userid,
       {
-        $set: req.body,
+        $set: userToSave,
       },
       { new: true }
     );
 
     res.status(200).json({
-      message: updatedUser,
+      user: updatedUser,
     });
   } catch (error) {
     res

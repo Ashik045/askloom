@@ -106,14 +106,13 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
         photoUrl: profilePictureUrl,
       };
 
-      console.log(updatedUser);
-
       const response = await axios.put(
         `http://localhost:4000/api/auth/user/update/${user._id}`,
         updatedUser
       );
 
       setLoading(false);
+      console.log(response.data.user);
 
       if (response.data.user) {
         dispatch({ type: "USER_UPDATE_SUCCESS", payload: response.data.user });
@@ -126,7 +125,7 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
         type: "USER_UPDATE_FAILURE",
         payload: error.response.data.error,
       });
-      setErrorMessages(["There was an error updating the user."]);
+      setErrorMessages(["There was an error updating the user!"]);
       setLoading(false);
     }
   };

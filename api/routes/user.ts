@@ -18,7 +18,7 @@ router.post("/registration", regHandler);
 router.post("/login/manual", loginHandler);
 
 // update a user
-router.post("/user/update/:userId", updateUser);
+router.put("/user/update/:userId", updateUser);
 
 // get user by userId
 router.get("/user/:userId", getUserById);
