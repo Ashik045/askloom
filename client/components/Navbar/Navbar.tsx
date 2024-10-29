@@ -69,29 +69,31 @@ const Navbar = () => {
         </div>
 
         <div className={styles.nav_right}>
-          <div className={styles.search}>
-            <form onSubmit={handleSubmit} className={styles.search_form}>
-              <input
-                type="text"
-                placeholder="Search Questions.."
-                value={inpVal}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-              />
-
-              <button type="button" className={styles.submit_btn}>
-                Ask
-              </button>
-            </form>
-          </div>
-
-          <div className={styles.nav_menu}>
+          <div className={styles.nav_menu_item}>
             <Link href="/" style={{ textDecoration: "none" }}>
               <p>Questions</p>
             </Link>
             <Link href="/createquestion" style={{ textDecoration: "none" }}>
               <p>ask question</p>
             </Link>
+          </div>
+
+          <div className={styles.nav_menu}>
+            <div className={styles.search}>
+              <form onSubmit={handleSubmit} className={styles.search_form}>
+                <input
+                  type="text"
+                  placeholder="Search Questions.."
+                  value={inpVal}
+                  onChange={handleChange}
+                  onKeyDown={handleKeyDown}
+                />
+
+                <button type="button" className={styles.submit_btn}>
+                  Ask
+                </button>
+              </form>
+            </div>
 
             {user ? (
               <div className={styles.nav_menu_user}>
@@ -102,7 +104,7 @@ const Navbar = () => {
                       src={user.photoUrl ? user.photoUrl : noPhoto}
                       height={35}
                       width={35}
-                      alt="user profile"
+                      alt="askloom profile"
                     />
                   </Link>
                 </div>
@@ -121,45 +123,14 @@ const Navbar = () => {
             ) : (
               <div className={styles.sign_in}>
                 <Link href="/login" style={{ textDecoration: "none" }}>
-                  Sign In /
+                  Sign In /{" "}
                 </Link>
-                <Link href="/login" style={{ textDecoration: "none" }}>
+                <Link href="/registration" style={{ textDecoration: "none" }}>
                   Sign Up
                 </Link>
               </div>
             )}
           </div>
-
-          {/* show popup(logour, view profile) on mousehover */}
-          {/* <div className={styles.nav_reg}>
-            {user ? (
-              <>
-                <div className={styles.nav_regg}>
-                  <Image
-                    className={styles.profilePic}
-                    src={user.profilePicture ? user.profilePicture : noPhoto}
-                    height={35}
-                    width={35}
-                    alt="user profile"
-                  />
-                  <div className={styles.username}>{user?.username}</div>
-                  <div className={styles.user_popup}>
-                    <Link
-                      href={`/user/${user.username}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <p>View Profile</p>
-                    </Link>
-                    <p >Log Out</p>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <button type="button" onClick={handleClick}>
-                Log in
-              </button>
-            )}
-          </div> */}
 
           {/* for responsive device */}
           <div className={styles.res_navbar}>
@@ -183,29 +154,56 @@ const Navbar = () => {
                     <p onClick={() => setToggler(false)}>Questions</p>
                   </Link>
 
-                  <Link href="/post" style={{ textDecoration: "none" }}>
+                  <Link
+                    href="/createquestion"
+                    style={{ textDecoration: "none" }}
+                  >
                     <p onClick={() => setToggler(false)}>ask question</p>
                   </Link>
 
-                  {/* {user && (
-                    <Link
-                      href={`/user/${user.username}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <p onClick={() => setToggler(false)}>Profile</p>
-                    </Link>
-                  )} */}
-
                   {user ? (
-                    <Link href={`/users`} style={{ textDecoration: "none" }}>
-                      <p>profile</p>
-                    </Link>
+                    <div
+                      className={styles.res_nav_menu_user}
+                      onClick={() => setToggler(false)}
+                    >
+                      <div className={styles.login_user}>
+                        <Link href={`/profile/${user._id}`}>
+                          <Image
+                            className={styles.profilePic}
+                            src={user.photoUrl ? user.photoUrl : noPhoto}
+                            height={30}
+                            width={30}
+                            alt="askloom profile"
+                          />
+                        </Link>
+                      </div>
+                      <p className={styles.username}>
+                        <Link
+                          href={`/profile/${user._id}`}
+                          style={{ textDecoration: "none" }}
+                        >
+                          {user.displayName}
+                        </Link>
+                      </p>
+                      <span
+                        onClick={handleLogout}
+                        style={{ cursor: "pointer" }}
+                      >
+                        Log out
+                      </span>
+                    </div>
                   ) : (
-                    <div className={styles.res_sign_in}>
+                    <div
+                      className={styles.res_sign_in}
+                      onClick={() => setToggler(false)}
+                    >
                       <Link href="/login" style={{ textDecoration: "none" }}>
-                        Sign In /
+                        Sign In /{" "}
                       </Link>
-                      <Link href="/login" style={{ textDecoration: "none" }}>
+                      <Link
+                        href="/registration"
+                        style={{ textDecoration: "none" }}
+                      >
                         Sign Up
                       </Link>
                     </div>

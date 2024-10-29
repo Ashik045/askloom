@@ -3,13 +3,13 @@
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.796);
   font-weight: 400;
-  font-size: 17px;
+  font-size: 16px;
   transition: all 0.3s ease;
 }
 
 @mixin menuStyleHover {
   font-weight: 500;
-  color: #fb2577e0;
+  color: #3a78fc;
 }
 
 @mixin reg-button {
@@ -37,9 +37,9 @@
   background-color: #f6fcfd;
   z-index: 100;
   transition: all 0.2s ease;
-  // position: fixed;
-  // top: 0;
-  // left: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: grid;
   align-items: center;
 
@@ -67,26 +67,19 @@
     .nav_right {
       display: flex;
       align-items: center;
+      justify-content: center;
 
-      .search {
-        border: none;
-        border: 1px solid gray;
-        padding: 2px 10px;
-        border-radius: 15px;
+      .nav_menu_item {
         display: flex;
+        align-items: center;
+        margin-bottom: -2px;
+        p {
+          @include menuStyle();
+          padding: 5px 7px;
+        }
 
-        .search_form {
-          input {
-            border: none;
-            outline: none;
-            background: none;
-            color: rgb(80, 80, 80);
-            font-size: 14px;
-          }
-
-          .submit_btn {
-            // margin-left: auto;
-          }
+        p:hover {
+          @include menuStyleHover();
         }
       }
 
@@ -94,24 +87,47 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-right: 10px;
+        // margin-right: 10px;
         margin-left: auto;
 
+        .search {
+          border: none;
+          border: 1px solid gray;
+          padding: 2px 10px;
+          border-radius: 15px;
+          margin-right: 10px;
+          display: flex;
+          color: rgba(0, 0, 0, 0.796);
+
+          .search_form {
+            input {
+              border: none;
+              outline: none;
+              background: none;
+              color: rgba(0, 0, 0, 0.796);
+
+              font-size: 14px;
+            }
+
+            .submit_btn {
+              transition: all 0.2s ease;
+              color: rgba(0, 0, 0, 0.776);
+
+              &:hover {
+                color: #3a78fc;
+              }
+            }
+          }
+        }
+
         .sign_in {
-          margin-left: 10px;
-        }
-        p {
-          @include menuStyle();
-          padding: 10px 7px;
-        }
+          // margin-left: 10px;
+          color: rgba(0, 0, 0, 0.796);
+          transition: all 0.2s ease;
 
-        p:hover {
-          @include menuStyleHover();
-        }
-
-        .active {
-          font-weight: 500;
-          color: #fb2577e0;
+          &:hover {
+            color: #3a78fc;
+          }
         }
 
         .nav_menu_user {
@@ -132,6 +148,11 @@
             padding: 0px;
             margin-right: 5px;
             cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover {
+              color: #3a78fc;
+            }
           }
         }
       }
@@ -187,9 +208,11 @@
 
       .res_navbar {
         display: none;
+
         .res_nav_iconn {
           cursor: pointer;
           margin-left: 15px;
+          color: rgba(0, 0, 0, 0.796);
         }
 
         .res_nav_menu {
@@ -201,12 +224,13 @@
           height: 100%;
           background-color: rgba(0, 0, 0, 0.76);
           z-index: 10;
+          overflow: hidden !important;
 
           .res_nav_menuu {
             position: relative;
             width: 100%;
             background-color: #f6fcfd;
-            overflow: hidden;
+            overflow: hidden !important;
             height: 100vh;
             padding: 20px 5px;
 
@@ -214,6 +238,28 @@
               cubic-bezier(0.39, 0.575, 0.565, 1) both;
             animation: scale-up-hor-left 0.4s
               cubic-bezier(0.39, 0.575, 0.565, 1) both;
+
+            .res_nav_menu_user {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              .login_user {
+                .profilePic {
+                  border-radius: 50%;
+                  margin-right: 5px;
+                  object-fit: cover;
+                  cursor: pointer;
+                }
+              }
+
+              .username {
+                text-decoration: underline;
+                text-transform: lowercase;
+                padding: 0px;
+                margin-right: 5px;
+                cursor: pointer;
+              }
+            }
 
             p {
               display: block;
@@ -227,6 +273,12 @@
 
             .res_sign_in {
               margin-top: 10px;
+              color: rgba(0, 0, 0, 0.796);
+              transition: all 0.2s ease;
+
+              &:hover {
+                color: #3a78fc;
+              }
             }
 
             .res_nav_reg {
@@ -290,6 +342,9 @@
 
       .nav_right {
         .nav_menu {
+          .search {
+            margin-right: 0px;
+          }
           p {
             font-size: 16px;
             padding: 7px 5px;
@@ -314,26 +369,39 @@
       grid-template-columns: 8% 80% 2%;
 
       .nav_right {
-        .search {
-          // margin-right: -20px;
-          margin-left: auto;
-          width: 70%;
+        .nav_menu_item {
+          display: none;
+        }
 
-          .search_form {
-            display: flex;
-            align-items: center;
+        .nav_menu {
+          // display: none;
+          .search {
+            margin-right: -5px;
+            margin-left: auto;
+            width: 90%;
+            padding: 0px 5px;
 
-            input {
-              width: 100%;
-            }
+            .search_form {
+              display: flex;
+              align-items: center;
 
-            .submit_btn {
-              display: none;
+              input {
+                width: 100%;
+              }
+
+              // .submit_btn {
+              //   display: none;
+              // }
             }
           }
-        }
-        .nav_menu {
-          display: none;
+
+          .sign_in {
+            display: none;
+          }
+
+          .nav_menu_user {
+            display: none;
+          }
         }
 
         .nav_reg {
@@ -347,7 +415,7 @@
 
         .res_navbar {
           display: block;
-          margin-right: 4%;
+          // margin-right: 4%;
           position: relative;
           .res_nav_menu {
             .res_nav_reg {
@@ -398,29 +466,31 @@
           }
         }
 
-        .search {
-          width: 65%;
-          display: flex;
-          align-items: center;
-          margin-right: -10px;
+        .nav_menu {
+          .search {
+            width: 75%;
+            display: flex;
+            align-items: center;
+            margin-right: -10px;
 
-          button {
-            border: none;
-            background: none;
+            // button {
+            //   border: none;
+            //   background: none;
 
-            .search_option {
-              border-radius: 13px;
-              padding: 2px 6px;
+            //   .search_option {
+            //     border-radius: 13px;
+            //     padding: 2px 6px;
+            //   }
+            // }
+            // .search_icon_close {
+            //   margin-right: 0px;
+            //   margin-bottom: -4px;
+            //   padding: 0px;
+            // }
+
+            input {
+              width: 80%;
             }
-          }
-          .search_icon_close {
-            margin-right: 0px;
-            margin-bottom: -4px;
-            padding: 0px;
-          }
-
-          input {
-            width: 80%;
           }
         }
 
