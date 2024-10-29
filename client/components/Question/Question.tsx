@@ -190,7 +190,7 @@ const Question = ({ question }: QuestionProps) => {
             <FaRegComment />{" "}
             <span className={styles.comments}>
               {question.comments.length}{" "}
-              {question.comments.length > 1 ? "Comments" : "Comment"}
+              {question.comments.length > 1 ? "Answers" : "Answer"}
             </span>
           </p>
         </div>

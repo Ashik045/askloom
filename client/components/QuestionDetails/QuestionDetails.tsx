@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FaRegComment, FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
+import PostAnswer from "../PostAnswer/PostAnswer";
 import styles from "./questionDetails.module.scss";
 
 interface QuestionDetailsProps {
@@ -225,20 +226,21 @@ export default function QuestionDetails({ question }: QuestionDetailsProps) {
           <FaRegComment />{" "}
           <span className={styles.comments}>
             {question.comments.length}{" "}
-            {question.comments.length > 1 ? "Comments" : "Comment"}
+            {question.comments.length > 1 ? "Answers" : "Answer"}
           </span>
         </p>
       </div>
 
       <div className={styles.post_like_line}></div>
+      <PostAnswer />
 
       <div className={styles.question_comments}>
-        <h3 className={styles.q_cmnt}>{question.comments.length} comments</h3>
+        <h3 className={styles.q_cmnt}>{question.comments.length} Answers</h3>
 
-        <p>comment 1</p>
-        <p>comment 2</p>
-        <p>comment 3</p>
-        <p>comment 4</p>
+        <p>Answers 1</p>
+        <p>Answers 2</p>
+        <p>Answers 3</p>
+        <p>Answers 4</p>
       </div>
     </div>
   );

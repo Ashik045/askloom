@@ -1,0 +1,40 @@
+.answer_comp {
+  margin-top: 5px;
+  margin-bottom: 15px;
+  .write_answer {
+    display: grid;
+    grid-template-columns: 10% 70% 15%;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 15px;
+    border: 1px solid rgba(0, 0, 0, 0.205);
+    border-radius: 15px;
+
+    .profilePic {
+      border-radius: 50%;
+      margin-right: 5px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .submit_btn {
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 6px;
+      color: white;
+      background-color: #3a78fc;
+      font-weight: bold;
+
+      transition: all 0.1s ease-in-out;
+
+      &:hover {
+        background-color: #0c0c0c;
+      }
+    }
+  }
+
+  .form_err {
+    color: red;
+    font-size: 15px;
+  }
+}

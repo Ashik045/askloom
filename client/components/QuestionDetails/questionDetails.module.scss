@@ -1,6 +1,8 @@
 .questiondetails_component {
   margin-top: 10px;
   color: rgb(92, 92, 92);
+  background-color: white;
+  padding: 10px;
   h2 {
     font-size: 23px;
     font-weight: 700;
@@ -180,7 +182,7 @@
     }
   }
 
-  .question_comments {
+  .write_answer .question_comments {
     margin-top: 20px;
     .q_cmnt {
       &:hover {
