@@ -1,0 +1,66 @@
+.answer_comp {
+  .post_like_line {
+    width: 99%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.205);
+    margin-bottom: 0px;
+  }
+  .answer_comp_main {
+    display: grid;
+    grid-template-columns: 7% 85%;
+    justify-content: start;
+    padding: 5px;
+
+    .profilePic {
+      border-radius: 50%;
+      margin-right: 5px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .answer_comp_userd {
+      .answer_name_time {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+      }
+
+      .answer_name {
+        font-weight: 600;
+        color: rgba(0, 0, 0, 0.756);
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .full_answer {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .clamped {
+        -webkit-line-clamp: 2; /* Limits to 2 lines when not expanded */
+      }
+
+      .expanded {
+        -webkit-line-clamp: unset; /* Shows all lines when expanded */
+      }
+
+      .readMoreBtn {
+        cursor: pointer;
+        color: #3373fd;
+        background: none;
+        border: none;
+        font-size: 0.9em;
+        padding: 0;
+        margin-top: 4px;
+        display: inline; // Align button with text
+        margin-left: 4px;
+      }
+    }
+  }
+}

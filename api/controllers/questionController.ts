@@ -209,6 +209,25 @@ const unReactQuestion = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to unreact to the question!" });
   }
 };
+
+// const getReactedUsersList = async (req: Request, res: Response) => {
+//   const { postid } = req.params;
+
+//   try {
+//     const post = await Post.findById(postid);
+//     if (!post) {
+//       return res.status(404).json({ error: "Post not found!" });
+//     }
+
+//     const reactedUsersList = await User.find({ _id: { $in: post.likes } });
+//     res.status(200).json({
+//       message: reactedUsersList,
+//     });
+//   } catch (error) {
+//     res.status(500).json({ error: "Failed to fetch reactedusers!" });
+//   }
+// };
+
 export {
   createQuestion,
   DeleteAQuestion,

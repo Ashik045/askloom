@@ -154,6 +154,8 @@
     display: flex;
     justify-content: start;
     align-items: center;
+    margin-bottom: 7px;
+    margin-bottom: 10px;
 
     p {
       margin: 10px 10px 5px 0px;
@@ -182,9 +184,10 @@
     }
   }
 
-  .write_answer .question_comments {
-    margin-top: 20px;
+  .question_comments {
+    margin-top: 25px;
     .q_cmnt {
+      margin-bottom: 10px;
       &:hover {
         text-decoration: underline;
       }

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import QuestionDetails from "@/components/QuestionDetails/QuestionDetails";
+import { getCommentsByQid } from "@/lib/comments";
 import { getQuestionById } from "@/lib/questions";
 import styles from "@/styles/questiondetails.module.scss";
 
@@ -13,6 +14,7 @@ interface Params {
 export default async function QuestionPage({ params }: Params) {
   const { id } = params;
   const question = await getQuestionById(id);
+  const comments = await getCommentsByQid(id);
 
   // console.log(question);
 
@@ -23,7 +25,7 @@ export default async function QuestionPage({ params }: Params) {
 
   return (
     <div className={styles.questiondetails_page}>
-      <QuestionDetails question={question} />
+      <QuestionDetails question={question} answers={comments} />
 
       <h1>Trending Questions</h1>
     </div>

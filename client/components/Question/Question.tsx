@@ -204,7 +204,7 @@ const Question = ({ question }: QuestionProps) => {
         </div>
       </div>
 
-      {ansComponent && <PostAnswer />}
+      {ansComponent && <PostAnswer qid={question._id} />}
     </div>
   );
 };

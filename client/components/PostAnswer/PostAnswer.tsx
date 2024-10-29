@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Context } from "@/Context/Context";
 import noPhoto from "@/public/images/no-photo.png";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {} from "next/router";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -13,7 +14,11 @@ type Inputs = {
   answer: string;
 };
 
-const PostAnswer = () => {
+interface PostType {
+  qid?: string;
+}
+
+const PostAnswer = ({ qid }: PostType) => {
   const [loading, setLoading] = useState(false);
 
   const {
@@ -28,18 +33,38 @@ const PostAnswer = () => {
 
   const { user } = useContext(Context);
   const router = useRouter();
+  const { id } = useParams();
 
   const onSubmit = async (data: Inputs) => {
+    if (loading) return;
     if (!user) {
       return router.push("/login");
     }
-    const newAnswer = {
-      ...data,
-      userid: user?._id,
-      username: user?.displayName,
-      userphoto: user?.photoUrl,
-    };
-    console.log(newAnswer);
+
+    setLoading(true);
+
+    try {
+      const newAnswer = {
+        ...data,
+        userid: user?._id,
+        username: user?.displayName,
+        userphoto: user?.photoUrl,
+        questionId: id ? id : qid,
+      };
+
+      const response = await axios.post(
+        "http://localhost:4000/api/comment/create",
+        newAnswer
+      );
+
+      if (response.data.message) {
+        reset();
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
 
   return (
@@ -49,8 +74,8 @@ const PostAnswer = () => {
           <Image
             className={styles.profilePic}
             src={user?.photoUrl ? user?.photoUrl : noPhoto}
-            height={35}
-            width={35}
+            height={34}
+            width={34}
             alt="askloom profile"
           />
         </Link>
@@ -79,7 +104,7 @@ const PostAnswer = () => {
 
           <input
             type="submit"
-            value={loading ? "Loading..." : "Add Answer"}
+            value={loading ? "Loading.." : "Add Answer"}
             className={styles.submit_btn}
             style={{
               cursor: loading ? "not-allowed" : "pointer",

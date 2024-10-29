@@ -1,12 +1,12 @@
 .answer_comp {
   margin-top: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   .write_answer {
     display: grid;
     grid-template-columns: 8% 90%;
     justify-content: center;
     align-items: center;
-    padding: 3px 15px;
+    padding: 2px 15px;
     border: 1px solid rgba(0, 0, 0, 0.205);
     border-radius: 20px;
 
@@ -30,14 +30,14 @@
           border: none;
           outline: none;
           border-radius: 15px;
-          padding: 5px 10px;
+          padding: 3px 10px;
           width: 100%;
           background-color: #eee;
         }
       }
 
       .submit_btn {
-        padding: 5px 10px;
+        padding: 3px 10px;
         cursor: pointer;
         border-radius: 15px;
         color: white;

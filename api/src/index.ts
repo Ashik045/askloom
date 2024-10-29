@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import passport from "passport";
 
 import session from "express-session";
+import commentRoute from "../routes/comment";
 import questionRoute from "../routes/question";
 import authRoute from "../routes/user";
 
@@ -56,6 +57,9 @@ app.get("/", (req: Request, res: Response) => {
 
 // questions route
 app.use("/api", questionRoute);
+
+// questions route
+app.use("/api", commentRoute);
 
 // user route
 app.use("/api/auth", authRoute);

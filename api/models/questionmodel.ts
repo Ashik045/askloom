@@ -8,7 +8,7 @@ export interface QuestionType {
   userTitle: string;
   tags: string[]; // Array of strings for tags
   reacts: string[]; // Array of strings for reactions
-  comments: Comment[]; // Array of Comment objects
+  comments: string[]; // Array of Comment objects
 }
 
 const QuestionSchema = new mongoose.Schema<QuestionType>(

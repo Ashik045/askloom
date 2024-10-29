@@ -61,3 +61,12 @@ export type Inputs = {
   facebook: string;
   profession: string;
 };
+
+export interface CommentType {
+  userid: string;
+  username: string;
+  userphoto: string;
+  answer: string;
+  questionId: string;
+  createdAt: Date; // Date
+}

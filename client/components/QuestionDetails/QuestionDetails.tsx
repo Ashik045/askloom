@@ -2,7 +2,7 @@
 "use client";
 
 import { Context } from "@/Context/Context";
-import { QuestionType } from "@/types.global";
+import { CommentType, QuestionType } from "@/types.global";
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
@@ -15,9 +15,13 @@ import styles from "./questionDetails.module.scss";
 
 interface QuestionDetailsProps {
   question: QuestionType;
+  answers: [CommentType];
 }
 
-export default function QuestionDetails({ question }: QuestionDetailsProps) {
+export default function QuestionDetails({
+  question,
+  answers,
+}: QuestionDetailsProps) {
   const [like, setLike] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -238,9 +242,9 @@ export default function QuestionDetails({ question }: QuestionDetailsProps) {
       <div className={styles.question_comments}>
         <h3 className={styles.q_cmnt}>{question.comments.length} Answers</h3>
 
-        <AnswerComponent />
-        <AnswerComponent />
-        <AnswerComponent />
+        {answers.map((answer) => {
+          return <AnswerComponent key={answer.userid} answer={answer} />;
+        })}
       </div>
     </div>
   );
