@@ -71,7 +71,7 @@ function Profile({ userr, questions }: UserT) {
           {editPopUp && <EditPopup user={userr} setEditPopUp={setEditPopUp} />}
         </div>
 
-        <p style={{ color: "rgb(92, 92, 92)" }}>{user?.about}</p>
+        <p style={{ color: "rgb(92, 92, 92)" }}>{userr?.about}</p>
 
         <div className={styles.user_qna}>
           <nav>

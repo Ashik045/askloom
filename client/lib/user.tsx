@@ -1,6 +1,13 @@
 const getUserByuserId = async (userId: string) => {
   try {
-    const result = await fetch(`http://localhost:4000/api/auth/user/${userId}`);
+    const result = await fetch(
+      `http://localhost:4000/api/auth/user/${userId}`,
+      {
+        next: {
+          revalidate: 2,
+        },
+      }
+    );
 
     if (!result.ok) {
       throw new Error("Failed to fetch the requested question");

@@ -27,24 +27,6 @@ const Navbar = () => {
     return null;
   }
 
-  // const { user, dispatch } = useContext(Context);
-
-  // navigate to login page
-  const handleClick = () => {
-    // router.push("/login");
-    setToggler(false);
-  };
-
-  // The handleLogout function logs the user out by dispatching a logout action, redirecting to the home page, removing the JWT token from local storage, and logging a message to the console
-  // user logout function.
-  // const handleLogout = () => {
-  //   dispatch({ type: "LOGOUT" });
-  //   router.push("/");
-  //   // set the JWT token to null
-  //   localStorage.removeItem("jwtToken");
-  //   console.log("logged out");
-  // };
-
   const handleLogout = () => {
     window.open("http://localhost:4000/api/auth/logout", "_self");
 
@@ -75,11 +57,6 @@ const Navbar = () => {
     if (e.key === "Enter") {
       handleSubmit(e);
     }
-  };
-
-  const handleClose = () => {
-    setInpVal("");
-    //   dispatchh({ type: 'SEARCH_CLEAR' })
   };
 
   return (
