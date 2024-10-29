@@ -5,6 +5,7 @@ import {
   getUserById,
   loginHandler,
   regHandler,
+  updateUser,
 } from "../controllers/userController";
 import { IUser } from "../models/usermodel";
 
@@ -15,6 +16,9 @@ router.post("/registration", regHandler);
 
 // manually login
 router.post("/login/manual", loginHandler);
+
+// update a user
+router.post("/user/update/:userId", updateUser);
 
 // get user by userId
 router.get("/user/:userId", getUserById);

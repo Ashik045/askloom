@@ -109,7 +109,7 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
       console.log(updatedUser);
 
       const response = await axios.put(
-        `http://localhost:4000/api/auth/user/update${user._id}`,
+        `http://localhost:4000/api/auth/user/update/${user._id}`,
         updatedUser
       );
 
