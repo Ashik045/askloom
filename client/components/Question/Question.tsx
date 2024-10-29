@@ -12,6 +12,7 @@ import { FaRegComment, FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import styles from "./question.module.scss";
 
 import { formatDistanceToNow } from "date-fns";
+import PostAnswer from "../PostAnswer/PostAnswer";
 
 interface QuestionProps {
   question: QuestionType;
@@ -20,6 +21,7 @@ interface QuestionProps {
 const Question = ({ question }: QuestionProps) => {
   const [like, setLike] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
+  const [ansComponent, setAnsComponent] = useState(false);
   const [likeCount, setLikeCount] = useState(question.reacts?.length);
   const [timeAgo, setTimeAgo] = useState("");
 
@@ -122,6 +124,10 @@ const Question = ({ question }: QuestionProps) => {
     setLikeLoading(false);
   };
 
+  const handleAnsComp = () => {
+    setAnsComponent(!ansComponent);
+  };
+
   return (
     <div className={styles.single_question}>
       <div className={styles.question_user}>
@@ -187,14 +193,18 @@ const Question = ({ question }: QuestionProps) => {
             </span>
           </p>
           <p>
-            <FaRegComment />{" "}
+            <FaRegComment onClick={handleAnsComp} />{" "}
             <span className={styles.comments}>
-              {question.comments.length}{" "}
-              {question.comments.length > 1 ? "Answers" : "Answer"}
+              <Link href={`/questions/${question._id}`}>
+                {question.comments.length}{" "}
+                {question.comments.length > 1 ? "Answers" : "Answer"}
+              </Link>
             </span>
           </p>
         </div>
       </div>
+
+      {ansComponent && <PostAnswer />}
     </div>
   );
 };

@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Context } from "@/Context/Context";
 import noPhoto from "@/public/images/no-photo.png";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {} from "next/router";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./postanswer.module.scss";
@@ -24,9 +27,19 @@ const PostAnswer = () => {
   } = useForm<Inputs>();
 
   const { user } = useContext(Context);
+  const router = useRouter();
 
   const onSubmit = async (data: Inputs) => {
-    console.log(data);
+    if (!user) {
+      return router.push("/login");
+    }
+    const newAnswer = {
+      ...data,
+      userid: user?._id,
+      username: user?.displayName,
+      userphoto: user?.photoUrl,
+    };
+    console.log(newAnswer);
   };
 
   return (
@@ -36,32 +49,33 @@ const PostAnswer = () => {
           <Image
             className={styles.profilePic}
             src={user?.photoUrl ? user?.photoUrl : noPhoto}
-            height={34}
-            width={34}
+            height={35}
+            width={35}
             alt="askloom profile"
           />
         </Link>
 
-        <form className={styles.reg_form} onSubmit={handleSubmit(onSubmit)}>
-          <label>Email*</label>
-          <input
-            {...register("answer", {
-              required: "Answer should be 3-300 characters!",
-              minLength: {
-                value: 3,
-                message: "Minimum length is 3 characters!",
-              },
-              maxLength: {
-                value: 300,
-                message: "Maximum length is 300 characters!",
-              },
-            })}
-            placeholder="Add you answer.."
-            onBlur={() => {
-              trigger("answer");
-            }}
-            className={styles.exact_form_inp}
-          />
+        <form className={styles.comment_form} onSubmit={handleSubmit(onSubmit)}>
+          <div className={styles.comment_form_inp}>
+            <input
+              {...register("answer", {
+                required: "Answer should be 3-300 characters!",
+                minLength: {
+                  value: 3,
+                  message: "Minimum length is 3 characters!",
+                },
+                maxLength: {
+                  value: 300,
+                  message: "Maximum length is 300 characters!",
+                },
+              })}
+              placeholder="Add you answer.."
+              onBlur={() => {
+                trigger("answer");
+              }}
+              className={styles.exact_form_inp}
+            />
+          </div>
 
           <input
             type="submit"

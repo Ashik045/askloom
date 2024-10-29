@@ -1,14 +1,14 @@
 .answer_comp {
-  margin-top: 5px;
+  margin-top: 10px;
   margin-bottom: 15px;
   .write_answer {
     display: grid;
-    grid-template-columns: 10% 70% 15%;
+    grid-template-columns: 8% 90%;
     justify-content: center;
     align-items: center;
-    padding: 5px 15px;
+    padding: 3px 15px;
     border: 1px solid rgba(0, 0, 0, 0.205);
-    border-radius: 15px;
+    border-radius: 20px;
 
     .profilePic {
       border-radius: 50%;
@@ -17,18 +17,37 @@
       cursor: pointer;
     }
 
-    .submit_btn {
-      padding: 6px 12px;
-      cursor: pointer;
-      border-radius: 6px;
-      color: white;
-      background-color: #3a78fc;
-      font-weight: bold;
+    .comment_form {
+      display: grid;
+      grid-template-columns: 75% 23%;
+      justify-content: space-between;
+      align-items: center;
 
-      transition: all 0.1s ease-in-out;
+      .comment_form_inp {
+        .exact_form_inp {
+          font-size: 16px;
+          border-radius: 5px;
+          border: none;
+          outline: none;
+          border-radius: 15px;
+          padding: 5px 10px;
+          width: 100%;
+          background-color: #eee;
+        }
+      }
 
-      &:hover {
-        background-color: #0c0c0c;
+      .submit_btn {
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 15px;
+        color: white;
+        background-color: #3a78fc;
+        font-weight: bold;
+        transition: all 0.1s ease-in-out;
+
+        &:hover {
+          background-color: #0c0c0c;
+        }
       }
     }
   }

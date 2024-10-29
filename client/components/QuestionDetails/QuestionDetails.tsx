@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FaRegComment, FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
+import AnswerComponent from "../AnswerComponent/AnswerComponent";
 import PostAnswer from "../PostAnswer/PostAnswer";
 import styles from "./questionDetails.module.scss";
 
@@ -237,10 +238,9 @@ export default function QuestionDetails({ question }: QuestionDetailsProps) {
       <div className={styles.question_comments}>
         <h3 className={styles.q_cmnt}>{question.comments.length} Answers</h3>
 
-        <p>Answers 1</p>
-        <p>Answers 2</p>
-        <p>Answers 3</p>
-        <p>Answers 4</p>
+        <AnswerComponent />
+        <AnswerComponent />
+        <AnswerComponent />
       </div>
     </div>
   );
