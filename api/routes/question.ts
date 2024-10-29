@@ -6,6 +6,8 @@ import {
   editAQuestion,
   getAllQuestions,
   getQuestionById,
+  getQuestionsOfUser,
+  getReactedUsers,
   reactQuestion,
   unReactQuestion,
 } from "../controllers/questionController";
@@ -27,7 +29,7 @@ router.get("/question/:questionid", getQuestionById);
 router.get("/questions/all", getAllQuestions);
 
 // get all questions
-router.get("/questions/all", getAllQuestions);
+router.get("/questions/all/:userid", getQuestionsOfUser);
 
 // edit question
 router.put("/question/edit/:questionid", QuestionValidation, editAQuestion);
@@ -52,5 +54,8 @@ router.post(
   ReactQuestionMiddleware,
   unReactQuestion
 );
+
+// fetch the reacted users list of a perticular post
+router.get("/question/:questionid/reacts", getReactedUsers);
 
 export default router;

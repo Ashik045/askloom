@@ -1,5 +1,5 @@
 import Profile from "@/components/Profile/Profile";
-import { getAllQuestions } from "@/lib/questions";
+import { getQuestionsOfUser } from "@/lib/questions";
 import { getUserByuserId } from "@/lib/user";
 import styles from "@/styles/profilepage.module.scss";
 
@@ -12,7 +12,7 @@ interface Params {
 export default async function page({ params }: Params) {
   const { userid } = params;
   const user = await getUserByuserId(userid);
-  const questionss = await getAllQuestions();
+  const questionss = await getQuestionsOfUser(userid);
 
   // create a suspense boundary for user data and questions
 

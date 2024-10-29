@@ -63,6 +63,22 @@ const getAllQuestions = async (req: Request, res: Response) => {
   }
 };
 
+// create all questions
+const getQuestionsOfUser = async (req: Request, res: Response) => {
+  const { userid } = req.params;
+  try {
+    const questions = await Question.find({ userid }).sort({ createdAt: -1 });
+
+    res.status(200).json({
+      message: questions,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Question not found!",
+    });
+  }
+};
+
 // edit question
 const editAQuestion = async (req: Request, res: Response) => {
   const userId = (req as AuthenticatedRequest).userData?.id;
@@ -210,23 +226,23 @@ const unReactQuestion = async (req: Request, res: Response) => {
   }
 };
 
-// const getReactedUsersList = async (req: Request, res: Response) => {
-//   const { postid } = req.params;
+const getReactedUsers = async (req: Request, res: Response) => {
+  const { questionid } = req.params;
 
-//   try {
-//     const post = await Post.findById(postid);
-//     if (!post) {
-//       return res.status(404).json({ error: "Post not found!" });
-//     }
+  try {
+    const question = await Question.findById(questionid);
+    if (!question) {
+      return res.status(404).json({ error: "question not found!" });
+    }
 
-//     const reactedUsersList = await User.find({ _id: { $in: post.likes } });
-//     res.status(200).json({
-//       message: reactedUsersList,
-//     });
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to fetch reactedusers!" });
-//   }
-// };
+    const reactedUsersList = await User.find({ _id: { $in: question.reacts } });
+    res.status(200).json({
+      message: reactedUsersList,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch reactedusers!" });
+  }
+};
 
 export {
   createQuestion,
@@ -234,6 +250,8 @@ export {
   editAQuestion,
   getAllQuestions,
   getQuestionById,
+  getQuestionsOfUser,
+  getReactedUsers,
   reactQuestion,
   unReactQuestion,
 };

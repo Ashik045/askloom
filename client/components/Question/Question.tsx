@@ -2,7 +2,7 @@
 "use client";
 import { Context } from "@/Context/Context";
 import nophoto from "@/public/images/no-photo.png";
-import { QuestionType } from "@/types.global";
+import { QuestionType, UserType } from "@/types.global";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,6 +12,7 @@ import { FaRegComment, FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import styles from "./question.module.scss";
 
 import { formatDistanceToNow } from "date-fns";
+import LikePopup from "../LikePopup/LikePopup";
 import PostAnswer from "../PostAnswer/PostAnswer";
 
 interface QuestionProps {
@@ -20,10 +21,12 @@ interface QuestionProps {
 
 const Question = ({ question }: QuestionProps) => {
   const [like, setLike] = useState(false);
+  const [likePopup, setLikePopup] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
   const [ansComponent, setAnsComponent] = useState(false);
   const [likeCount, setLikeCount] = useState(question.reacts?.length);
   const [timeAgo, setTimeAgo] = useState("");
+  const [reactedUsers, setReactedUsers] = useState<UserType[]>([]);
 
   const { user } = useContext(Context);
   const router = useRouter();
@@ -128,6 +131,25 @@ const Question = ({ question }: QuestionProps) => {
     setAnsComponent(!ansComponent);
   };
 
+  const handleLikesPopup = async () => {
+    setLikePopup(!likePopup);
+
+    try {
+      // setLoading(true);
+      const res = await axios.get(
+        `http://localhost:4000/api/question/${question._id}/reacts`
+      );
+      const users = await res.data.message;
+
+      setReactedUsers(users);
+
+      // setLoading(false);
+    } catch (error) {
+      console.error(error);
+      // setLoading(false);
+    }
+  };
+
   return (
     <div className={styles.single_question}>
       <div className={styles.question_user}>
@@ -174,8 +196,11 @@ const Question = ({ question }: QuestionProps) => {
           </a>
         </div>
 
+        {likePopup && question.reacts.length > 0 && (
+          <LikePopup users={reactedUsers} setLikePopup={setLikePopup} />
+        )}
         <div className={styles.add_like_cmnt}>
-          <p>
+          <p onClick={handleLikesPopup}>
             {like ? (
               <FaThumbsUp
                 className={styles.unlike_icon}

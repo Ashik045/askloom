@@ -83,7 +83,8 @@ function Profile({ userr, questions }: UserT) {
               }
               onClick={() => handlePostOrActivity("questions", userr._id)}
             >
-              1 Question
+              {questions.length}{" "}
+              {questions.length > 1 ? "Questions" : "Question"}
             </p>
             <p
               className={
@@ -93,7 +94,7 @@ function Profile({ userr, questions }: UserT) {
               }
               onClick={() => handlePostOrActivity("comments", userr._id)}
             >
-              2 Comments
+              2 Answers
             </p>
             <p
               className={
@@ -108,13 +109,20 @@ function Profile({ userr, questions }: UserT) {
           </nav>
 
           {activity === "questions" ? (
-            questions.map((question) => {
-              return <Question key={question._id} question={question} />;
-            })
+            questions.length === 0 ? (
+              <p>{user?.displayName} haven&apos;t created any question yet.</p>
+            ) : (
+              questions.map((question) => {
+                return <Question key={question._id} question={question} />;
+              })
+            )
           ) : activity === "comments" ? (
             <Activity />
           ) : (
-            <p>Reacts</p>
+            <>
+              <p>This functionality has not completed yet. (Updating..)</p>
+              <p>You reacted on example&apos;s question</p>
+            </>
           )}
         </div>
       </div>

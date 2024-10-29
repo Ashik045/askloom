@@ -69,7 +69,7 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
         tags: tags.filter((tag) => tag.trim() !== ""),
         userid: user?._id,
         user: user?.displayName,
-        userTitle: user?.about,
+        userTitle: user?.title,
       };
 
       const token = localStorage.getItem("jwttoken");
