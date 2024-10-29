@@ -32,13 +32,13 @@ const userSchema: Schema = new Schema(
     title: {
       type: String,
       required: true,
-      default:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla nam eligendi quia repellendus, eum amet harum? Sequi, fugit sed reiciendis, ex nesciunt excepturi reprehenderit eum, porro corporis cumque accusamus in!",
+      default: "New User",
     },
     about: {
       type: String,
       required: true,
-      default: "New User",
+      default:
+        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla nam eligendi quia repellendus, eum amet harum? Sequi, fugit sed reiciendis, ex nesciunt excepturi reprehenderit eum, porro corporis cumque accusamus in!",
     },
     password: { type: String },
     photoUrl: {

@@ -8,11 +8,15 @@ passport.use(
     {
       clientID:
         process.env.GOOGLE_CLIENT_ID ||
-        "1077098493332-k62gepmg9c4tg8eb53fqi7adhhbk70fh.apps.googleusercontent.com",
+        "1077098493332-137np8olfj3l8hbqeafunkgjj34f3bfa.apps.googleusercontent.com",
       clientSecret:
         process.env.GOOGLE_CLIENT_SECRET ||
-        "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",
+        "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",
       callbackURL: "http://localhost:4000/api/auth/google/callback",
+      scope: [
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.googleapis.com/auth/userinfo.profile",
+      ],
     },
 
     async (
@@ -23,9 +27,10 @@ passport.use(
     ) => {
       try {
         // Extract email from Google profile
-        const email = profile.emails && profile.emails[0]?.value;
+        // const email = profile.emails && profile.emails[0]?.value;
 
-        console.log(profile);
+        // console.log(profile);
+        // console.log(email);
 
         // Check if the user already exists
         let user = await User.findOne({ googleId: profile.id });
@@ -48,12 +53,12 @@ passport.use(
         // If user does not exist, create a new one
         const newUser: IUser = new User({
           googleId: profile.id,
-          email: email || "", // Save email if available
+          email: "", // Save email if available
           displayName: profile.displayName || "Unknown User",
           photoUrl: profile.photos?.[0]?.value || "",
-          title:
+          title: "New User",
+          about:
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla nam eligendi quia repellendus, eum amet harum? Sequi, fugit sed reiciendis, ex nesciunt excepturi reprehenderit eum, porro corporis cumque accusamus in!",
-          about: "New User",
           password: "",
           questions: [],
           comments: [],

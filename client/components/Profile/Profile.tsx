@@ -59,7 +59,7 @@ function Profile({ userr, questions }: UserT) {
                 </div>
               )}
             </div>
-            <p className={styles.title}>{userr.about}</p>
+            <p className={styles.title}>{userr.title}</p>
             <p>Member since {date.toLocaleDateString()}</p>
           </div>
 
@@ -71,12 +71,7 @@ function Profile({ userr, questions }: UserT) {
           {editPopUp && <EditPopup user={userr} setEditPopUp={setEditPopUp} />}
         </div>
 
-        <p style={{ color: "rgb(92, 92, 92)" }}>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla nam
-          eligendi quia repellendus, eum amet harum? Sequi, fugit sed
-          reiciendis, ex nesciunt excepturi reprehenderit eum, porro corporis
-          cumque accusamus in!
-        </p>
+        <p style={{ color: "rgb(92, 92, 92)" }}>{user?.about}</p>
 
         <div className={styles.user_qna}>
           <nav>

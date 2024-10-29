@@ -19,6 +19,7 @@ type Inputs = {
   email: string;
   displayName: string;
   about: string;
+  title: string;
   photoUrl: string;
 };
 
@@ -43,6 +44,7 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
     defaultValues: {
       email: user.email || "",
       displayName: user.displayName || "",
+      title: user.title || "",
       about: user.about || "",
     },
   });
@@ -55,6 +57,7 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
     if (
       watchedFields.email !== user.email ||
       watchedFields.displayName !== user.displayName ||
+      watchedFields.title !== user.title ||
       watchedFields.about !== user.about ||
       profilePic
     ) {
@@ -102,6 +105,8 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
         email: data.email.toLowerCase(),
         photoUrl: profilePictureUrl,
       };
+
+      console.log(updatedUser);
 
       const response = await axios.put(
         `http://localhost:4000/api/auth/user/update${user._id}`,
@@ -171,6 +176,24 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
             className={styles.exact_form_inp}
           />
           <span className={styles.form_err}>{errors.displayName?.message}</span>
+
+          <label>Title*</label>
+          <input
+            {...register("title", {
+              required: "Title should be 3-40 characters!",
+              minLength: {
+                value: 3,
+                message: "Minimum length is 3 characters!",
+              },
+              maxLength: {
+                value: 40,
+                message: "Maximum length is 40 characters!",
+              },
+            })}
+            placeholder="Title"
+            className={styles.exact_form_inp}
+          />
+          <span className={styles.form_err}>{errors.title?.message}</span>
 
           <label>About*</label>
           <textarea
