@@ -24,13 +24,14 @@ const LikePopup = ({ users, setLikePopup }: UsersType) => {
         <span onClick={handleClose} className={styles.close_icon}>
           <FaTimes />
         </span>
+        <h1>{users.length} Likes </h1>
 
         {users.map((user) => {
           return (
             <div key={user._id} className={styles.like_users}>
               <Link href={`/profile/${user._id}`}>
                 <Image
-                  src={nophoto}
+                  src={user.photoUrl ? user.photoUrl : nophoto}
                   height={37}
                   width={37}
                   alt="sociatek"
@@ -39,8 +40,10 @@ const LikePopup = ({ users, setLikePopup }: UsersType) => {
               </Link>
 
               <div className={styles.like_user_name}>
-                <p>{user.displayName}</p>
-                <p>{user.title}</p>
+                <p className={styles.answer_name}>
+                  <Link href={`/profile/${user._id}`}>{user.displayName}</Link>
+                </p>
+                <p className={styles.title}>{user.title}</p>
               </div>
 
               <button>

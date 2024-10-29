@@ -40,7 +40,7 @@
       font-size: 24px;
       background-color: #eee;
       border-radius: 50%;
-      color: black;
+      color: rgba(0, 0, 0, 0.756);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -49,6 +49,65 @@
 
       &:hover {
         transform: scale(1.1);
+      }
+    }
+
+    h1 {
+      font-size: 19px;
+      font-weight: bold;
+      color: rgba(0, 0, 0, 0.756);
+      margin-bottom: 5px;
+    }
+
+    .like_users {
+      display: grid;
+      grid-template-columns: 8% 55% 32%;
+      gap: 10px;
+      justify-content: start;
+      align-items: center;
+      //   margin-top: 10px;
+      border-top: 1px solid rgba(0, 0, 0, 0.356);
+      padding: 4px 5px;
+
+      .user_profile {
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .like_user_name {
+        display: block;
+        margin-top: 0px;
+        margin-bottom: 0px;
+
+        .answer_name {
+          font-weight: 600;
+          cursor: pointer;
+          color: rgba(0, 0, 0, 0.756);
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        .title {
+          font-size: 15px;
+          margin-top: -5px;
+          color: rgba(0, 0, 0, 0.656);
+        }
+      }
+
+      button {
+        padding: 4px 10px;
+        cursor: pointer;
+        border-radius: 15px;
+        color: white;
+        transition: all 0.2s ease;
+        background-color: #3a78fc;
+        font-size: 15px;
+
+        &:hover {
+          background-color: #0c0c0c;
+        }
       }
     }
   }

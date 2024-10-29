@@ -200,7 +200,7 @@ const Question = ({ question }: QuestionProps) => {
           <LikePopup users={reactedUsers} setLikePopup={setLikePopup} />
         )}
         <div className={styles.add_like_cmnt}>
-          <p onClick={handleLikesPopup}>
+          <p>
             {like ? (
               <FaThumbsUp
                 className={styles.unlike_icon}
@@ -212,7 +212,7 @@ const Question = ({ question }: QuestionProps) => {
                 onClick={() => handleClick("like")}
               />
             )}
-            <span className={styles.likes}>
+            <span className={styles.likes} onClick={handleLikesPopup}>
               {likeCount}
               {likeCount > 1 ? " Likes" : " Like"}
             </span>
