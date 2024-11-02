@@ -1,7 +1,6 @@
 "use client";
 
 import { Context } from "@/Context/Context";
-import Questionloading from "@/loader/Questionloading";
 import { QuestionType } from "@/types.global";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
@@ -34,7 +33,6 @@ const MainHome = ({ questions }: QuestionProp) => {
   return (
     <div className={styles.main_home}>
       <QuestionComponent />
-      <Questionloading />
 
       {questions.map((question) => {
         return <Question key={question._id} question={question} />;

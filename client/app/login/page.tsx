@@ -14,6 +14,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const router = useRouter();
 
   const { dispatch } = useContext(Context);
@@ -46,9 +47,8 @@ export default function Login() {
       setLoading(false);
     } catch (error: any) {
       setLoading(false);
+      setErrorMessages(error.response?.data.error);
       dispatch({ type: "LOGIN_FAILURE", payload: error.response.data.error });
-      console.log(error);
-      throw new Error("There was an error logging user!");
     }
   };
 
@@ -146,6 +146,15 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+
+          {errorMessages && (
+            <p
+              className={styles.f_errors}
+              style={{ marginBottom: "-16px", marginTop: "5px", color: "red" }}
+            >
+              {errorMessages}
+            </p>
+          )}
           <button type="submit">{loading ? "Loading..." : "Submit"}</button>
         </form>
 

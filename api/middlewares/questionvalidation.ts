@@ -27,7 +27,7 @@ export const QuestionValidation = (
       return res.status(401).json({ error: "Unauthorized: Invalid token" });
     }
   } else {
-    return res.status(401).json({ error: "Unauthorized: No token provided" });
+    return res.status(401).json({ error: "Unauthorized: Invalid token" });
   }
 };
 

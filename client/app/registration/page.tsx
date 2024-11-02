@@ -87,7 +87,6 @@ export default function Regpage() {
           "http://localhost:4000/api/auth/registration",
           newUser
         );
-        setLoading(false);
 
         if (response.data.user) {
           localStorage.setItem("jwttoken", response.data.token);
@@ -101,6 +100,7 @@ export default function Regpage() {
         setLoading(false);
       } catch (error: any) {
         dispatch({ type: "LOGIN_FAILURE", payload: error.response.data.error });
+        setErrorMessages(error.response.data.error);
 
         if (axios.isAxiosError(error)) {
           const axiosError = error as AxiosError<{ errors?: any }>;
@@ -110,8 +110,7 @@ export default function Regpage() {
             axiosError.response.data.errors
           ) {
             const { errors } = axiosError.response.data;
-            // console.log(errors);
-            setErrorMessages(errors);
+            // setErrorMessages(errors);
           }
         }
 
@@ -119,9 +118,9 @@ export default function Regpage() {
       }
     } catch (error: any) {
       dispatch({ type: "LOGIN_FAILURE", payload: error.response.data.error });
-      console.log(error);
-      throw new Error("There was an error logging user!");
+      setErrorMessages(error.response.data.error);
       setLoading(false);
+      throw new Error("There was an error logging user!");
     }
   };
 
@@ -213,7 +212,6 @@ export default function Regpage() {
             className={styles.textarea}
             rows={3}
             cols={70}
-            required
           />
           {/* error message */}
           <span className={styles.form_err}>{formErrors?.about?.message}</span>
@@ -283,11 +281,11 @@ export default function Regpage() {
             {formErrors?.confirmPassword?.message}
           </span>
 
-          {errorMessages.map((errorMessage, index) => (
-            <p key={index} className={styles.f_errors}>
-              {errorMessage}
+          {errorMessages && (
+            <p className={styles.f_errors} style={{ marginBottom: "-18px" }}>
+              {errorMessages}
             </p>
-          ))}
+          )}
 
           <input
             type="submit"

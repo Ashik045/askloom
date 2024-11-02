@@ -37,6 +37,7 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
   const [inpChanged, setInpChanged] = useState(false); // State for
   const router = useRouter();
   const [error, setError] = useState("");
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
   const { user } = useContext(Context);
   if (!user) {
@@ -81,7 +82,7 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
         },
       };
 
-      console.log(initialData);
+      // console.log(initialData);
 
       try {
         const url = initialData
@@ -92,7 +93,7 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
         const response = await method(url, enrichedData, config);
 
         if (response.data.message) {
-          console.log(response.data.message);
+          // console.log(response.data.message);
 
           if (initialData) {
             router.push(`/questions/${initialData._id}`);
@@ -104,12 +105,14 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
         setLoading(false);
       } catch (error: any) {
         setLoading(false);
+        setErrorMessages(error.response?.data?.error);
         console.error("Error submitting form:", error);
       }
 
       // console.log(enrichedData);
       setLoading(false);
-    } catch (error) {
+    } catch (error: any) {
+      setErrorMessages(error.response?.data?.error);
       console.error("Error submitting form:", error);
       setLoading(false);
     }
@@ -187,6 +190,19 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
         {/* {errors.tag?.message && <p>{String(errors.tags.message)}</p>} */}
 
         {error && <p style={{ color: "red" }}>{error}</p>}
+        {errorMessages && (
+          <p
+            className={styles.f_errors}
+            style={{
+              marginBottom: "-16px",
+              marginTop: "9px",
+              color: "red",
+              textAlign: "center",
+            }}
+          >
+            {errorMessages}
+          </p>
+        )}
         <button type="submit">
           {loading
             ? "Loading.."

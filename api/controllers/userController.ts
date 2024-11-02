@@ -77,18 +77,18 @@ const loginHandler = async (req: Request, res: Response) => {
         const jwtToken = jwt.sign(payload, jwtSecret, { expiresIn: "2d" });
 
         res.status(200).json({
-          message: "Login successfull!",
+          message: "Login successfull.",
           user: userDetail,
           token: jwtToken,
         });
       } else {
         res.status(401).json({
-          error: "Incorrect email/username or password!",
+          error: "Incorrect email or password!",
         });
       }
     } else {
       res.status(401).json({
-        error: "Incorrect email/username or password!",
+        error: "Incorrect email or password!",
       });
     }
   } catch (error) {
