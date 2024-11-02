@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import QuestionDetails from "@/components/QuestionDetails/QuestionDetails";
+import TrendingQuestions from "@/components/TrendingQuestions/TrendingQuestions";
 import { getCommentsByQid } from "@/lib/comments";
 import { getQuestionById } from "@/lib/questions";
 import styles from "@/styles/questiondetails.module.scss";
@@ -28,7 +29,9 @@ export default async function QuestionPage({ params }: Params) {
     <div className={styles.questiondetails_page}>
       <QuestionDetails question={question} answers={comments} />
 
-      <h1>Trending Questions</h1>
+      <div className={styles.trending_questionss}>
+        <TrendingQuestions />
+      </div>
     </div>
   );
 }

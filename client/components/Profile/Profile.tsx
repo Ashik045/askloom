@@ -5,7 +5,7 @@ import { Context } from "@/Context/Context";
 import noPhoto from "@/public/images/no-photo.png";
 import { QuestionType, UserType } from "@/types.global";
 import Image from "next/image";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MdCreate } from "react-icons/md";
 import Activity from "../Activity/Activity";
 import EditPopup from "../EditPopup/EditPopup";
@@ -21,6 +21,7 @@ function Profile({ userr, questions }: UserT) {
   const date = new Date(userr.createdAt);
   const [activity, setActivity] = useState<string>("questions");
   const [editPopUp, setEditPopUp] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   const { user } = useContext(Context);
 
@@ -31,6 +32,14 @@ function Profile({ userr, questions }: UserT) {
   const handleEditProfile = () => {
     setEditPopUp(true);
   };
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <div className={styles.profile_main}>
@@ -54,7 +63,13 @@ function Profile({ userr, questions }: UserT) {
                     <MdCreate
                       style={{ marginRight: "3px", fontSize: "18px" }}
                     />
-                    Edit profile
+                    Edit
+                    <span
+                      className={styles.edit_profile_hide}
+                      style={{ marginLeft: "4px" }}
+                    >
+                      profile
+                    </span>
                   </p>
                 </div>
               )}
@@ -125,10 +140,6 @@ function Profile({ userr, questions }: UserT) {
             </>
           )}
         </div>
-      </div>
-
-      <div className={styles.trending_questions}>
-        <h1>trending questions</h1>
       </div>
     </div>
   );

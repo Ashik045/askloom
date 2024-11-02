@@ -10,4 +10,30 @@
   justify-content: center;
   margin-top: 75px;
   // background-color: #e9f9fa;
+
+  .trending_questionss {
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .main_home_page {
+    display: grid;
+    grid-template-columns: 25% 70%;
+
+    .trending_questionss {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .main_home_page {
+    display: grid;
+    grid-template-columns: 100%;
+    margin-top: 69px;
+
+    .question_tags {
+      display: none;
+    }
+  }
 }

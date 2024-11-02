@@ -4,8 +4,29 @@
   margin-right: auto;
   padding-left: 15px;
   padding-right: 15px;
-  margin-top: 75px;
-
+  margin-top: 90px;
+  display: grid;
+  grid-template-columns: 70% 20%;
   gap: 15px;
-  justify-content: center;
+  justify-content: start;
+}
+
+@media screen and (max-width: 992px) {
+  .profile_page {
+    display: grid;
+    grid-template-columns: 96%;
+    justify-content: center;
+
+    .trending_questions {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .profile_page {
+    display: grid;
+    grid-template-columns: 100%;
+    justify-content: center;
+  }
 }

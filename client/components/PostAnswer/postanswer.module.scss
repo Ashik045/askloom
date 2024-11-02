@@ -57,3 +57,38 @@
     font-size: 15px;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .answer_comp {
+    .write_answer {
+      .comment_form {
+        display: grid;
+        grid-template-columns: 72% 25%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .answer_comp {
+    .write_answer {
+      display: grid;
+      grid-template-columns: 9% 89%;
+      justify-content: center;
+      // align-items: center;
+      padding: 2px 3px;
+
+      .comment_form {
+        display: grid;
+        grid-template-columns: 60% 39%;
+        justify-content: space-between;
+        margin-left: 2px;
+
+        .submit_btn {
+          font-size: 15px;
+          padding: 4px 7px;
+        }
+      }
+    }
+  }
+}

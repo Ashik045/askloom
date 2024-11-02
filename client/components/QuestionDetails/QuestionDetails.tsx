@@ -176,7 +176,7 @@ export default function QuestionDetails({
             style={{ textDecoration: "none" }}
           >
             <p>
-              Asked by{" "}
+              <span className={styles.user_ask}>Asked by </span>
               <span className={styles.user_name}> {question.user}</span>,
             </p>
           </Link>

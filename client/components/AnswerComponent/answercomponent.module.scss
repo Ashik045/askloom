@@ -9,7 +9,7 @@
   }
   .answer_comp_main {
     display: grid;
-    grid-template-columns: 7% 85%;
+    grid-template-columns: 8% 85%;
     justify-content: start;
     padding: 5px;
 
@@ -61,6 +61,17 @@
         display: inline; // Align button with text
         margin-left: 4px;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .answer_comp {
+    .answer_comp_main {
+      display: grid;
+      grid-template-columns: 12% 85%;
+      justify-content: space-between;
+      padding: 5px;
     }
   }
 }

@@ -1,4 +1,5 @@
 import Profile from "@/components/Profile/Profile";
+import TrendingQuestions from "@/components/TrendingQuestions/TrendingQuestions";
 import { getQuestionsOfUser } from "@/lib/questions";
 import { getUserByuserId } from "@/lib/user";
 import styles from "@/styles/profilepage.module.scss";
@@ -26,6 +27,10 @@ export default async function page({ params }: Params) {
   return (
     <div className={styles.profile_page}>
       <Profile userr={user} questions={questionss} />
+
+      <div className={styles.trending_questions}>
+        <TrendingQuestions />
+      </div>
     </div>
   );
 }

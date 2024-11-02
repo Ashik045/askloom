@@ -1,12 +1,6 @@
 $color1: rgb(49, 49, 49);
 $color2: rgb(92, 92, 92);
 .profile_main {
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: 70% 20%;
-  gap: 15px;
-  justify-content: start;
-
   .profile_main_user {
     background-color: #f6fcfd;
     padding: 8px;
@@ -14,7 +8,7 @@ $color2: rgb(92, 92, 92);
     .profile_main_info {
       display: grid;
       grid-template-columns: 15% 80%;
-      gap: 20px;
+      gap: 18px;
       justify-content: start;
       align-items: center;
       margin-bottom: 20px;
@@ -27,7 +21,7 @@ $color2: rgb(92, 92, 92);
       .profile_main_in {
         .profile_name_or_edit {
           display: grid;
-          grid-template-columns: 60% 30%;
+          grid-template-columns: 60% 34%;
           justify-content: space-between;
           align-items: center;
 
@@ -46,7 +40,7 @@ $color2: rgb(92, 92, 92);
               align-items: center;
               margin-left: 3px;
               background-color: rgb(240, 239, 239);
-              padding: 3px 7px 0px;
+              padding: 3px 7px 1px 9px;
               color: rgba(0, 0, 0, 0.796);
               margin-right: 5px;
               border-radius: 6px;
@@ -63,22 +57,6 @@ $color2: rgb(92, 92, 92);
           margin: 1px 0px;
         }
       }
-
-      // .edit_profile {
-      //   margin-left: auto;
-      //   cursor: pointer;
-      //   p {
-      //     display: flex;
-      //     justify-content: center;
-      //     align-items: center;
-      //     margin-left: 3px;
-      //     background-color: rgb(240, 239, 239);
-      //     padding: 3px 7px 0px;
-      //     color: rgba(0, 0, 0, 0.796);
-      //     margin-right: 5px;
-      //     border-radius: 4px;
-      //   }
-      // }
     }
 
     .user_qna {
@@ -116,5 +94,53 @@ $color2: rgb(92, 92, 92);
 
   .trending_questions {
     background-color: #f6fcfd;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .profile_main {
+    .profile_main_user {
+      .profile_main_info {
+        display: block;
+
+        .profile_main_in {
+          .profile_name_or_edit {
+            display: grid;
+            grid-template-columns: 60% 34%;
+            justify-content: space-between;
+            align-items: center;
+
+            .edit_profile {
+              p {
+                align-items: center;
+
+                margin-right: 0px;
+              }
+              .edit_profile_hide {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+
+      .user_qna {
+        nav {
+          p {
+            padding: 0px 3px 0px 0px;
+          }
+
+          .notactive {
+            padding: 0px 3px 0px 0px;
+            font-size: 17px;
+          }
+
+          .active {
+            padding: 0px 3px 0px 0px;
+            font-size: 17px;
+          }
+        }
+      }
+    }
   }
 }

@@ -11,3 +11,14 @@
   gap: 15px;
   justify-content: center;
 }
+
+@media screen and (max-width: 992px) {
+  .questiondetails_page {
+    display: grid;
+    grid-template-columns: 100%;
+
+    .trending_questionss {
+      display: none;
+    }
+  }
+}
