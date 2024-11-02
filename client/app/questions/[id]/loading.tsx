@@ -1,5 +1,7 @@
+import QuestionDetailLoading from "@/loader/QuestionDetailLoading";
+
 const loading = () => {
-  return <div>Loading question..</div>;
+  return <QuestionDetailLoading />;
 };
 
 export default loading;
