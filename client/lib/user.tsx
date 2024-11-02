@@ -3,9 +3,7 @@ const getUserByuserId = async (userId: string) => {
     const result = await fetch(
       `http://localhost:4000/api/auth/user/${userId}`,
       {
-        next: {
-          revalidate: 2,
-        },
+        cache: "no-store",
       }
     );
 

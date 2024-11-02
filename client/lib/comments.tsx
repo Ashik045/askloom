@@ -2,9 +2,7 @@
 const getCommentsByQid = async (qid: any) => {
   try {
     const result = await fetch(`http://localhost:4000/api/comments/${qid}`, {
-      next: {
-        revalidate: 1, // This revalidates the cache every 10 seconds
-      },
+      cache: "no-store",
     });
 
     // Check if the response was successful

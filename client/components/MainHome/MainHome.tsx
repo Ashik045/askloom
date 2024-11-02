@@ -17,8 +17,9 @@ const MainHome = ({ questions }: QuestionProp) => {
   const router = useRouter();
   const { dispatch } = useContext(Context);
 
-  const token = localStorage.getItem("jwttoken");
-
+  // logout the user and remove jwttoken if the user expire the expiration time
+  const token =
+    typeof window !== "undefined" && localStorage.getItem("jwttoken");
   if (token) {
     const decodedToken = jwtDecode<{ exp: number }>(token);
     const expirationTime = decodedToken.exp * 1000;

@@ -2,9 +2,7 @@
 const getAllQuestions = async () => {
   try {
     const result = await fetch(`http://localhost:4000/api/questions/all`, {
-      next: {
-        revalidate: 1, // This revalidates the cache every 10 seconds
-      },
+      cache: "no-store",
     });
 
     // Check if the response was successful
@@ -27,9 +25,7 @@ const getQuestionById = async (id: string | number) => {
   try {
     // Fix the URL format, remove the colon and directly insert `id`
     const result = await fetch(`http://localhost:4000/api/question/${id}`, {
-      next: {
-        revalidate: 1, // This revalidates the cache every 10 seconds
-      },
+      cache: "no-store",
     });
 
     if (!result.ok) {
@@ -52,9 +48,7 @@ const getQuestionsOfUser = async (id: string | number) => {
     const result = await fetch(
       `http://localhost:4000/api/questions/all/${id}`,
       {
-        next: {
-          revalidate: 1, // This revalidates the cache every 10 seconds
-        },
+        cache: "no-store",
       }
     );
 
