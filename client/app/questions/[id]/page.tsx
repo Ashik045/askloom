@@ -4,6 +4,7 @@ import QuestionDetails from "@/components/QuestionDetails/QuestionDetails";
 import { getCommentsByQid } from "@/lib/comments";
 import { getQuestionById } from "@/lib/questions";
 import styles from "@/styles/questiondetails.module.scss";
+import NotFound from "./not-found";
 
 interface Params {
   params: {
@@ -20,7 +21,7 @@ export default async function QuestionPage({ params }: Params) {
 
   if (!question) {
     // Return some fallback or error component if the question is not found
-    return <div>Question not found</div>;
+    return <NotFound />;
   }
 
   return (

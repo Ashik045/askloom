@@ -11,6 +11,7 @@ export interface QuestionType {
   user: string;
   userid: string;
   userTitle: string;
+  userPhoto: string;
   tags: string[]; // Array of strings for tags
   reacts: string[]; // Array of strings for reactions
   comments: Comment[]; // Array of Comment objects

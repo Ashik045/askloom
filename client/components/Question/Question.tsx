@@ -155,7 +155,7 @@ const Question = ({ question }: QuestionProps) => {
       <div className={styles.question_user}>
         <Link href={`/profile/${question.userid}`}>
           <Image
-            src={nophoto}
+            src={question?.userPhoto ? question.userPhoto : nophoto}
             height={37}
             width={37}
             alt="sociatek"

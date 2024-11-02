@@ -70,6 +70,7 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
         userid: user?._id,
         user: user?.displayName,
         userTitle: user?.title,
+        userPhoto: user?.photoUrl,
       };
 
       const token = localStorage.getItem("jwttoken");

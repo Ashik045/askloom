@@ -2,9 +2,9 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div style={{ marginTop: "100px" }}>
-      <h1>User Not Found</h1>
-      <p>The user you are looking for does not exist.</p>
+    <div style={{ marginTop: "150px" }}>
+      <h1>Not Found page</h1>
+      <p>The requested page was Not Found</p>
       <Link href="/">Return Home</Link>
     </div>
   );

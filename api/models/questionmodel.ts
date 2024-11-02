@@ -6,6 +6,7 @@ export interface QuestionType {
   userid: string;
   user: string;
   userTitle: string;
+  userPhoto: string;
   tags: string[]; // Array of strings for tags
   reacts: string[]; // Array of strings for reactions
   comments: string[]; // Array of Comment objects
@@ -29,6 +30,9 @@ const QuestionSchema = new mongoose.Schema<QuestionType>(
       required: true,
     },
     userTitle: {
+      type: String,
+    },
+    userPhoto: {
       type: String,
     },
     tags: {
