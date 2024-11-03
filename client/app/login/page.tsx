@@ -136,6 +136,7 @@ export default function Login() {
             placeholder="Email"
             id="email"
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
           />
           <label htmlFor="password">Password:</label>
@@ -144,6 +145,7 @@ export default function Login() {
             id="password"
             placeholder="Password"
             value={password}
+            required
             onChange={(e) => setPassword(e.target.value)}
           />
 

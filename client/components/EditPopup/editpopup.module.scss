@@ -140,3 +140,32 @@
     }
   }
 }
+
+@media screen and (max-width: 767px) {
+  .edit_popup {
+    .form_div {
+      width: 80%;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .edit_popup {
+    .form_div {
+      width: 95%;
+      padding: 10px;
+
+      // .reg_form {
+      //   margin-left: auto;
+      //   margin-right: auto;
+      //   .exact_form_inp {
+      //     width: 98%;
+      //   }
+
+      //   .textarea {
+      //     width: 98%;
+      //   }
+      // }
+    }
+  }
+}

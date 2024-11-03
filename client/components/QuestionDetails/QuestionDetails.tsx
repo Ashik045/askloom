@@ -172,7 +172,7 @@ export default function QuestionDetails({
       <div className={styles.questiondetails_user_time}>
         <div className={styles.question_user_time}>
           <Link
-            href={`/user/${question.user}`}
+            href={`/profile/${question.userid}`}
             style={{ textDecoration: "none" }}
           >
             <p>

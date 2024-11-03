@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Context } from "@/Context/Context";
 import noImage from "@/public/images/no-photo.png";

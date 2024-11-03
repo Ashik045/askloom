@@ -141,7 +141,11 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
             placeholder="Enter your question title"
             onChange={handleInputChange}
           />
-          {errors.title?.message && <p>{String(errors.title.message)}</p>}
+          {errors.title?.message && (
+            <p className={styles.question_inp_error}>
+              {String(errors.title.message)}
+            </p>
+          )}
         </div>
 
         <div className={styles.question_inp}>

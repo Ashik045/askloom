@@ -34,6 +34,11 @@
         width: 100%; // Input should take full width
         box-sizing: border-box; // Include padding and borders in the width
       }
+
+      .question_inp_error {
+        color: red;
+        margin-bottom: -9px;
+      }
     }
 
     .tag_inputs {
@@ -72,6 +77,24 @@
 
       &:hover {
         background-color: #888888;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .create_question {
+    h1 {
+      font-size: 21px;
+
+      margin-bottom: 10px;
+    }
+
+    form {
+      .tag_inputs {
+        input {
+          width: 30%;
+        }
       }
     }
   }
