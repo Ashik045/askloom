@@ -96,7 +96,7 @@ const Question = ({ question }: QuestionProps) => {
       try {
         // add a like request
         const response = await axios.post(
-          `http://localhost:4000/api/question/react/${question._id}`,
+          `https://askloom-api.onrender.com/api/question/react/${question._id}`,
           {},
           config
         );
@@ -111,7 +111,7 @@ const Question = ({ question }: QuestionProps) => {
       // add an unlike request
       try {
         const response = await axios.post(
-          `http://localhost:4000/api/question/unreact/${question._id}`,
+          `https://askloom-api.onrender.com/api/question/unreact/${question._id}`,
           {},
           config
         );
@@ -137,7 +137,7 @@ const Question = ({ question }: QuestionProps) => {
     try {
       // setLoading(true);
       const res = await axios.get(
-        `http://localhost:4000/api/question/${question._id}/reacts`
+        `https://askloom-api.onrender.com/api/question/${question._id}/reacts`
       );
       const users = await res.data.message;
 

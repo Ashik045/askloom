@@ -18,54 +18,71 @@ const passport_google_oauth20_1 = require("passport-google-oauth20");
 const usermodel_1 = __importDefault(require("../models/usermodel")); // Import the User model
 passport_1.default.use(new passport_google_oauth20_1.Strategy({
     clientID: process.env.GOOGLE_CLIENT_ID ||
-        "1077098493332-k62gepmg9c4tg8eb53fqi7adhhbk70fh.apps.googleusercontent.com",
+        "1077098493332-137np8olfj3l8hbqeafunkgjj34f3bfa.apps.googleusercontent.com",
     clientSecret: process.env.GOOGLE_CLIENT_SECRET ||
-        "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",
-    callbackURL: "http://localhost:4000/api/auth/google/callback",
+        "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",
+    callbackURL: "https://askloom-api.onrender.com/api/auth/google/callback",
+    scope: [
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.googleapis.com/auth/userinfo.profile",
+    ],
 }, (accessToken, refreshToken, profile, done) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     try {
-        let existingUser = yield usermodel_1.default.findOne({ googleId: profile.id });
-        const jwtSecret = process.env.JWT_SECRET_KEY || "YOUR_JWT_SECRET";
-        if (existingUser) {
-            const token = jsonwebtoken_1.default.sign({ id: existingUser._id, googleId: existingUser.googleId }, jwtSecret, { expiresIn: "2d" });
-            return done(null, { _id: existingUser._id, token }); // Only return the _id and token
+        // Extract email from Google profile
+        // const email = profile.emails && profile.emails[0]?.value;
+        // console.log(profile);
+        // console.log(email);
+        // Check if the user already exists
+        let user = yield usermodel_1.default.findOne({ googleId: profile.id });
+        const jwtSecret = process.env.JWT_SECRET_KEY || "@@&8a@zP3m6M8*Wx%";
+        if (user) {
+            // Generate a JWT token
+            const token = jsonwebtoken_1.default.sign({ id: user._id, googleId: user.googleId }, jwtSecret, { expiresIn: "2d" });
+            // Return existing user and token
+            return done(null, { user, token }); // Return user and token
         }
+        // If user does not exist, create a new one
         const newUser = new usermodel_1.default({
             googleId: profile.id,
-            displayName: profile.displayName || profile.username || "Unknown User",
+            email: "",
+            displayName: profile.displayName || "Unknown User",
             photoUrl: ((_b = (_a = profile.photos) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.value) || "",
-            about: "",
+            title: "New User",
+            about: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla nam eligendi quia repellendus, eum amet harum? Sequi, fugit sed reiciendis, ex nesciunt excepturi reprehenderit eum, porro corporis cumque accusamus in!",
             password: "",
             questions: [],
             comments: [],
             reacts: [],
         });
         yield newUser.save();
+        // Generate a JWT token for the new user
         const token = jsonwebtoken_1.default.sign({ id: newUser._id, googleId: newUser.googleId }, jwtSecret, { expiresIn: "2d" });
-        return done(null, { _id: newUser._id, token }); // Only return the _id and token
+        // Return new user and token
+        return done(null, { user: newUser, token }); // Return new user and token
     }
     catch (error) {
-        return done(error);
+        return done(error, undefined); // Handle error
     }
 })));
 // Serialize the user by saving the user ID in the session
 passport_1.default.serializeUser((user, done) => {
-    done(null, user._id); // Only store the user ID in the session
+    const userObj = user; // user contains both user and token
+    done(null, userObj.user._id); // Serialize only the user ID
 });
-// Deserialize the user by finding the user by ID in the database
+// Deserialize user.
 passport_1.default.deserializeUser((id, done) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield usermodel_1.default.findById(id);
         if (user) {
-            done(null, user);
+            done(null, user); // Pass the user object to the session
         }
         else {
-            done(null, false);
+            done(new Error("User not found"), null); // Handle user not found
         }
     }
     catch (error) {
-        done(error, null);
+        done(error, null); // Handle any errors during deserialization
     }
 }));
 // passport.serializeUser(

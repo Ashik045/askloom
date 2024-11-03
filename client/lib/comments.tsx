@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const getCommentsByQid = async (qid: any) => {
   try {
-    const result = await fetch(`http://localhost:4000/api/comments/${qid}`, {
-      cache: "no-store",
-    });
+    const result = await fetch(
+      `https://askloom-api.onrender.com/api/comments/${qid}`,
+      {
+        cache: "no-store",
+      }
+    );
 
     // Check if the response was successful
     if (!result.ok) {

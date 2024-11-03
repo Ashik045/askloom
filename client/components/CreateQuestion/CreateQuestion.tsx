@@ -86,8 +86,8 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
 
       try {
         const url = initialData
-          ? `http://localhost:4000/api/question/edit/${initialData._id}`
-          : "http://localhost:4000/api/question/create";
+          ? `https://askloom-api.onrender.com/api/question/edit/${initialData._id}`
+          : "https://askloom-api.onrender.com/api/question/create";
 
         const method = initialData ? axios.put : axios.post;
         const response = await method(url, enrichedData, config);

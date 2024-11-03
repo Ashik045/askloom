@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const getAllQuestions = async () => {
   try {
-    const result = await fetch(`http://localhost:4000/api/questions/all`, {
-      cache: "no-store",
-    });
+    const result = await fetch(
+      `https://askloom-api.onrender.com/api/questions/all`,
+      {
+        cache: "no-store",
+      }
+    );
 
     // Check if the response was successful
     if (!result.ok) {
@@ -24,9 +27,12 @@ const getAllQuestions = async () => {
 const getQuestionById = async (id: string | number) => {
   try {
     // Fix the URL format, remove the colon and directly insert `id`
-    const result = await fetch(`http://localhost:4000/api/question/${id}`, {
-      cache: "no-store",
-    });
+    const result = await fetch(
+      `https://askloom-api.onrender.com/api/question/${id}`,
+      {
+        cache: "no-store",
+      }
+    );
 
     if (!result.ok) {
       throw new Error("Failed to fetch the requested question");
@@ -46,7 +52,7 @@ const getQuestionsOfUser = async (id: string | number) => {
   try {
     // Fix the URL format, remove the colon and directly insert `id`
     const result = await fetch(
-      `http://localhost:4000/api/questions/all/${id}`,
+      `https://askloom-api.onrender.com/api/questions/all/${id}`,
       {
         cache: "no-store",
       }

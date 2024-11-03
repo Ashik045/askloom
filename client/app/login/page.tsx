@@ -28,7 +28,7 @@ export default function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/auth/login/manual",
+        "https://askloom-api.onrender.com/api/auth/login/manual",
         { email, password }
       );
       setLoading(false);
@@ -58,7 +58,7 @@ export default function Login() {
       dispatch({ type: "LOGIN_START" });
 
       // Open Google login and wait for the redirect back to the app
-      window.open("http://localhost:4000/api/auth/google", "_self");
+      window.open("https://askloom-api.onrender.com/api/auth/google", "_self");
 
       // Wait for the redirection to complete, then check the login success
     } catch (error: unknown) {
@@ -78,7 +78,7 @@ export default function Login() {
     const checkLoginStatus = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/api/auth/login/success",
+          "https://askloom-api.onrender.com/api/auth/login/success",
           {
             method: "GET",
             credentials: "include",

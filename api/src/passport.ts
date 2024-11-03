@@ -12,7 +12,7 @@ passport.use(
       clientSecret:
         process.env.GOOGLE_CLIENT_SECRET ||
         "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",
-      callbackURL: "http://localhost:4000/api/auth/google/callback",
+      callbackURL: "https://askloom-api.onrender.com/api/auth/google/callback",
       scope: [
         "https://www.googleapis.com/auth/userinfo.email",
         "https://www.googleapis.com/auth/userinfo.profile",
@@ -47,7 +47,7 @@ passport.use(
           );
 
           // Return existing user and token
-          return done(null, { user, token }); // Return user and token
+          return done(null, { user, token } as unknown as Express.User); // Return user and token
         }
 
         // If user does not exist, create a new one
@@ -75,7 +75,7 @@ passport.use(
         );
 
         // Return new user and token
-        return done(null, { user: newUser, token }); // Return new user and token
+        return done(null, { user: newUser, token } as unknown as Express.User); // Return new user and token
       } catch (error) {
         return done(error, undefined); // Handle error
       }
@@ -85,7 +85,7 @@ passport.use(
 
 // Serialize the user by saving the user ID in the session
 passport.serializeUser((user, done) => {
-  const userObj = user as { user: IUser; token: string }; // user contains both user and token
+  const userObj = user as unknown as { user: IUser; token: string }; // user contains both user and token
   done(null, userObj.user._id); // Serialize only the user ID
 });
 

@@ -16,7 +16,7 @@ const LikePopup = ({ users, setLikePopup }: UsersType) => {
     setLikePopup(false);
   };
 
-  console.log(users);
+  // console.log(users);
 
   return (
     <div className={styles.like_popup}>

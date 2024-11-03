@@ -10,7 +10,7 @@ interface ParamProp {
 
 export default async function page({ params }: ParamProp) {
   const response = await axios.get(
-    `http://localhost:4000/api/question/${params.id}`
+    `https://askloom-api.onrender.com/api/question/${params.id}`
   );
   const questionData = response.data.message;
 

@@ -28,7 +28,7 @@ const Navbar = () => {
   }
 
   const handleLogout = () => {
-    window.open("http://localhost:4000/api/auth/logout", "_self");
+    window.open("https://askloom-api.onrender.com/api/auth/logout", "_self");
 
     dispatch({ type: "LOGOUT" });
 

@@ -96,7 +96,7 @@ export default function QuestionDetails({
       try {
         // add a like request
         const response = await axios.post(
-          `http://localhost:4000/api/question/react/${question._id}`,
+          `https://askloom-api.onrender.com/api/question/react/${question._id}`,
           {},
           config
         );
@@ -111,7 +111,7 @@ export default function QuestionDetails({
       // add an unlike request
       try {
         const response = await axios.post(
-          `http://localhost:4000/api/question/unreact/${question._id}`,
+          `https://askloom-api.onrender.com/api/question/unreact/${question._id}`,
           {},
           config
         );
@@ -148,7 +148,7 @@ export default function QuestionDetails({
 
     try {
       const res = await axios.delete(
-        `http://localhost:4000/api/question/delete/${question._id}`,
+        `https://askloom-api.onrender.com/api/question/delete/${question._id}`,
         config
       );
 

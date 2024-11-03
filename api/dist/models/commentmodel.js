@@ -24,47 +24,26 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-// Create a user schema
-const userSchema = new mongoose_1.Schema({
-    googleId: {
-        type: String,
-        sparse: true,
-    },
-    email: {
-        type: String,
-        // required: true,
-    },
-    displayName: {
+const CommentSchema = new mongoose_1.Schema({
+    userid: {
         type: String,
         required: true,
     },
-    title: {
+    username: {
         type: String,
         required: true,
-        default: "New User",
     },
-    about: {
+    answer: {
         type: String,
         required: true,
-        default: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla nam eligendi quia repellendus, eum amet harum? Sequi, fugit sed reiciendis, ex nesciunt excepturi reprehenderit eum, porro corporis cumque accusamus in!",
     },
-    password: { type: String },
-    photoUrl: {
+    questionId: {
         type: String,
+        required: true,
     },
-    questions: {
-        type: [String],
-        default: [],
-    },
-    comments: {
-        type: [String],
-        default: [],
-    },
-    reacts: {
-        type: [String],
-        default: [],
+    userphoto: {
+        type: String,
     },
 }, { timestamps: true });
-// Create a Mongoose model for users
-const User = mongoose_1.default.model("User", userSchema);
-exports.default = User;
+const Comment = mongoose_1.default.model("Comment", CommentSchema);
+exports.default = Comment;

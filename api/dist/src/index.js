@@ -9,6 +9,7 @@ const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const passport_1 = __importDefault(require("passport"));
 const express_session_1 = __importDefault(require("express-session"));
+const comment_1 = __importDefault(require("../routes/comment"));
 const question_1 = __importDefault(require("../routes/question"));
 const user_1 = __importDefault(require("../routes/user"));
 // Import the Google strategy file
@@ -47,6 +48,8 @@ app.get("/", (req, res) => {
 });
 // questions route
 app.use("/api", question_1.default);
+// questions route
+app.use("/api", comment_1.default);
 // user route
 app.use("/api/auth", user_1.default);
 // Error handling: 404

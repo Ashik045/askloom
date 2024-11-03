@@ -7,18 +7,25 @@ exports.Question = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const QuestionSchema = new mongoose_1.default.Schema({
     title: {
-        type: "string",
+        type: String,
         required: true,
     },
     question: {
-        type: "string",
+        type: String,
+    },
+    userid: {
+        type: String,
+        required: true,
     },
     user: {
-        type: "string",
+        type: String,
         required: true,
     },
     userTitle: {
-        type: "string",
+        type: String,
+    },
+    userPhoto: {
+        type: String,
     },
     tags: {
         type: [String],

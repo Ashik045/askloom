@@ -53,7 +53,7 @@ const PostAnswer = ({ qid }: PostType) => {
       };
 
       const response = await axios.post(
-        "http://localhost:4000/api/comment/create",
+        "https://askloom-api.onrender.com/api/comment/create",
         newAnswer
       );
 
