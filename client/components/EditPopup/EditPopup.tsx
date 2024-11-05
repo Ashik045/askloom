@@ -108,7 +108,7 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
       };
 
       const response = await axios.put(
-        `https://askloom-api.onrender.com/api/auth/user/update/${user._id}`,
+        `${process.env.SERVER_URL}/api/auth/user/update/${user._id}`,
         updatedUser
       );
 

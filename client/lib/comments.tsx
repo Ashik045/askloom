@@ -2,7 +2,7 @@
 const getCommentsByQid = async (qid: any) => {
   try {
     const result = await fetch(
-      `https://askloom-api.onrender.com/api/comments/${qid}`,
+      `${process.env.SERVER_URL}/api/comments/${qid}`,
       {
         cache: "no-store",
       }

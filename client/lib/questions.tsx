@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const getAllQuestions = async () => {
   try {
-    const result = await fetch(
-      `https://askloom-api.onrender.com/api/questions/all`,
-      {
-        cache: "no-store",
-      }
-    );
+    const result = await fetch(`${process.env.SERVER_URL}/api/questions/all`, {
+      cache: "no-store",
+    });
 
     // Check if the response was successful
     if (!result.ok) {
@@ -27,12 +24,9 @@ const getAllQuestions = async () => {
 const getQuestionById = async (id: string | number) => {
   try {
     // Fix the URL format, remove the colon and directly insert `id`
-    const result = await fetch(
-      `https://askloom-api.onrender.com/api/question/${id}`,
-      {
-        cache: "no-store",
-      }
-    );
+    const result = await fetch(`${process.env.SERVER_URL}/api/question/${id}`, {
+      cache: "no-store",
+    });
 
     if (!result.ok) {
       throw new Error("Failed to fetch the requested question");
@@ -52,7 +46,7 @@ const getQuestionsOfUser = async (id: string | number) => {
   try {
     // Fix the URL format, remove the colon and directly insert `id`
     const result = await fetch(
-      `https://askloom-api.onrender.com/api/questions/all/${id}`,
+      `${process.env.SERVER_URL}/api/questions/all/${id}`,
       {
         cache: "no-store",
       }
@@ -72,4 +66,24 @@ const getQuestionsOfUser = async (id: string | number) => {
   }
 };
 
-export { getAllQuestions, getQuestionById, getQuestionsOfUser };
+const getAllTags = async () => {
+  try {
+    const result = await fetch(`${process.env.SERVER_URL}/api/questions/tags`);
+
+    // Check if the response was successful
+    if (!result.ok) {
+      throw new Error("Failed to fetch question tags");
+    }
+
+    // Await the JSON parsing
+    const data = await result.json();
+
+    // Return the message array from the response
+    return data.message; // Since your data is inside the 'message' array
+  } catch (error) {
+    console.error("Error fetching question tags:", error);
+    throw new Error("There was an error fetching question tags!");
+  }
+};
+
+export { getAllQuestions, getAllTags, getQuestionById, getQuestionsOfUser };

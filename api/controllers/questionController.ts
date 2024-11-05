@@ -244,6 +244,36 @@ const getReactedUsers = async (req: Request, res: Response) => {
   }
 };
 
+// fetch the tags based on most used tags
+// fetch the tags based on most used tags
+const getQuestionsTags = async (req: Request, res: Response) => {
+  try {
+    // Fetch all questions and extract tags
+    const result = await Question.find();
+    const tagFrequency: Record<string, number> = {};
+
+    // Count the frequency of each tag
+    result.forEach((question) => {
+      question.tags.forEach((tag: string) => {
+        tagFrequency[tag] = (tagFrequency[tag] || 0) + 1; // This line checks if the tag already exists . If it does, it increments the count by 1. If it doesn’t, it initializes the count to 1.
+      });
+    });
+
+    // Convert tagFrequency object to an array and sort by frequency
+    const tags = Object.keys(tagFrequency)
+      .sort((a, b) => tagFrequency[b] - tagFrequency[a])
+      .map((tag) => `${tag}(${tagFrequency[tag]})`);
+
+    res.status(200).json({
+      tags,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Question tags could not be retrieved!",
+    });
+  }
+};
+
 export {
   createQuestion,
   DeleteAQuestion,
@@ -251,6 +281,7 @@ export {
   getAllQuestions,
   getQuestionById,
   getQuestionsOfUser,
+  getQuestionsTags,
   getReactedUsers,
   reactQuestion,
   unReactQuestion,

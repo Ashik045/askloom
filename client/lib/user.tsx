@@ -1,7 +1,7 @@
 const getUserByuserId = async (userId: string) => {
   try {
     const result = await fetch(
-      `https://askloom-api.onrender.com/api/auth/user/${userId}`,
+      `${process.env.SERVER_URL}/api/auth/user/${userId}`,
       {
         cache: "no-store",
       }

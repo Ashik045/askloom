@@ -28,7 +28,7 @@ export default function Login() {
 
     try {
       const response = await axios.post(
-        "https://askloom-api.onrender.com/api/auth/login/manual",
+        `${process.env.SERVER_URL}/api/auth/login/manual`,
         { email, password }
       );
       setLoading(false);
@@ -61,7 +61,7 @@ export default function Login() {
       const baseUrl =
         window.location.hostname === "localhost"
           ? "http://localhost:4000"
-          : "https://askloom-api.onrender.com";
+          : `${process.env.SERVER_URL}`;
 
       // Open Google login and wait for the redirect back to the app
       window.open(`${baseUrl}/api/auth/google`, "_self");
@@ -86,7 +86,7 @@ export default function Login() {
         const baseUrl =
           window.location.hostname === "localhost"
             ? "http://localhost:4000"
-            : "https://askloom-api.onrender.com";
+            : `${process.env.SERVER_URL}`;
 
         console.log(window.location.hostname);
         console.log("Environment:", process.env.NODE_ENV);

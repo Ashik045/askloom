@@ -5,7 +5,6 @@ import styles from "@/styles/mhome.module.scss";
 
 export default async function Home() {
   const questionss = await getAllQuestions();
-  console.log(process.env.SERVER_URL);
 
   return (
     <div className=" font-[family-name:var(--font-geist-sans)]">

@@ -7,6 +7,7 @@ import {
   getAllQuestions,
   getQuestionById,
   getQuestionsOfUser,
+  getQuestionsTags,
   getReactedUsers,
   reactQuestion,
   unReactQuestion,
@@ -57,5 +58,8 @@ router.post(
 
 // fetch the reacted users list of a perticular post
 router.get("/question/:questionid/reacts", getReactedUsers);
+
+// fetch the tags list
+router.get("/questions/tags", getQuestionsTags);
 
 export default router;

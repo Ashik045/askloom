@@ -5,7 +5,7 @@ interface QuestionProp {
 }
 
 const TrendingQuestions = ({ questions }: QuestionProp) => {
-  console.log(questions);
+  // console.log(questions);
 
   return (
     <div className={styles.trending_questions}>

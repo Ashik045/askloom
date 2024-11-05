@@ -84,7 +84,7 @@ export default function Regpage() {
 
       try {
         const response = await axios.post(
-          "https://askloom-api.onrender.com/api/auth/registration",
+          `${process.env.SERVER_URL}/api/auth/registration`,
           newUser
         );
 

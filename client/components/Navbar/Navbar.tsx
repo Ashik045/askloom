@@ -28,7 +28,7 @@ const Navbar = () => {
   }
 
   const handleLogout = () => {
-    window.open("https://askloom-api.onrender.com/api/auth/logout", "_self");
+    window.open(`${process.env.SERVER_URL}/api/auth/logout`, "_self");
 
     dispatch({ type: "LOGOUT" });
 
