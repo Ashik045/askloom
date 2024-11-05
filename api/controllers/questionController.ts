@@ -48,7 +48,7 @@ const getQuestionById = async (req: Request, res: Response) => {
   }
 };
 
-// create all questions
+// get all questions
 const getAllQuestions = async (req: Request, res: Response) => {
   try {
     const questions = await Question.find().sort({ createdAt: -1 });
@@ -275,6 +275,25 @@ const getQuestionsTags = async (req: Request, res: Response) => {
   }
 };
 
+// get trending questions based on most reacts
+const getTrendingQuestions = async (req: Request, res: Response) => {
+  try {
+    const questions = await Question.find();
+
+    const trendingQuestions = questions.sort(
+      (a, b) => b.reacts.length - a.reacts.length
+    );
+
+    res.status(200).json({
+      message: trendingQuestions,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Question not found!",
+    });
+  }
+};
+
 export {
   createQuestion,
   DeleteAQuestion,
@@ -284,6 +303,7 @@ export {
   getQuestionsOfUser,
   getQuestionsTags,
   getReactedUsers,
+  getTrendingQuestions,
   reactQuestion,
   unReactQuestion,
 };

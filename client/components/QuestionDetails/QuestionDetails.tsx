@@ -28,6 +28,8 @@ export default function QuestionDetails({
   const [likeCount, setLikeCount] = useState(question.reacts?.length);
   const [timeAgo, setTimeAgo] = useState("");
 
+  console.log("url", process.env.NEXT_PUBLIC_SERVER_URL);
+
   const { user } = useContext(Context);
   const router = useRouter();
 
@@ -96,7 +98,7 @@ export default function QuestionDetails({
       try {
         // add a like request
         const response = await axios.post(
-          `${process.env.SERVER_URL}/api/question/react/${question._id}`,
+          `https://askloom-api.onrender.com/api/question/react/${question._id}`,
           {},
           config
         );
@@ -111,7 +113,7 @@ export default function QuestionDetails({
       // add an unlike request
       try {
         const response = await axios.post(
-          `${process.env.SERVER_URL}/api/question/unreact/${question._id}`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/question/unreact/${question._id}`,
           {},
           config
         );
@@ -148,7 +150,7 @@ export default function QuestionDetails({
 
     try {
       const res = await axios.delete(
-        `${process.env.SERVER_URL}/api/question/delete/${question._id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/question/delete/${question._id}`,
         config
       );
 

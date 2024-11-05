@@ -17,7 +17,7 @@ const Tags = ({ tags }: TagType) => {
 
   return (
     <div className={styles.question_tags}>
-      {tags.map((tag) => {
+      {tags?.map((tag) => {
         return (
           <div
             key={tag}

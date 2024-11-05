@@ -12,8 +12,6 @@ const TagContext = createContext<TagContextType | undefined>(undefined);
 export const TagProvider = ({ children }: { children: ReactNode }) => {
   const [tagVal, setTagVal] = useState("");
 
-  console.log(tagVal);
-
   return (
     <TagContext.Provider value={{ tagVal, setTagVal }}>
       {children}

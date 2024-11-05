@@ -19,16 +19,11 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? "http://localhost:3000/" // Replace with actual frontend URL when hosted
-        : process.env.CLIENT_URL,
+    origin: process.env.CLIENT_URL,
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
 );
-
-console.log(process.env.NODE_ENV);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

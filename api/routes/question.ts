@@ -9,6 +9,7 @@ import {
   getQuestionsOfUser,
   getQuestionsTags,
   getReactedUsers,
+  getTrendingQuestions,
   reactQuestion,
   unReactQuestion,
 } from "../controllers/questionController";
@@ -61,5 +62,8 @@ router.get("/question/:questionid/reacts", getReactedUsers);
 
 // fetch the tags lists
 router.get("/questions/tags", getQuestionsTags);
+
+// fetch the trending questions list
+router.get("/questions/trending", getTrendingQuestions);
 
 export default router;

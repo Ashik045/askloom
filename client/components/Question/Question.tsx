@@ -27,7 +27,6 @@ const Question = ({ question }: QuestionProps) => {
   const [likeCount, setLikeCount] = useState(question.reacts?.length);
   const [timeAgo, setTimeAgo] = useState("");
   const [reactedUsers, setReactedUsers] = useState<UserType[]>([]);
-  console.log("url", process.env.NEXT_PUBLIC_NEXT_PUBLIC_SERVER_URL);
 
   const { user } = useContext(Context);
   const router = useRouter();
