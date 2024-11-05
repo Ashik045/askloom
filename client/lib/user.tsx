@@ -1,7 +1,7 @@
 const getUserByuserId = async (userId: string) => {
   try {
     const result = await fetch(
-      `${process.env.SERVER_URL}/api/auth/user/${userId}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/user/${userId}`,
       {
         cache: "no-store",
       }

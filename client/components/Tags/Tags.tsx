@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useTag } from "@/TagContext/TagContext";
 import styles from "./tags.module.scss";
 
 type TagType = {
@@ -7,8 +7,7 @@ type TagType = {
 };
 
 const Tags = ({ tags }: TagType) => {
-  const [tagVal, setTagVal] = useState("");
-  console.log(tagVal);
+  const { setTagVal } = useTag();
 
   const handleTag = (val: string) => {
     const tag = val.split("(")[0];

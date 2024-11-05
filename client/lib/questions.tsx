@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const getAllQuestions = async () => {
   try {
-    const result = await fetch(`${process.env.SERVER_URL}/api/questions/all`, {
-      cache: "no-store",
-    });
+    const result = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/questions/all`,
+      {
+        cache: "no-store",
+      }
+    );
 
     // Check if the response was successful
     if (!result.ok) {
@@ -24,9 +27,12 @@ const getAllQuestions = async () => {
 const getQuestionById = async (id: string | number) => {
   try {
     // Fix the URL format, remove the colon and directly insert `id`
-    const result = await fetch(`${process.env.SERVER_URL}/api/question/${id}`, {
-      cache: "no-store",
-    });
+    const result = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/question/${id}`,
+      {
+        cache: "no-store",
+      }
+    );
 
     if (!result.ok) {
       throw new Error("Failed to fetch the requested question");
@@ -46,7 +52,7 @@ const getQuestionsOfUser = async (id: string | number) => {
   try {
     // Fix the URL format, remove the colon and directly insert `id`
     const result = await fetch(
-      `${process.env.SERVER_URL}/api/questions/all/${id}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/questions/all/${id}`,
       {
         cache: "no-store",
       }

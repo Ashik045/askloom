@@ -1,3 +1,24 @@
 .main_home {
   // margin-top: 75px;
+
+  .tag_text {
+    color: rgba(0, 0, 0, 0.796);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+
+    span {
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      margin-left: 3px;
+      text-decoration: underline;
+
+      .tag_text_icon {
+        cursor: pointer;
+        margin-left: 3px;
+      }
+    }
+  }
 }

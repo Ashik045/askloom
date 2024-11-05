@@ -27,6 +27,7 @@ const Question = ({ question }: QuestionProps) => {
   const [likeCount, setLikeCount] = useState(question.reacts?.length);
   const [timeAgo, setTimeAgo] = useState("");
   const [reactedUsers, setReactedUsers] = useState<UserType[]>([]);
+  console.log("url", process.env.NEXT_PUBLIC_NEXT_PUBLIC_SERVER_URL);
 
   const { user } = useContext(Context);
   const router = useRouter();
@@ -96,7 +97,7 @@ const Question = ({ question }: QuestionProps) => {
       try {
         // add a like request
         const response = await axios.post(
-          `${process.env.SERVER_URL}/api/question/react/${question._id}`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/question/react/${question._id}`,
           {},
           config
         );
@@ -111,7 +112,7 @@ const Question = ({ question }: QuestionProps) => {
       // add an unlike request
       try {
         const response = await axios.post(
-          `${process.env.SERVER_URL}/api/question/unreact/${question._id}`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/question/unreact/${question._id}`,
           {},
           config
         );
@@ -137,7 +138,7 @@ const Question = ({ question }: QuestionProps) => {
     try {
       // setLoading(true);
       const res = await axios.get(
-        `${process.env.SERVER_URL}/api/question/${question._id}/reacts`
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/question/${question._id}/reacts`
       );
       const users = await res.data.message;
 

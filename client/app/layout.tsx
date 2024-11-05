@@ -1,4 +1,5 @@
 import { ContextProvider } from "@/Context/Context";
+import { TagProvider } from "@/TagContext/TagContext";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Navbar from "../components/Navbar/Navbar";
@@ -31,8 +32,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ContextProvider>
-          <Navbar />
-          {children}
+          <TagProvider>
+            <Navbar />
+            {children}
+          </TagProvider>
         </ContextProvider>
       </body>
     </html>

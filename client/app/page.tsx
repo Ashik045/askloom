@@ -8,11 +8,15 @@ export default async function Home() {
   const questionss = await getAllQuestions();
   const tags = await getAllTags();
 
+  // how do i get here my tag value. so that i can filter question by tag
+
+  console.log(process.env.NEXT_PUBLIC_SERVER_URL);
+
   return (
     <div className=" font-[family-name:var(--font-geist-sans)]">
       <main className={styles.main_home_page}>
         <div className={styles.question_tags}>
-          <Tags tags={tags} />;
+          <Tags tags={tags} />
         </div>
 
         <MainHome questions={questionss} />

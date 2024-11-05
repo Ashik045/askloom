@@ -5,6 +5,7 @@
 // import { Context } from "Context/Context";
 import { Context } from "@/Context/Context";
 import noPhoto from "@/public/images/no-photo.png";
+import { useTag } from "@/TagContext/TagContext";
 import Image from "next/image";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
@@ -18,6 +19,7 @@ const Navbar = () => {
   const [isClient, setIsClient] = useState(false);
 
   const { user, dispatch } = useContext(Context);
+  const { setTagVal } = useTag();
 
   useEffect(() => {
     setIsClient(true);
@@ -62,7 +64,7 @@ const Navbar = () => {
   return (
     <div className={styles.navbar}>
       <div className={styles.navbar_main}>
-        <div className={styles.nav_brand}>
+        <div className={styles.nav_brand} onClick={() => setTagVal("")}>
           <Link href="/" style={{ textDecoration: "none", color: "black" }}>
             <h5>AskLoom</h5>
           </Link>
@@ -71,7 +73,7 @@ const Navbar = () => {
         <div className={styles.nav_right}>
           <div className={styles.nav_menu_item}>
             <Link href="/" style={{ textDecoration: "none" }}>
-              <p>Questions</p>
+              <p onClick={() => setTagVal("")}>Questions</p>
             </Link>
             <Link href="/createquestion" style={{ textDecoration: "none" }}>
               <p>ask question</p>

@@ -2,7 +2,7 @@
 const getCommentsByQid = async (qid: any) => {
   try {
     const result = await fetch(
-      `${process.env.SERVER_URL}/api/comments/${qid}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/comments/${qid}`,
       {
         cache: "no-store",
       }
