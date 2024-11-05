@@ -15,6 +15,7 @@ import {
 } from "../controllers/questionController";
 
 import {
+  QuestionTagValidation,
   QuestionValidation,
   ReactQuestionMiddleware,
 } from "../middlewares/questionvalidation";
@@ -22,7 +23,12 @@ import {
 const router = express.Router();
 
 // create a question
-router.post("/question/create", QuestionValidation, createQuestion);
+router.post(
+  "/question/create",
+  QuestionValidation,
+  QuestionTagValidation,
+  createQuestion
+);
 
 // get a question by questionId
 router.get("/question/:questionid", getQuestionById);
@@ -34,7 +40,12 @@ router.get("/questions/all", getAllQuestions);
 router.get("/questions/all/:userid", getQuestionsOfUser);
 
 // edit question
-router.put("/question/edit/:questionid", QuestionValidation, editAQuestion);
+router.put(
+  "/question/edit/:questionid",
+  QuestionValidation,
+  QuestionTagValidation,
+  editAQuestion
+);
 
 // delete question
 router.delete(

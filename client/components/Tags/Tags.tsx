@@ -17,17 +17,21 @@ const Tags = ({ tags }: TagType) => {
 
   return (
     <div className={styles.question_tags}>
-      {tags?.map((tag) => {
-        return (
-          <div
-            key={tag}
-            className={styles.question_tag}
-            onClick={() => handleTag(tag)}
-          >
-            <span className={styles.tag}>{tag}</span>
-          </div>
-        );
-      })}
+      <h1>Tags</h1>
+
+      <div className={styles.question_tag}>
+        {tags?.map((tag) => {
+          return (
+            <span
+              className={styles.tag}
+              key={tag}
+              onClick={() => handleTag(tag)}
+            >
+              {tag}
+            </span>
+          );
+        })}
+      </div>
     </div>
   );
 };

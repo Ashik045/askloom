@@ -27,8 +27,7 @@ export default function QuestionDetails({
   const [loading, setLoading] = useState(false);
   const [likeCount, setLikeCount] = useState(question.reacts?.length);
   const [timeAgo, setTimeAgo] = useState("");
-
-  console.log("url", process.env.NEXT_PUBLIC_SERVER_URL);
+  const [isClient, setIsClient] = useState(false);
 
   const { user } = useContext(Context);
   const router = useRouter();
@@ -70,6 +69,14 @@ export default function QuestionDetails({
       }
     }
   }, [question, user?._id]);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
 
   const handleClick = async (prop: string) => {
     if (likeLoading) {

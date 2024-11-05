@@ -3,7 +3,7 @@
 import QuestionDetails from "@/components/QuestionDetails/QuestionDetails";
 import TrendingQuestions from "@/components/TrendingQuestions/TrendingQuestions";
 import { getCommentsByQid } from "@/lib/comments";
-import { getQuestionById } from "@/lib/questions";
+import { getQuestionById, getTrendingQuestions } from "@/lib/questions";
 import styles from "@/styles/questiondetails.module.scss";
 import NotFound from "./not-found";
 
@@ -17,6 +17,7 @@ export default async function QuestionPage({ params }: Params) {
   const { id } = params;
   const question = await getQuestionById(id);
   const comments = await getCommentsByQid(id);
+  const trendingQuestions = await getTrendingQuestions();
 
   // console.log(question);
 
@@ -30,7 +31,7 @@ export default async function QuestionPage({ params }: Params) {
       <QuestionDetails question={question} answers={comments} />
 
       <div className={styles.trending_questionss}>
-        <TrendingQuestions />
+        <TrendingQuestions questions={trendingQuestions} />
       </div>
     </div>
   );
