@@ -12,7 +12,10 @@ passport.use(
       clientSecret:
         process.env.GOOGLE_CLIENT_SECRET ||
         "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",
-      callbackURL: "http://localhost:4000/api/auth/google/callback",
+      callbackURL:
+        process.env.NODE_ENV === "production"
+          ? "https://askloom-api.onrender.com/api/auth/google/callback"
+          : "http://localhost:4000/api/auth/google/callback",
       scope: [
         "https://www.googleapis.com/auth/userinfo.email",
         "https://www.googleapis.com/auth/userinfo.profile",

@@ -57,8 +57,14 @@ export default function Login() {
       // Dispatch loading state
       dispatch({ type: "LOGIN_START" });
 
+      // Set the base URL based on the environment
+      const baseUrl =
+        window.location.hostname === "localhost"
+          ? "http://localhost:4000"
+          : "https://askloom-api.onrender.com";
+
       // Open Google login and wait for the redirect back to the app
-      window.open("http://localhost:4000/api/auth/google", "_self");
+      window.open(`${baseUrl}/api/auth/google`, "_self");
 
       // Wait for the redirection to complete, then check the login success
     } catch (error: unknown) {
@@ -77,13 +83,18 @@ export default function Login() {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:4000/api/auth/login/success",
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
+        const baseUrl =
+          window.location.hostname === "localhost"
+            ? "http://localhost:4000"
+            : "https://askloom-api.onrender.com";
+
+        console.log(window.location.hostname);
+        console.log("Environment:", process.env.NODE_ENV);
+
+        const response = await fetch(`${baseUrl}/api/auth/login/success`, {
+          method: "GET",
+          credentials: "include",
+        });
 
         if (response.ok) {
           const data = await response.json();

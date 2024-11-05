@@ -1,10 +1,10 @@
+import MongoStore from "connect-mongo";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
+import session from "express-session";
 import mongoose from "mongoose";
 import passport from "passport";
-
-import session from "express-session";
 import commentRoute from "../routes/comment";
 import questionRoute from "../routes/question";
 import authRoute from "../routes/user";
@@ -19,21 +19,35 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: process.env.CLIENT_URL, // Allow requests from the client
+    origin:
+      process.env.NODE_ENV === "production"
+        ? "http://localhost:3000/" // Replace with actual frontend URL when hosted
+        : process.env.CLIENT_URL,
     methods: "GET,POST,PUT,DELETE",
-    credentials: true, // Allow sending cookies from client
+    credentials: true,
   })
 );
+
+console.log(process.env.NODE_ENV);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Middleware for session management with MongoDB store
 app.use(
   session({
-    secret: process.env.SECRET_KEY as string, // Replace with a real secret
+    secret: process.env.SECRET_KEY as string,
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }, // Set to true if using HTTPS
+    saveUninitialized: false, // Set to false to prevent storing sessions that are uninitialized
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_CONNECTION_STRING,
+      ttl: 14 * 24 * 60 * 60, // Session expiration in seconds (14 days here)
+    }),
+    cookie: {
+      httpOnly: true, // Ensure the cookie is not accessible via JavaScript
+      secure: process.env.NODE_ENV === "production", // Only use HTTPS in production
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    },
   })
 );
 
