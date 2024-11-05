@@ -1,0 +1,18 @@
+.question_tags {
+  display: flex;
+  flex-wrap: wrap;
+  .question_tag {
+    margin: 3px;
+    .tag {
+      padding: 3px 7px;
+      background-color: rgb(219, 217, 217);
+      color: rgba(0, 0, 0, 0.796);
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

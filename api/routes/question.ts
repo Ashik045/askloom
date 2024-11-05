@@ -59,7 +59,7 @@ router.post(
 // fetch the reacted users list of a perticular post
 router.get("/question/:questionid/reacts", getReactedUsers);
 
-// fetch the tags list
+// fetch the tags lists
 router.get("/questions/tags", getQuestionsTags);
 
 export default router;

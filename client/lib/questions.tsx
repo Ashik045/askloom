@@ -68,7 +68,7 @@ const getQuestionsOfUser = async (id: string | number) => {
 
 const getAllTags = async () => {
   try {
-    const result = await fetch(`${process.env.SERVER_URL}/api/questions/tags`);
+    const result = await fetch(`http://localhost:4000/api/questions/tags`);
 
     // Check if the response was successful
     if (!result.ok) {

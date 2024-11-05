@@ -252,12 +252,13 @@ const getQuestionsTags = async (req: Request, res: Response) => {
     const result = await Question.find();
     const tagFrequency: Record<string, number> = {};
 
-    // Count the frequency of each tag
+    // Count the frequency of each tag.
     result.forEach((question) => {
       question.tags.forEach((tag: string) => {
         tagFrequency[tag] = (tagFrequency[tag] || 0) + 1; // This line checks if the tag already exists . If it does, it increments the count by 1. If it doesn’t, it initializes the count to 1.
       });
     });
+    // console.log(tagFrequency[tag]);
 
     // Convert tagFrequency object to an array and sort by frequency
     const tags = Object.keys(tagFrequency)
@@ -265,7 +266,7 @@ const getQuestionsTags = async (req: Request, res: Response) => {
       .map((tag) => `${tag}(${tagFrequency[tag]})`);
 
     res.status(200).json({
-      tags,
+      message: tags,
     });
   } catch (error) {
     res.status(500).json({
