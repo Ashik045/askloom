@@ -137,7 +137,17 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
           <input
             id="title"
             type="text"
-            {...register("title", { required: "Title is required" })}
+            {...register("title", {
+              required: "Title is required",
+              minLength: {
+                value: 5,
+                message: "Minimum length is 5 characters!",
+              },
+              maxLength: {
+                value: 250,
+                message: "Maximum length is 250 characters!",
+              },
+            })}
             placeholder="Enter your question title"
             onChange={handleInputChange}
           />

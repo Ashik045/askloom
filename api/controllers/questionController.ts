@@ -280,9 +280,9 @@ const getTrendingQuestions = async (req: Request, res: Response) => {
   try {
     const questions = await Question.find();
 
-    const trendingQuestions = questions.sort(
-      (a, b) => b.reacts.length - a.reacts.length
-    );
+    const trendingQuestions = questions
+      .sort((a, b) => b.reacts.length - a.reacts.length)
+      .slice(0, 7);
 
     res.status(200).json({
       message: trendingQuestions,
