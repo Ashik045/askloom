@@ -28,7 +28,7 @@ export default function Login() {
 
     try {
       const response = await axios.post(
-        `${process.env.SERVER_URL}/api/auth/login/manual`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/login/manual`,
         { email, password }
       );
       setLoading(false);
@@ -58,10 +58,7 @@ export default function Login() {
       dispatch({ type: "LOGIN_START" });
 
       // Set the base URL based on the environment
-      const baseUrl =
-        window.location.hostname === "localhost"
-          ? "http://localhost:4000"
-          : `${process.env.SERVER_URL}`;
+      const baseUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}`;
 
       // Open Google login and wait for the redirect back to the app
       window.open(`${baseUrl}/api/auth/google`, "_self");
@@ -83,10 +80,7 @@ export default function Login() {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const baseUrl =
-          window.location.hostname === "localhost"
-            ? "http://localhost:4000"
-            : `${process.env.SERVER_URL}`;
+        const baseUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}`;
 
         console.log(window.location.hostname);
         console.log("Environment:", process.env.NODE_ENV);

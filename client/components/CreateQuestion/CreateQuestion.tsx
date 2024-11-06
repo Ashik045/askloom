@@ -5,15 +5,18 @@ import { Context } from "@/Context/Context";
 import { QuestionType } from "@/types.global";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import ReactQuill from "react-quill"; // Rich text editor
+// import ReactQuill from "react-quill"; // Rich text editor
+import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css"; // Styles for the editor
 import styles from "./createquestion.module.scss";
-
 interface OptionalQuestionProp {
   initialData?: QuestionType;
 }
+
+// Dynamically import ReactQuill with SSR disabled
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
   const {
@@ -40,10 +43,11 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
   const { user } = useContext(Context);
-  if (!user) {
-    router.push("/login");
-  }
-
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user, router]);
   // Handle changes in title, question, and tags inputs
   const handleInputChange = () => setInpChanged(true);
 
@@ -74,7 +78,8 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
         userPhoto: user?.photoUrl,
       };
 
-      const token = localStorage.getItem("jwttoken");
+      const token =
+        typeof window !== "undefined" && localStorage.getItem("jwttoken");
 
       const config = {
         headers: {
@@ -86,8 +91,8 @@ const CreateQuestion = ({ initialData }: OptionalQuestionProp) => {
 
       try {
         const url = initialData
-          ? `${process.env.NEXT_PUBLIC_SERVER_URL_DEV}/api/question/edit/${initialData._id}`
-          : `${process.env.NEXT_PUBLIC_SERVER_URL_DEV}/api/question/create`;
+          ? `${process.env.NEXT_PUBLIC_SERVER_URL}/api/question/edit/${initialData._id}`
+          : `${process.env.NEXT_PUBLIC_SERVER_URL}/api/question/create`;
 
         const method = initialData ? axios.put : axios.post;
         const response = await method(url, enrichedData, config);

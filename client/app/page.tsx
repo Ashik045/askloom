@@ -8,6 +8,8 @@ import {
 } from "@/lib/questions";
 import styles from "@/styles/mhome.module.scss";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const questionss = await getAllQuestions();
   const tags = await getAllTags();

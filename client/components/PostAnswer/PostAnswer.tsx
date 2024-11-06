@@ -53,7 +53,7 @@ const PostAnswer = ({ qid }: PostType) => {
       };
 
       const response = await axios.post(
-        `${process.env.SERVER_URL}/api/comment/create`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/comment/create`,
         newAnswer
       );
 

@@ -1,6 +1,6 @@
 import Profile from "@/components/Profile/Profile";
 import TrendingQuestions from "@/components/TrendingQuestions/TrendingQuestions";
-import { getQuestionsOfUser } from "@/lib/questions";
+import { getQuestionsOfUser, getTrendingQuestions } from "@/lib/questions";
 import { getUserByuserId } from "@/lib/user";
 import styles from "@/styles/profilepage.module.scss";
 import NotFound from "./not-found";
@@ -16,6 +16,7 @@ export default async function page({ params }: Params) {
 
   const user = await getUserByuserId(userid);
   const questionss = await getQuestionsOfUser(userid);
+  const trendingQuestions = await getTrendingQuestions();
 
   // If user is not found, render the NotFound component
   if (!user) {
@@ -29,7 +30,7 @@ export default async function page({ params }: Params) {
       <Profile userr={user} questions={questionss} />
 
       <div className={styles.trending_questions}>
-        <TrendingQuestions />
+        <TrendingQuestions questions={trendingQuestions} />
       </div>
     </div>
   );

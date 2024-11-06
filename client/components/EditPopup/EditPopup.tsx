@@ -108,12 +108,12 @@ const EditPopup = ({ user, setEditPopUp }: UserT) => {
       };
 
       const response = await axios.put(
-        `${process.env.SERVER_URL}/api/auth/user/update/${user._id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/user/update/${user._id}`,
         updatedUser
       );
 
       setLoading(false);
-      console.log(response.data.user);
+      // console.log(response.data.user);
 
       if (response.data.user) {
         dispatch({ type: "USER_UPDATE_SUCCESS", payload: response.data.user });

@@ -84,7 +84,7 @@ export default function Regpage() {
 
       try {
         const response = await axios.post(
-          `${process.env.SERVER_URL}/api/auth/registration`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/registration`,
           newUser
         );
 

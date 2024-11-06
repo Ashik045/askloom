@@ -74,7 +74,9 @@ const getQuestionsOfUser = async (id: string | number) => {
 
 const getAllTags = async () => {
   try {
-    const result = await fetch(`http://localhost:4000/api/questions/tags`);
+    const result = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/questions/tags`
+    );
 
     // Check if the response was successful
     if (!result.ok) {
@@ -94,7 +96,9 @@ const getAllTags = async () => {
 
 const getTrendingQuestions = async () => {
   try {
-    const result = await fetch(`http://localhost:4000/api/questions/trending`);
+    const result = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/questions/trending`
+    );
 
     // Check if the response was successful
     if (!result.ok) {

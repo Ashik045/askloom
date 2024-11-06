@@ -19,8 +19,6 @@ export default async function QuestionPage({ params }: Params) {
   const comments = await getCommentsByQid(id);
   const trendingQuestions = await getTrendingQuestions();
 
-  // console.log(question);
-
   if (!question) {
     // Return some fallback or error component if the question is not found
     return <NotFound />;

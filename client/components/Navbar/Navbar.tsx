@@ -1,6 +1,5 @@
 "use client"; //
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import { Context } from "Context/Context";
 import { Context } from "@/Context/Context";
@@ -30,7 +29,10 @@ const Navbar = () => {
   }
 
   const handleLogout = () => {
-    window.open(`${process.env.SERVER_URL}/api/auth/logout`, "_self");
+    window.open(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/logout`,
+      "_self"
+    );
 
     dispatch({ type: "LOGOUT" });
 

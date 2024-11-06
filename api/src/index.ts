@@ -16,12 +16,22 @@ import "./passport";
 dotenv.config();
 const app = express();
 
+// Environment variables for clarity
+const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000";
+const SESSION_SECRET = process.env.SECRET_KEY;
+const MONGODB_URI = process.env.MONGODB_CONNECTION_STRING;
+
+// Ensure essential environment variables are loaded
+if (!SESSION_SECRET || !MONGODB_URI) {
+  throw new Error("Missing essential environment variables.");
+}
+
 // Middleware
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true,
+    origin: CLIENT_URL, // Allow requests from client URL
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // Allow cookies to be sent with requests
   })
 );
 
@@ -29,19 +39,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Middleware for session management with MongoDB store
+// Middleware for session management with MongoDB store
 app.use(
   session({
-    secret: process.env.SECRET_KEY as string,
+    secret: SESSION_SECRET,
     resave: false,
-    saveUninitialized: false, // Set to false to prevent storing sessions that are uninitialized
+    saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_CONNECTION_STRING,
-      ttl: 14 * 24 * 60 * 60, // Session expiration in seconds (14 days here)
+      mongoUrl: MONGODB_URI,
+      ttl: 14 * 24 * 60 * 60, // Session expiration (14 days)
     }),
     cookie: {
-      httpOnly: true, // Ensure the cookie is not accessible via JavaScript
-      secure: process.env.NODE_ENV === "production", // Only use HTTPS in production
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      httpOnly: true, // Makes cookie inaccessible via JavaScript
+      secure: process.env.NODE_ENV === "production", // HTTPS only in production
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Allows cross-site cookies in production
+      maxAge: 14 * 24 * 60 * 60 * 1000, // Optional: Set cookie expiration (14 days)
     },
   })
 );

@@ -1,6 +1,7 @@
 "use client";
 
 import { QuestionType } from "@/types.global";
+import Link from "next/link";
 import styles from "./trendingQuestions.module.scss";
 interface QuestionProp {
   questions?: QuestionType[];
@@ -14,7 +15,9 @@ const TrendingQuestions = ({ questions }: QuestionProp) => {
       {questions?.map((question) => {
         return (
           <div key={question._id} className={styles.t_question}>
-            <h3>{question.title}</h3>
+            <h3>
+              <Link href={question._id}> {question.title}</Link>
+            </h3>
           </div>
         );
       })}

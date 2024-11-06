@@ -10,7 +10,7 @@ interface ParamProp {
 
 export default async function page({ params }: ParamProp) {
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_SERVER_URL_DEV}/api/question/${params.id}`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/question/${params.id}`
   );
   const questionData = response.data.message;
 

@@ -105,7 +105,7 @@ export default function QuestionDetails({
       try {
         // add a like request
         const response = await axios.post(
-          `https://askloom-api.onrender.com/api/question/react/${question._id}`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/question/react/${question._id}`,
           {},
           config
         );
