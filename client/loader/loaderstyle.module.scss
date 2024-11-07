@@ -1,3 +1,4 @@
+// loading skeletonfor question detail page.
 .questionDetailLoading {
   max-width: 1150px;
   margin-left: auto;
@@ -29,6 +30,27 @@
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
 }
 
+// loading skeletonfor  tag .
+.homePage_loading_tagg {
+  .homePage_loading_tag {
+    display: grid;
+    grid-template-columns: 31% 31% 31%;
+    gap: 10px 8px;
+    background-color: white;
+    padding: 10px;
+    width: 100%;
+    height: fit-content;
+  }
+}
+
+.trending_questionss {
+  margin-top: 8px;
+  padding: 15px;
+  width: 100%;
+  background-color: white;
+}
+
+// loading skeletonfor home page.
 .homePage_loading {
   max-width: 1200px;
   margin-left: auto;
@@ -41,24 +63,8 @@
   justify-content: center;
   margin-top: 90px;
 
-  .homePage_loading_tags {
-    display: grid;
-    grid-template-columns: 31% 31% 31%;
-    gap: 10px 8px;
-    background-color: white;
-    padding: 10px;
-    width: 100%;
-    height: fit-content;
-  }
-
   .homePage_loading_questions {
     margin-top: -15px;
-  }
-
-  .trending_questions {
-    padding: 15px;
-    width: 100%;
-    background-color: white;
   }
 }
 
@@ -121,9 +127,14 @@
   .homePage_loading {
     display: grid;
     grid-template-columns: 100%;
+    justify-content: center;
 
     .homePage_loading_tags {
       display: none;
+    }
+
+    .homePage_loading_questions {
+      display: block;
     }
   }
 

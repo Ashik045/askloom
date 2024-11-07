@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import QuestionDetails from "@/components/QuestionDetails/QuestionDetails";
-import TrendingQuestions from "@/components/TrendingQuestions/TrendingQuestions";
+import TQserver from "@/components/TrendingQuestions/TQserverProps";
 import { getCommentsByQid } from "@/lib/comments";
 import { getQuestionById, getTrendingQuestions } from "@/lib/questions";
+import TrendingQLoading from "@/loader/TredingQLoading";
 import styles from "@/styles/questiondetails.module.scss";
+import { Suspense } from "react";
 import NotFound from "./not-found";
 
 interface Params {
@@ -17,7 +19,7 @@ export default async function QuestionPage({ params }: Params) {
   const { id } = params;
   const question = await getQuestionById(id);
   const comments = await getCommentsByQid(id);
-  const trendingQuestions = await getTrendingQuestions();
+  const trendingQuestionPromise = getTrendingQuestions();
 
   if (!question) {
     // Return some fallback or error component if the question is not found
@@ -29,7 +31,9 @@ export default async function QuestionPage({ params }: Params) {
       <QuestionDetails question={question} answers={comments} />
 
       <div className={styles.trending_questionss}>
-        <TrendingQuestions questions={trendingQuestions} />
+        <Suspense fallback={<TrendingQLoading />}>
+          <TQserver promise={trendingQuestionPromise} />
+        </Suspense>
       </div>
     </div>
   );
