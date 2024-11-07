@@ -21,4 +21,24 @@
       }
     }
   }
+
+  .tag_text_res {
+    color: rgba(0, 0, 0, 0.796);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+
+    span {
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      margin-left: 3px;
+
+      .tag_text_icon {
+        cursor: pointer;
+        margin-left: 3px;
+      }
+    }
+  }
 }

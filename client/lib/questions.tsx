@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const getAllQuestions = async () => {
+const getAllQuestions = async (inpVal?: string) => {
   try {
-    const result = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/questions/all`,
-      {
-        cache: "no-store",
-      }
-    );
+    const url = inpVal
+      ? `${
+          process.env.NEXT_PUBLIC_SERVER_URL
+        }/api/questions/all?search=${encodeURIComponent(inpVal)}`
+      : `${process.env.NEXT_PUBLIC_SERVER_URL}/api/questions/all`;
+
+    const result = await fetch(url, {
+      cache: "no-store",
+    });
 
     // Check if the response was successful
     if (!result.ok) {

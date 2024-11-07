@@ -1,10 +1,135 @@
 .questionDetailLoading {
+  max-width: 1150px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 90px;
+  display: grid;
+  grid-template-columns: 70% 25%;
+  gap: 15px;
+
+  .questionDetailLoading_q {
+    padding: 15px;
+    background-color: white;
+  }
+
+  .trending_questions {
+    padding: 15px;
+    width: 100%;
+    background-color: white;
+  }
+}
+
+.single_question {
+  background-color: white;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+}
+
+.homePage_loading {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: grid;
+  grid-template-columns: 20% 53% 23%;
+  gap: 13px;
+  justify-content: center;
+  margin-top: 90px;
+
+  .homePage_loading_tags {
+    display: grid;
+    grid-template-columns: 31% 31% 31%;
+    gap: 10px 8px;
+    background-color: white;
+    padding: 10px;
+    width: 100%;
+    height: fit-content;
+  }
+
+  .homePage_loading_questions {
+    margin-top: -15px;
+  }
+
+  .trending_questions {
+    padding: 15px;
+    width: 100%;
+    background-color: white;
+  }
+}
+
+.userPage_loading {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 15px;
   padding-right: 15px;
   margin-top: 90px;
-  background-color: white;
-  padding: 15px;
+  display: grid;
+  grid-template-columns: 70% 23%;
+  gap: 15px;
+  justify-content: start;
+
+  .userPage_loading_q {
+    padding: 15px;
+    background-color: white;
+  }
+
+  .trending_questions {
+    padding: 15px;
+    width: 100%;
+    background-color: white;
+    height: fit-content;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .questionDetailLoading {
+    display: grid;
+    grid-template-columns: 100%;
+
+    .trending_questions {
+      display: none;
+    }
+  }
+
+  .homePage_loading {
+    display: grid;
+    grid-template-columns: 25% 70%;
+
+    .trending_questions {
+      display: none;
+    }
+  }
+
+  .userPage_loading {
+    display: grid;
+    grid-template-columns: 96%;
+    justify-content: center;
+
+    .trending_questions {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .homePage_loading {
+    display: grid;
+    grid-template-columns: 100%;
+
+    .homePage_loading_tags {
+      display: none;
+    }
+  }
+
+  .userPage_loading {
+    display: grid;
+    grid-template-columns: 100%;
+    justify-content: center;
+  }
 }

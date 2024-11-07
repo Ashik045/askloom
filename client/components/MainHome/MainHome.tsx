@@ -4,7 +4,7 @@ import { Context } from "@/Context/Context";
 import { useTag } from "@/TagContext/TagContext";
 import { QuestionType } from "@/types.global";
 import { jwtDecode } from "jwt-decode";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useContext } from "react";
 import { FaTimes } from "react-icons/fa";
 import Question from "../Question/Question";
@@ -18,6 +18,8 @@ interface QuestionProp {
 const MainHome = ({ questions }: QuestionProp) => {
   const router = useRouter();
   const { dispatch } = useContext(Context);
+  const searchParams = useSearchParams();
+  const searchTerm = searchParams.get("search");
   const { tagVal, setTagVal } = useTag();
 
   const filteredQuestions = tagVal
@@ -49,6 +51,11 @@ const MainHome = ({ questions }: QuestionProp) => {
               className={styles.tag_text_icon}
             />
           </span>
+        </p>
+      ) : searchTerm ? (
+        <p className={styles.tag_text_res}>
+          {filteredQuestions.length === 0 && "No"} Results for
+          <span>{searchTerm}</span>
         </p>
       ) : (
         <QuestionComponent />

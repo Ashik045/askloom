@@ -1,9 +1,10 @@
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import styles from "./loaderstyle.module.scss";
 
 const Questionloading = () => {
   return (
-    <div style={{ marginTop: "15px", marginBottom: "25px" }}>
+    <div style={{ marginTop: "15px" }} className={styles.single_question}>
       <div>
         <Skeleton height={38} />
         <Skeleton

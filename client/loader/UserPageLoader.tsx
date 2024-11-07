@@ -2,19 +2,24 @@ import Skeleton from "react-loading-skeleton";
 
 import "react-loading-skeleton/dist/skeleton.css";
 import styles from "./loaderstyle.module.scss";
+import Questionloading from "./Questionloading";
 
-const QuestionDetailLoading = () => {
+const UserProfileLoading = () => {
   return (
-    <div className={styles.questionDetailLoading}>
-      <div className={styles.questionDetailLoading_q}>
-        <Skeleton height={38} />
+    <div className={styles.userPage_loading}>
+      <div className={styles.userPage_loading_q}>
+        <Skeleton height={115} />
         <Skeleton
-          height={22}
-          style={{ marginTop: "10px", marginBottom: "20px" }}
+          height={20}
+          style={{ marginTop: "15px", marginBottom: "1px" }}
         />
-        <Skeleton height={300} style={{ marginBottom: "20px" }} />
-        <Skeleton height={30} style={{ marginBottom: "5px" }} />
-        <Skeleton height={45} style={{ marginBottom: "5px" }} />
+        <Skeleton height={20} style={{ marginBottom: "15px" }} />
+
+        <Skeleton height={40} style={{ marginBottom: "20px" }} />
+
+        <Questionloading />
+        <Questionloading />
+        <Questionloading />
       </div>
 
       <div
@@ -32,4 +37,4 @@ const QuestionDetailLoading = () => {
   );
 };
 
-export default QuestionDetailLoading;
+export default UserProfileLoading;

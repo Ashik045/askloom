@@ -7,6 +7,7 @@ import noPhoto from "@/public/images/no-photo.png";
 import { useTag } from "@/TagContext/TagContext";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { BiMenu, BiX } from "react-icons/bi";
 import styles from "./navbar.module.scss";
@@ -19,6 +20,7 @@ const Navbar = () => {
 
   const { user, dispatch } = useContext(Context);
   const { setTagVal } = useTag();
+  const router = useRouter();
 
   useEffect(() => {
     setIsClient(true);
@@ -47,11 +49,9 @@ const Navbar = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      // router.push({
-      //   pathname: selectVal === "users" ? "users" : "/",
-      //   query: { search: inpVal },
-      // });
-      // console.log("input:" + inpVal, selectVal === "users" ? "users" : "posts");
+      // const questions = await getAllQuestions(inpVal);
+      // console.log(questions);
+      router.push(`/questions?search=${inpVal}`);
     } catch (error) {
       console.log(error);
     }
@@ -74,7 +74,7 @@ const Navbar = () => {
 
         <div className={styles.nav_right}>
           <div className={styles.nav_menu_item}>
-            <Link href="/" style={{ textDecoration: "none" }}>
+            <Link href="/questions" style={{ textDecoration: "none" }}>
               <p onClick={() => setTagVal("")}>Questions</p>
             </Link>
             <Link href="/createquestion" style={{ textDecoration: "none" }}>
@@ -84,7 +84,7 @@ const Navbar = () => {
 
           <div className={styles.nav_menu}>
             <div className={styles.search}>
-              <form onSubmit={handleSubmit} className={styles.search_form}>
+              <form className={styles.search_form}>
                 <input
                   type="text"
                   placeholder="Search Questions.."
@@ -93,7 +93,11 @@ const Navbar = () => {
                   onKeyDown={handleKeyDown}
                 />
 
-                <button type="button" className={styles.submit_btn}>
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  className={styles.submit_btn}
+                >
                   Ask
                 </button>
               </form>
@@ -154,7 +158,7 @@ const Navbar = () => {
             {toggler && (
               <div className={styles.res_nav_menu}>
                 <div className={styles.res_nav_menuu}>
-                  <Link href="/" style={{ textDecoration: "none" }}>
+                  <Link href="/questions" style={{ textDecoration: "none" }}>
                     <p onClick={() => setToggler(false)}>Questions</p>
                   </Link>
 

@@ -51,12 +51,18 @@ const getQuestionById = async (req: Request, res: Response) => {
 // get all questions
 const getAllQuestions = async (req: Request, res: Response) => {
   try {
-    const questions = await Question.find().sort({ createdAt: -1 });
+    const searchParams = req.query.search as string; // Extract search query from req.query
+    const query = searchParams
+      ? { title: { $regex: searchParams, $options: "i" } } // Case-insensitive search
+      : {};
+
+    const questions = await Question.find(query).sort({ createdAt: -1 });
 
     res.status(200).json({
       message: questions,
     });
   } catch (error) {
+    console.error("Error fetching questions:", error);
     res.status(500).json({
       error: "Question not found!",
     });
