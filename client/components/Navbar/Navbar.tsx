@@ -31,10 +31,12 @@ const Navbar = () => {
   }
 
   const handleLogout = () => {
-    window.open(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/logout`,
-      "_self"
-    );
+    if (user?.googleId) {
+      window.open(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/logout`,
+        "_self"
+      );
+    }
 
     dispatch({ type: "LOGOUT" });
 

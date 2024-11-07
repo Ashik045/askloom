@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import QuestionDetails from "@/components/QuestionDetails/QuestionDetails";
+import AnswersServer from "@/components/AnswerComponent/AnswersServer";
 import TQserver from "@/components/TrendingQuestions/TQserverProps";
-import { getCommentsByQid } from "@/lib/comments";
 import { getQuestionById, getTrendingQuestions } from "@/lib/questions";
 import TrendingQLoading from "@/loader/TredingQLoading";
 import styles from "@/styles/questiondetails.module.scss";
@@ -18,7 +17,7 @@ interface Params {
 export default async function QuestionPage({ params }: Params) {
   const { id } = params;
   const question = await getQuestionById(id);
-  const comments = await getCommentsByQid(id);
+  // const comments = await getCommentsByQid(id);
   const trendingQuestionPromise = getTrendingQuestions();
 
   if (!question) {
@@ -28,7 +27,7 @@ export default async function QuestionPage({ params }: Params) {
 
   return (
     <div className={styles.questiondetails_page}>
-      <QuestionDetails question={question} answers={comments} />
+      <AnswersServer question={question} questionId={id} />
 
       <div className={styles.trending_questionss}>
         <Suspense fallback={<TrendingQLoading />}>

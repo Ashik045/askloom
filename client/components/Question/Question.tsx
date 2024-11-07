@@ -22,6 +22,7 @@ interface QuestionProps {
 const Question = ({ question }: QuestionProps) => {
   const [like, setLike] = useState(false);
   const [likePopup, setLikePopup] = useState(false);
+  const [likePopupLoading, setLikePopupLoading] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
   const [ansComponent, setAnsComponent] = useState(false);
   const [likeCount, setLikeCount] = useState(question.reacts?.length);
@@ -135,7 +136,7 @@ const Question = ({ question }: QuestionProps) => {
     setLikePopup(!likePopup);
 
     try {
-      // setLoading(true);
+      setLikePopupLoading(true);
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/question/${question._id}/reacts`
       );
@@ -143,10 +144,10 @@ const Question = ({ question }: QuestionProps) => {
 
       setReactedUsers(users);
 
-      // setLoading(false);
+      setLikePopupLoading(false);
     } catch (error) {
       console.error(error);
-      // setLoading(false);
+      setLikePopupLoading(false);
     }
   };
 
@@ -197,7 +198,11 @@ const Question = ({ question }: QuestionProps) => {
         </div>
 
         {likePopup && question.reacts.length > 0 && (
-          <LikePopup users={reactedUsers} setLikePopup={setLikePopup} />
+          <LikePopup
+            users={reactedUsers}
+            setLikePopup={setLikePopup}
+            likePopupLoading={likePopupLoading}
+          />
         )}
         <div className={styles.add_like_cmnt}>
           <p>

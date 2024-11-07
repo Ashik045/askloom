@@ -4,19 +4,19 @@ import Link from "next/link";
 import { FaTimes } from "react-icons/fa";
 import styles from "./likepopup.module.scss";
 
+import UserLoader from "@/loader/UserLoader";
 import nophoto from "@/public/images/no-photo.png";
 
 interface UsersType {
   users: UserType[];
   setLikePopup: React.Dispatch<React.SetStateAction<boolean>>;
+  likePopupLoading: boolean;
 }
 
-const LikePopup = ({ users, setLikePopup }: UsersType) => {
+const LikePopup = ({ users, setLikePopup, likePopupLoading }: UsersType) => {
   const handleClose = () => {
     setLikePopup(false);
   };
-
-  // console.log(users);
 
   return (
     <div className={styles.like_popup}>
@@ -26,6 +26,7 @@ const LikePopup = ({ users, setLikePopup }: UsersType) => {
         </span>
         <h1>{users.length} Likes </h1>
 
+        {likePopupLoading && <UserLoader />}
         {users.map((user) => {
           return (
             <div key={user._id} className={styles.like_users}>

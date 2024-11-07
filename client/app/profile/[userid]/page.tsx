@@ -1,8 +1,10 @@
 import Profile from "@/components/Profile/Profile";
-import TrendingQuestions from "@/components/TrendingQuestions/TrendingQuestions";
+import TQserver from "@/components/TrendingQuestions/TQserverProps";
 import { getQuestionsOfUser, getTrendingQuestions } from "@/lib/questions";
 import { getUserByuserId } from "@/lib/user";
+import TrendingQLoading from "@/loader/TredingQLoading";
 import styles from "@/styles/profilepage.module.scss";
+import { Suspense } from "react";
 import NotFound from "./not-found";
 
 interface Params {
@@ -16,7 +18,7 @@ export default async function page({ params }: Params) {
 
   const user = await getUserByuserId(userid);
   const questionss = await getQuestionsOfUser(userid);
-  const trendingQuestions = await getTrendingQuestions();
+  const trendingQuestionPromise = getTrendingQuestions();
 
   // If user is not found, render the NotFound component
   if (!user) {
@@ -30,7 +32,9 @@ export default async function page({ params }: Params) {
       <Profile userr={user} questions={questionss} />
 
       <div className={styles.trending_questions}>
-        <TrendingQuestions questions={trendingQuestions} />
+        <Suspense fallback={<TrendingQLoading />}>
+          <TQserver promise={trendingQuestionPromise} />
+        </Suspense>
       </div>
     </div>
   );

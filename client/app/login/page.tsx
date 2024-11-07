@@ -8,7 +8,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
-import { FaFacebook, FaGoogle } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -46,8 +46,10 @@ export default function Login() {
 
       setLoading(false);
     } catch (error: any) {
+      console.log(error);
       setLoading(false);
       setErrorMessages(error.response?.data.error);
+
       dispatch({ type: "LOGIN_FAILURE", payload: error.response.data.error });
     }
   };
@@ -123,14 +125,14 @@ export default function Login() {
             Log In With Google
           </div>
 
-          <div
+          {/* <div
             className={styles.facebook_login}
             style={{ cursor: "not-allowed" }}
           >
             {" "}
             <FaFacebook style={{ marginRight: "8px" }} />
             Log In With Facebook
-          </div>
+          </div> */}
         </div>
 
         <p className={styles.s_or_e}>or</p>

@@ -2,12 +2,13 @@
 "use client";
 
 import { Context } from "@/Context/Context";
+import AnswerLoader from "@/loader/AnswerLoader";
 import { CommentType, QuestionType } from "@/types.global";
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 import { FaRegComment, FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import AnswerComponent from "../AnswerComponent/AnswerComponent";
 import PostAnswer from "../PostAnswer/PostAnswer";
@@ -15,12 +16,12 @@ import styles from "./questionDetails.module.scss";
 
 interface QuestionDetailsProps {
   question: QuestionType;
-  answers: [CommentType];
+  commentsPromise: Promise<CommentType[]>;
 }
 
 export default function QuestionDetails({
   question,
-  answers,
+  commentsPromise,
 }: QuestionDetailsProps) {
   const [like, setLike] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
@@ -251,10 +252,24 @@ export default function QuestionDetails({
       <div className={styles.question_comments}>
         <h3 className={styles.q_cmnt}>{question.comments.length} Answers</h3>
 
-        {answers.map((answer) => {
-          return <AnswerComponent key={answer.userid} answer={answer} />;
-        })}
+        {/* Progressive loading of comments */}
+        <Suspense fallback={<AnswerLoader />}>
+          <CommentsList promise={commentsPromise} />
+        </Suspense>
       </div>
     </div>
+  );
+}
+
+// CommentsList component to handle the promise resolution for comments
+async function CommentsList({ promise }: { promise: Promise<CommentType[]> }) {
+  const answers = await promise; // Await the promise to get answers
+
+  return (
+    <>
+      {answers.map((comment) => (
+        <AnswerComponent key={comment.userid} answer={comment} />
+      ))}
+    </>
   );
 }
