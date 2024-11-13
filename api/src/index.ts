@@ -17,7 +17,6 @@ dotenv.config();
 const app = express();
 
 // Environment variables for clarity
-const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000";
 const SESSION_SECRET = process.env.SECRET_KEY;
 const MONGODB_URI = process.env.MONGODB_CONNECTION_STRING;
 
@@ -29,11 +28,16 @@ if (!SESSION_SECRET || !MONGODB_URI) {
 // Middleware
 app.use(
   cors({
-    origin: CLIENT_URL, // Allow requests from client URL
+    origin:
+      process.env.NODE_ENV === "development"
+        ? process.env.CLIENT_URL_DEV
+        : process.env.CLIENT_URL_PRODUCTION, // Allow requests from client URL
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true, // Allow cookies to be sent with requests
   })
 );
+
+console.log(process.env.NODE_ENV);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

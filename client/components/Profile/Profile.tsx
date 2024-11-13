@@ -51,6 +51,8 @@ function Profile({ userr, questions }: UserT) {
             height={100}
             width={100}
             className={styles.profile_photo}
+            placeholder="blur"
+            blurDataURL="../../public/images/no-photo.png" // A local or small, base64-encoded image
           />
 
           <div className={styles.profile_main_in}>

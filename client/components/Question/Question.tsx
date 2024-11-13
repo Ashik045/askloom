@@ -161,6 +161,8 @@ const Question = ({ question }: QuestionProps) => {
             width={37}
             alt="sociatek"
             className={styles.user_profile}
+            placeholder="blur"
+            blurDataURL="../../public/images/no-photo.png"
           />
         </Link>
 
