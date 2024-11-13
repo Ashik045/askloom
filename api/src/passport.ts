@@ -80,6 +80,8 @@ passport.use(
         // Return new user and token
         return done(null, { user: newUser, token } as unknown as Express.User); // Return new user and token
       } catch (error) {
+        console.log(error);
+
         return done(error, undefined); // Handle error
       }
     }

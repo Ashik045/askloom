@@ -159,7 +159,7 @@ const Question = ({ question }: QuestionProps) => {
             src={question?.userPhoto ? question.userPhoto : nophoto}
             height={37}
             width={37}
-            alt="sociatek"
+            alt="askloom"
             className={styles.user_profile}
             placeholder="blur"
             blurDataURL="../../public/images/no-photo.png"

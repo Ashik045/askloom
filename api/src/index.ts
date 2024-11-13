@@ -37,7 +37,7 @@ app.use(
   })
 );
 
-console.log(process.env.NODE_ENV);
+console.log("index.ts", process.env.NODE_ENV);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

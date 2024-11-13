@@ -56,8 +56,15 @@ router.get("/logout", (req, res, next) => {
       return next(err); // Handle any potential errors
     }
   });
-  res.redirect("http://localhost:3000");
+
+  const redirectUrl =
+    process.env.NODE_ENV === "development"
+      ? process.env.CLIENT_URL_DEV || "http://localhost:3000"
+      : process.env.CLIENT_URL_PRODUCTION || "https://askloom.vercel.app";
+  res.redirect(redirectUrl);
 });
+
+console.log("route.ts", process.env.NODE_ENV);
 
 router.get("/login/failed", (req, res) => {
   res.status(401).json({
@@ -79,7 +86,10 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "http://localhost:3000/login",
+    successRedirect:
+      process.env.NODE_ENV === "development"
+        ? `${process.env.CLIENT_URL_DEV || "http://localhost:3000"}/login`
+        : `${process.env.CLIENT_URL_PRODUCTION || "https://askloom.vercel.app"}/login`,
     failureRedirect: "/login/failed",
   })
 );

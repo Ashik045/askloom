@@ -69,6 +69,8 @@ export default function Login() {
     } catch (error: unknown) {
       let errorMessage = "An unknown error occurred.";
 
+      console.log(error);
+
       if (error instanceof Error) {
         errorMessage = error.message;
       } else if (typeof error === "string") {
@@ -105,9 +107,13 @@ export default function Login() {
           // Dispatch the success action with user data
           dispatch({ type: "LOGIN_SUCCESS", payload: user });
         } else {
+          console.log(response);
+
           dispatch({ type: "LOGIN_FAILURE", payload: "Login failed!" });
         }
       } catch (error) {
+        console.log(error);
+
         dispatch({ type: "LOGIN_FAILURE", payload: "An error occurred." });
       }
     };
