@@ -92,19 +92,20 @@ console.log("passport.ts", process.env.NODE_ENV);
 
 // Serialize the user by saving the user ID in the session
 passport.serializeUser((user, done) => {
-  const userObj = user as unknown as { user: IUser; token: string }; // user contains both user and token
+  console.log("Serializing user:", user); // Log serialized user data
+  const userObj = user as unknown as { user: IUser; token: string };
+
   done(null, userObj.user._id); // Serialize only the user ID
 });
 
 // Deserialize user.
 passport.deserializeUser(async (id: string, done) => {
+  console.log("Deserializing user with id:", id); // Log deserialization id
+
   try {
     const user = await User.findById(id);
-    if (user) {
-      done(null, user); // Pass the user object to the session
-    } else {
-      done(new Error("User not found"), null); // Handle user not found
-    }
+
+    done(null, user); // Pass the user object to the session
   } catch (error) {
     done(error, null); // Handle any errors during deserialization
   }

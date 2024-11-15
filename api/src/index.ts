@@ -17,7 +17,8 @@ dotenv.config();
 const app = express();
 
 // Environment variables for clarity
-const SESSION_SECRET = process.env.SECRET_KEY;
+const SESSION_SECRET =
+  process.env.SECRET_KEY || "3#asv$6Pb@%mPLcYpWqt@#s45Ju%PDrk147@@BjiKl";
 const MONGODB_URI = process.env.MONGODB_CONNECTION_STRING;
 
 // Ensure essential environment variables are loaded
@@ -51,19 +52,20 @@ app.use(
     saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: MONGODB_URI,
-      ttl: 14 * 24 * 60 * 60, // Session expiration (14 days)
+      ttl: 14 * 24 * 60 * 60, // Session expiration
     }),
     cookie: {
-      httpOnly: true, // Makes cookie inaccessible via JavaScript
-      secure: process.env.NODE_ENV === "production", // HTTPS only in production
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Allows cross-site cookies in production
-      maxAge: 14 * 24 * 60 * 60 * 1000, // Optional: Set cookie expiration (14 days)
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: 14 * 24 * 60 * 60 * 1000,
     },
   })
 );
 
+// Passport session management
 app.use(passport.initialize());
-app.use(passport.session()); // This should be after cookie session
+app.use(passport.session());
 
 // server connect to database
 mongoose
