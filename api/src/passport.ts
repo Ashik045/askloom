@@ -88,6 +88,8 @@ passport.use(
   )
 );
 
+console.log("passport.ts", process.env.NODE_ENV);
+
 // Serialize the user by saving the user ID in the session
 passport.serializeUser((user, done) => {
   const userObj = user as unknown as { user: IUser; token: string }; // user contains both user and token

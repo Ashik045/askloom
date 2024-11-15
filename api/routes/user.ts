@@ -27,6 +27,8 @@ router.get("/user/:userId", getUserById);
 // passportjs google auth routes and controllers
 router.get("/login/success", (req, res) => {
   const user = req.user as IUser | undefined;
+  console.log("Session:", req.session);
+  console.log("User:", req.user);
 
   if (user) {
     // Generate a new token if needed (you may want to store it in the user model)
