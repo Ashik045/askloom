@@ -91,11 +91,11 @@ passport.use(
 console.log("passport.ts", process.env.NODE_ENV);
 
 // Serialize the user by saving the user ID in the session
-passport.serializeUser((user, done) => {
-  console.log("Serializing user:", user); // Log serialized user data
-  const userObj = user as unknown as { user: IUser; token: string };
 
-  done(null, userObj.user._id); // Serialize only the user ID
+passport.serializeUser((user, done) => {
+  const userObj = user as unknown as { user: IUser; token: string };
+  console.log("Serializing user ID:", userObj.user._id); // Log user ID before done
+  done(null, userObj.user._id);
 });
 
 // Deserialize user.
@@ -104,12 +104,19 @@ passport.deserializeUser(async (id: string, done) => {
 
   try {
     const user = await User.findById(id);
-
-    done(null, user); // Pass the user object to the session
+    if (user) {
+      console.log("User found during deserialization:", user); // Check user fetch
+      done(null, user);
+    } else {
+      console.log("User not found during deserialization");
+      done(null, null);
+    }
   } catch (error) {
-    done(error, null); // Handle any errors during deserialization
+    console.error("Error during deserialization:", error);
+    done(error, null);
   }
 });
+
 // passport.serializeUser(
 //   (
 //     user: Express.User,

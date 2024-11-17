@@ -62,8 +62,6 @@ app.use(
     },
   })
 );
-
-// Passport session management
 app.use(passport.initialize());
 app.use(passport.session());
 
