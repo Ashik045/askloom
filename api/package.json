@@ -27,6 +27,7 @@
     "passport-google-oidc": "^0.1.0"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.9",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-session": "^2.0.49",
     "@types/cors": "^2.8.17",
