@@ -1,0 +1,26 @@
+app = "api-broken-morning-4293"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+  NODE_ENV = "production"
+  APPLICATION_PORT = "4000"
+  MONGODB_CONNECTION_STRING = "mongodb+srv://ashikurislam045:ashikurislam045@cluster0.wpggk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+  GOOGLE_CLIENT_ID = "1077098493332-137np8olfj3l8hbqeafunkgjj34f3bfa.apps.googleusercontent.com"
+  GOOGLE_CLIENT_SECRET = "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"
+  CLIENT_URL_PRODUCTION = "https://askloom.vercel.app"
+  SECRET_KEY = "3#asv$6Pb@%mPLcYpWqt@#s45Ju%PDrk147@@BjiKl"
+  JWT_SECRET_KEY = "9&N@@&8a@zP3m6M8*Wx%2F"
+
+[[services]]
+  internal_port = 4000
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]

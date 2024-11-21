@@ -26,7 +26,7 @@ if (!SESSION_SECRET || !MONGODB_URI) {
   throw new Error("Missing essential environment variables.");
 }
 
-// Middleware
+// Middleware.
 app.use(
   cors({
     origin:
