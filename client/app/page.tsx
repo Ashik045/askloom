@@ -18,6 +18,8 @@ export default async function Home() {
   const trendingQuestionPromise = getTrendingQuestions();
   const tagPromise = getAllTags();
 
+  console.log("server url", process.env.NEXT_PUBLIC_SERVER_URL);
+
   return (
     <div className=" font-[family-name:var(--font-geist-sans)]">
       <main className={styles.main_home_page}>
